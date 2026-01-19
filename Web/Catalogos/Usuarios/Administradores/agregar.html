@@ -1,0 +1,272 @@
+<!-- ============================================================== -->
+<!-- breadcrumb -->
+<!-- ============================================================== -->
+<div class="page-breadcrumb">
+    <div class="row">
+        <div class="col-12 d-flex no-block align-items-center">
+            <h4 class="page-title">Agregar administrador</h4>
+            <div class="ml-auto text-right">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item active">
+                            <a href="javascript:;" onclick="modDashboard();">Dashboard</a>
+                        </li>
+                        <li class="breadcrumb-item active">
+                            <a href="javascript:;" onclick="modCatalogos();">Catálogos</a>
+                        </li>
+                        <li class="breadcrumb-item active">
+                            <a href="javascript:;" onclick="modAdministradores();">Administradores</a>
+                        </li>
+                        <li class="breadcrumb-item active">Agregar</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- End breadcrumb -->
+<!-- ============================================================== -->
+<!-- ============================================================== -->
+<!-- Container -->
+<!-- ============================================================== -->
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12"><br></div>
+        <div class="row col-sm-12 cuadroInsertar">
+            <hr />
+            <div class="col-sm-12">
+                <hr />
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group row">
+                    <label for="txtNombre" class="col-sm-2 form-control-label">*Nombre(s):</label>
+                    <div class="col-sm-10">
+                        <p class="form-control-static">
+                            <input type="text" class="form-control validar" id="txtNombre" placeholder="Nombre(s)"
+                                minlength="3"  maxlength="50" required/>
+                        <div class="invalid-feedback" id="txtNombreValid"></div>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group row">
+                    <label for="txtApePat" class="col-sm-2 form-control-label">*Apellido paterno:</label>
+                    <div class="col-sm-10">
+                        <p class="form-control-static">
+                            <input type="text" class="form-control validar" id="txtApePat"
+                                placeholder="Apellido paterno" minlength="2" maxlength="50" required />
+                        <div class="invalid-feedback" id="txtApePatValid"></div>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group row">
+                    <label for="txtApeMat" class="col-sm-2 form-control-label">Apellido materno:</label>
+                    <div class="col-sm-10">
+                        <p class="form-control-static">
+                            <input type="text" class="form-control validar" id="txtApeMat"
+                                placeholder="Apellido materno" minlength="2" maxlength="50" required />
+                        <div class="invalid-feedback" id="txtApeMatValid"></div>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group row">
+                    <label for="txtCorreo" class="col-sm-2 form-control-label">*Correo electrónico:</label>
+                    <div class="col-sm-10">
+                        <p class="form-control-static">
+                            <input type="text" class="form-control validar" id="txtCorreo"
+                                placeholder="Correo electrónico" minlength="6" required />
+                        </p>
+                        <div class="invalid-feedback" id="txtCorreoValid">
+                            El correo no es válido
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group row">
+                    <label for="txtUsuario" class="col-sm-2 form-control-label">*Usuario:</label>
+                    <div class="col-sm-10">
+                        <p class="form-control-static">
+                            <input type="text" class="form-control validar" id="txtUsuario" placeholder="Usuario"
+                                minlength="5" maxlength="30" autocomplete="off" required />
+                        <div class="invalid-feedback" id="txtUsuarioValid"></div>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group row">
+                    <label for="txtContrasena" class="col-sm-2 form-control-label">*Contraseña:</label>
+                    <div class="col-sm-5 input-group">
+                        <input type="password" class="form-control validar" id="txtContrasena" placeholder="Contraseña"
+                            minlength="8" autocomplete="off" required />
+                        <div class="input-group-append">
+                            <div class="input-group-text" id="divClaveAcceso">
+                                <i class="fa fa-eye"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <button class="btn btn-inline btn-cyan mt-2 ml-2"
+                                onclick="generarContraseña()">Generar</button>
+                        </div>
+                        <!-- <div class="col-sm-2"></div> -->
+                        <div class="col-sm-10 mt-3 mr-5">
+                            <div class="invalid-feedback" id="txtContrasenaValid"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <button href="javascript:;" onclick="modAdministradores();" type="button"
+                    class="btn btn-inline btn-danger">Cancelar</button>
+                <button id="btnRegistrar" type="button" class="btn btn-inline btn-success" disabled>Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- End Container -->
+<!-- ============================================================== -->
+<!--This page JavaScript -->
+<script>
+    $(document).ready(function () {
+        $("input.validar").each(function () {
+            const minLength = parseInt($(this).attr("minlength"));
+            if(this.id == 'txtNombre'){
+                this.oninput = function () {
+                    inputMayus(this);
+                    onlyLetras(this);
+                    validarFormulario();
+                };
+            } else if (this.id == 'txtApePat' || this.id == 'txtApeMat') {
+                this.oninput = function () {
+                    inputMayus(this);
+                    onlyLetras(this);
+                    validarFormulario();
+                };
+            } else if(this.id == 'txtCorreo'){
+                this.oninput = function(){
+                    inputMinus(this);
+                    validarFormulario();
+                }
+            }else if(this.id == 'txtUsuario') {
+                this.oninput = function(){
+                    validarUsuario(this);
+                    validarFormulario();
+                }
+            } else{
+                this.oninput = function () {
+                    inputSinEspacios(this);
+                    validarFormulario();
+                };
+            }
+            if (this.id == 'txtContrasena'){
+                $("#" + this.id + "Valid").html(`La contraseña debe contener al menos ${minLength} caracteres, una letra mayúscula, una minúscula, un número y un carácter especial.`);
+            } else if (this.id != 'txtCorreo') {
+                $("#" + this.id + "Valid").html(`El campo debe contener al menos ${minLength} caracteres.`);
+            }
+        });
+    });
+    function validarFormulario() {
+        var error = false;
+        $("input.validar").each(function () {
+            const minLength = parseInt($(this).attr("minlength"));
+            var value = $(this).val();
+            var id = this.id;
+            var valido;
+            if(id == 'txtApeMat'){
+                valido = value.length >= minLength || value.length == 0;
+            } else if (id == 'txtCorreo') {
+                valido = validateEmail(value);
+            } else {
+                valido = value.length >= minLength;
+            }
+            if (valido) {
+                $(this).removeClass('is-invalid');
+                $("#" + this.id + "Valid").removeClass('mostrar');
+            } else {
+                $(this).addClass('is-invalid');
+                $("#" + this.id + "Valid").addClass('mostrar');
+                error = true;
+            }
+        });
+        $("#btnRegistrar").attr("disabled", error);
+    }
+    function generarContraseña() {
+        const caracteres = 'ABCDEFGHJKLMNOPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz0123456789';
+        let contraseña = '';
+        for (let i = 0; i < 8; i++) {
+            const indice = Math.floor(Math.random() * caracteres.length);
+            contraseña += caracteres.charAt(indice);
+        }
+        document.getElementById('txtContrasena').value = contraseña;
+        validarFormulario();
+    }
+    $("#divClaveAcceso").click(function () {
+        $('#txtContrasena').attr('type', $("i", this).hasClass("fa-eye") ? 'text' : 'password');
+        $("i", this).toggleClass("fa-eye");
+        $("i", this).toggleClass("fa-eye-slash");
+    });
+
+    $('#btnRegistrar').click(function () {
+        $("#btnRegistrar").attr("disabled", true);
+        var Nombre = $('#txtNombre').val();
+        var ApePat = $('#txtApePat').val();
+        var ApeMat = $('#txtApeMat').val();
+        var Correo = $('#txtCorreo').val();
+        var Usuario = $('#txtUsuario').val();
+        var Password = $('#txtContrasena').val();
+        if(ApePat.trim() == '' && ApeMat.trim() == ''){
+            Swal.fire({ html: true, title: 'Error', text: 'Es obligatorio ingresar un apellido', icon: 'error' });
+            return;
+        }
+        if (Nombre.trim() == '' || Correo.trim() == '' || Usuario.trim() == '') {
+            Swal.fire({ html: true, title: 'Error', text: 'Todos los campos son obligatorios', icon: 'error' });
+            return;
+        }
+        //Se construye el json con los datos obtenidos
+        var jsonDatos = {
+            "nombre": Nombre,
+            "ape_pat": ApePat,
+            "ape_mat": ApeMat,
+            "correo": Correo,
+            "username": Usuario,
+            "password": Password
+        };
+        //Aquí se debe mandar a llamar el API enviandole el json
+        $.ajax({
+            url: "http://localhost/Herkace_Shared/Web/api/app_ws/Administradores/agregar",
+            method: "POST",
+            data: jsonDatos,
+            dataType: "json",
+            success: function (response) {
+                if (response.registrado) {
+                    Swal.fire({
+                        title: 'Registrado correctamente',
+                        icon: 'success'
+                    });
+                    modAdministradores();
+                } else {
+                    Swal.fire({
+                        title: response.mensaje,
+                        icon: 'error'
+                    });
+                    $("#btnRegistrar").attr("disabled", false);
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                Swal.fire({
+                    title: 'Ocurrió un error al registrar el usuario. Intente de nuevo más tarde.',
+                    icon: 'error'
+                });
+                $("#btnRegistrar").attr("disabled", false);
+            }
+        });
+    });
+</script>

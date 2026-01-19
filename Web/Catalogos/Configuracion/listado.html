@@ -1,0 +1,246 @@
+<!-- ============================================================== -->
+<!-- breadcrumb -->
+<!-- ============================================================== -->
+<div class="page-breadcrumb">
+    <div class="row">
+        <div class="col-12 d-flex no-block align-items-center">
+            <h4 class="page-title">Configuración</h4>
+            <div class="ml-auto text-right">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item active">
+                            <a href="javascript:;" onclick="modDashboard();">Dashboard</a>
+                        </li>
+                        <li class="breadcrumb-item active"><a href="javascript:;"
+                                onclick="modCatalogos();">Catálogos</a></li>
+                        <li class="breadcrumb-item active">Configuración</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    p {
+        margin-bottom: 0;
+    }
+
+    label.form-control-label {
+        margin-bottom: 0px;
+    }
+</style>
+<!-- ============================================================== -->
+<!-- End breadcrumb -->
+<!-- ============================================================== -->
+<!-- ============================================================== -->
+<!-- Container -->
+<!-- ============================================================== -->
+<div class="container-fluid">
+    <div class="row">
+        <!-- TIPOS MOVIMIENTOS -->
+        <button type="button" class="btn btn-success btn-square-icon" id="btnExcel">
+            <i class="fa fa-file-excel"></i> XLSX
+        </button>
+        <div class="table-responsive">
+            <table id="tbl" class="table table-bordered table-hover table-light">
+                <thead class="thead-light">
+                    <tr>
+                        <th><b>Concepto</b></th>
+                        <th><b>Valor</b></th>
+                        <th><b>Tipo de Verificación</b></th>
+                        <th><b>Modificar</b></th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+        <!-- MODAL MODIFICAR -->
+        <div id="modalModificar" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="modal-close" data-dismiss="modal" aria-label="Close">
+                            <i class="fa fa-times"></i>
+                        </button>
+                        <h4 class="modal-title col-11 text-center" id="myModalLabel">Modificar</h4>
+                    </div>
+                    <div class="modal-body row">
+                        <div class="col-sm-12">
+                            <div class="form-group row align-items-center">
+                                <label for="txtNombreModificar" class="col-sm-2 form-control-label">Valor:</label>
+                                <div class="col-sm-10">
+                                    <p class="form-control-static">
+                                        <input type="text" class="form-control" id="txtValorModificar"
+                                            placeholder="Nombre" minlength="3" required />
+                                    <div class="invalid-feedback" id="txtValorModificarValid"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-inline btn-danger" data-dismiss="modal">Cancelar</button>
+                        <button id="btnModificar" type="button" class="btn btn-inline btn-success">Modificar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- FIN MODAL MODIFICAR -->
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- End Container -->
+<!-- ============================================================== -->
+<!--This page JavaScript -->
+
+<script>
+    $(document).ready(function () {
+        $('body').tooltip({ selector: '[data-toggle=tooltip]', trigger: 'hover' });
+        $("table thead tr th").addClass("text-center");
+
+        $(".modal input").each(function () {
+            if (this.id == 'txtValorModificar') {
+                this.oninput = function () {
+                    inputMayus(this);
+                    validarFormularioModificar();
+                };
+            }
+            const minLength = parseInt($(this).attr("minlength"));
+            $("#" + this.id + "Valid").html(`El campo debe contener al menos ${minLength} caracteres.`);
+        });
+    });
+    
+    function validarFormularioModificar() {
+        let error = false;
+        let i = 1;
+        $("#modalModificar input").each(function () {
+            const minLength = parseInt($(this).attr("minlength"));
+            var value = $(this).val();
+            if (value.length < minLength) {
+                $(this).addClass('is-invalid');
+                $("#" + this.id + "Valid").addClass('mostrar');
+                error = true;
+            } else {
+                $(this).removeClass('is-invalid');
+                $("#" + this.id + "Valid").removeClass('mostrar');
+            }
+            i++;
+        });
+        $("#btnModificar").attr("disabled", error);
+    }
+    
+    $('#btnModificar').click(function () {
+        //Se construye el json con los datos obtenidos
+        var jsonDatos = {
+            "configuracion_id": elementoEliminar,
+            "valor": $("#txtValorModificar").val()
+        };
+        $.ajax({
+            url: "http://localhost/Herkace_Shared/Web/api/app_ws/Configuracion/modificar",
+            method: "PUT",
+            data: jsonDatos,
+            dataType: "json",
+            success: function (response) {
+                if (response.registrado) {
+                    $('#modalModificar').modal('hide');
+                    Swal.fire({
+                        title: 'Modificado correctamente',
+                        icon: 'success'
+                    });
+                    tabla();
+                } else {
+                    Swal.fire({
+                        title: response.mensaje,
+                        icon: 'error'
+                    });
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                $('#modalModificar').modal('hide');
+                Swal.fire({
+                    title: 'Ocurrió un error al modificar el elemento. Intente de nuevo más tarde.',
+                    icon: 'error'
+                });
+            }
+        });
+    });
+    $('#modalAgregar').on('hidden.bs.modal', function (e) {
+        $("#modalAgregar input").val('');
+        $("#modalAgregar input").removeClass('is-invalid');
+        $("#modalAgregar .invalid-feedback").removeClass('mostrar');
+        $("#btnAgregar").prop('disabled', true);
+    });
+    $('#modalModificar').on('hidden.bs.modal', function (e) {
+        $("#modalModificar input").val('');
+        $("#modalModificar input").removeClass('is-invalid');
+        $("#modalModificar .invalid-feedback").removeClass('mostrar');
+    });
+
+    function tabla() {
+        if ($.fn.dataTable.isDataTable('#tbl')) {
+            $('#tbl').DataTable().destroy();
+        }
+        $.ajax({
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            url: 'http://localhost/Herkace_Shared/Web/api/app_ws/Configuracion/listado_vw',
+            dataType: 'json',
+            success: function (data) {
+                $('#tbl tbody').empty();
+                var codigoHTML = '';
+                $.each(data, function (key, item) {
+                    codigoHTML += '<tr>';
+                    codigoHTML += '<td>' + item.nombre + '</td>';
+                    codigoHTML += '<td>' + item.valor + '</td>';
+                    codigoHTML += '<td>' + item.tipo_verificacion + '</td>';
+                    codigoHTML += '<td class="text-center">';
+                    codigoHTML += '<a href="javascript:;" onclick="modModificar(' + item.configuracion_id + ',\'' + item.valor + '\');">';
+                    codigoHTML += '<button type="button" class="btn btn-inline btn-outline-cyan" data-toggle="tooltip" title="Modificar">';
+                    codigoHTML += '<i class="fa fa-edit"></i>';
+                    codigoHTML += '</button>';
+                    codigoHTML += '</a>';
+                    codigoHTML += '</td>';
+                    codigoHTML += '</tr>';
+
+                    $('#tbl tbody').html(codigoHTML);
+                });
+            },
+            complete: function (jqXHR, textStatus) {
+                $('#tbl').DataTable({
+                    ordering: false, searching: true, info: true, paging: true, language: { 'url': 'assets/extra-libs/DataTables/Spanish.html' },
+                    initComplete: function () {
+                        $(this.api().table().container()).find('input').parent().wrap('<form>').parent().attr('autocomplete', 'off');
+                    }
+                });
+            }
+        });
+    }
+
+    var elementoEliminar = null;
+    function setElementoEliminar(id, nombre, activo) {
+        elementoEliminar = id;
+        var valorNuevo;
+        var strBoton;
+        var codigoHTML = '<strong>¿Está seguro que desea ';
+        if (activo) {
+            valorNuevo = 0;
+            strBoton = "Desactivar";
+            codigoHTML += 'des';
+        } else {
+            valorNuevo = 1;
+            strBoton = "Activar";
+        }
+        codigoHTML += `activar este tipo de servicio?</strong><br /><input id="lblNuevoVal" type="hidden" value="${valorNuevo}" /><br /><strong>Nombre: </strong><label>${nombre}</label>`;
+        $("#modalEliminar .modal-body").html(codigoHTML);
+        $("#btnDesactivar").html(strBoton);
+    }
+
+    function modInsertar() {
+        $('#modalAgregar').modal('show');
+    };
+
+    function modModificar(id, valor) {
+        elementoEliminar = id;
+        $("#txtValorModificar").val(valor);
+        $('#modalModificar').modal('show');
+    };
+</script>

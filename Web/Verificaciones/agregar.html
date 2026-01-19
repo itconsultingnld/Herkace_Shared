@@ -1,0 +1,1998 @@
+<style>
+    .select2-selection__rendered {
+        line-height: 31px !important;
+    }
+
+    .select2-container .select2-selection--single {
+        height: 35px !important;
+    }
+
+    .select2-selection__arrow {
+        height: 34px !important;
+    }
+
+    [class^='select2'] {
+        border-radius: 0px !important;
+    }
+
+    #modalAgregarCliente .form-control-label {
+        margin-top: 8px;
+    }
+
+    #modalAgregarVehiculo .form-control-label {
+        margin-bottom: 12px;
+    }
+</style>
+<!-- ============================================================== -->
+<!-- breadcrumb -->
+<!-- ============================================================== -->
+<div class="page-breadcrumb">
+    <div class="row">
+        <div class="col-12 d-flex no-block align-items-center">
+            <h4 id="titulo" class="page-title">Agregar verificación</h4>
+            <div class="ml-auto text-right">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item active">
+                            <a href="javascript:;" onclick="modDashboard();">Dashboard</a>
+                        </li>
+                        <li class="breadcrumb-item active">
+                            <a href="javascript:;" onclick="modVerificaciones();">Verificaciones</a>
+                        </li>
+                        <li class="breadcrumb-item active">Agregar</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- End breadcrumb -->
+<!-- ============================================================== -->
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12"><br></div>
+        <div class="row col-lg-12 cuadroInsertar">
+            <div class="col-lg-6 row mt-3">
+                <div class="col-lg-12">
+                    <div class="form-group align-items-center row">
+                        <label for="cboServicio" class="col-lg-4 form-control-label labelC lbl-mb-16">
+                            Servicio:
+                        </label>
+                        <div class="col-lg-8">
+                            <p class="form-control-static">
+                                <select class="form-control" id="cboServicio"></select>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="form-group align-items-center row">
+                        <label for="cboSubservicio" class="col-lg-4 form-control-label labelC lbl-mb-16">
+                            Tarifa:
+                        </label>
+                        <div class="col-lg-8">
+                            <p class="form-control-static">
+                                <select class="form-control" id="cboSubservicio"></select>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="form-group align-items-center row">
+                        <label for="txtPrecio" class="col-lg-4 form-control-label labelC lbl-mb-0">
+                            Precio:
+                        </label>
+                        <div class="col-sm-8 input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text"><i class="fa fa-dollar-sign"></i></div>
+                            </div>
+                            <input type="text" class="form-control" id="txtPrecio" disabled />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="form-group align-items-center row">
+                        <label for="txtTipoVerificacion" class="col-lg-4 form-control-label labelC">
+                            Tipo verificación:
+                        </label>
+                        <div class="col-lg-8">
+                            <p class="form-control-static">
+                                <select class="form-control" id="cboTipoVerificacion"></select>
+                            <div class="invalid-feedback" id="cboTipoVerificacionValid"></div>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="form-group align-items-center row">
+                        <label for="" class="col-lg-4 form-control-label labelC">
+                            Certificado:
+                        </label>
+                        <div class="col-lg-8">
+                            <p class="form-control-static">
+                                <select class="form-control" id="cboCertificado"></select>
+                            <div class="invalid-feedback" id="cboCertificadoValid"></div>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="form-group align-items-center row">
+                        <label for="txtCliente" class="col-lg-4 form-control-label labelC">
+                            Cliente:
+                        </label>
+                        <div class="col-lg-8">
+                            <p class="form-control-static">
+                            <div class="input-group">
+                                <div class="input-group-append">
+                                    <button class="btn btn-info" id="btnRfsCliente">
+                                        <i class="fa fa-rotate"></i>
+                                    </button>
+                                </div>
+                                <select class="form-control" id="cboCliente"></select>
+                                <div class="input-group-append">
+                                    <button class="btn btn-success" data-toggle="modal"
+                                        data-target="#modalAgregarCliente">
+                                        <i class="fa fa-add"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="invalid-feedback" id="cboClienteValid">
+                            </div>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="form-group align-items-center row">
+                        <label for="txtCliente" class="col-lg-4 form-control-label labelC">
+                            Vehículo:
+                        </label>
+                        <div class="col-lg-8">
+                            <p class="form-control-static">
+                            <div class="input-group">
+                                <div class="input-group-append">
+                                    <button class="btn btn-info" id="btnRfsVehiculo">
+                                        <i class="fa fa-rotate"></i>
+                                    </button>
+                                </div>
+                                <select class="form-control" id="cboVehiculo"></select>
+                                <div class="input-group-append">
+                                    <button class="btn btn-success" data-toggle="modal"
+                                        data-target="#modalAgregarVehiculo">
+                                        <i class="fa fa-add"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="invalid-feedback" id="cboVehiculoValid"></div>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="form-group align-items-center row">
+                        <label for="cboEstatus" class="col-lg-4 form-control-label labelC">
+                            Estatus:
+                        </label>
+                        <div class="col-lg-8">
+                            <p class="form-control-static">
+                                <select class="form-control" id="cboEstatus"></select>
+                            <div class="invalid-feedback" id="cboEstatusValid"></div>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12 row">
+                    <div class="col-lg-4"></div>
+                    <div class="col-lg-8 form-check">
+                        <input class="form-check-input" type="checkbox" value="1" id="chkImprimeNom">
+                        <label class="form-check-label" for="chkImprimeNom">
+                            Se imprime Nom-EM-167
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 row">
+                <div class="col-lg-12 mt-3">
+                    <div class="form-group align-items-center row">
+                        <label for="txtFechaAnterior" class="col-lg-4 form-control-label text-center text-lg-right">
+                            Fecha anterior:
+                        </label>
+                        <div class="col-lg-8 mb-3 row">
+                            <input type="date" class="form-control validar col-sm-6 col-lg-9" name="fecha"
+                                id="txtFechaAnterior" style="margin-left: 10px;" required />
+                            <div class="invalid-feedback col-sm-12" id="txtFechaAnteriorValid">
+                                El dato ingresado no es válido
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="form-group align-items-center row">
+                        <label for="txtCertificadoAnterior"
+                            class="col-lg-4 form-control-label text-center text-lg-right">
+                            Certificado anterior:
+                        </label>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control validar" id="txtCertificadoAnterior"
+                                placeholder="Certificado anterior" minlength="1" maxlength="30" required />
+                            <div class="invalid-feedback" id="txtCertificadoAnteriorValid"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="form-group align-items-center row">
+                        <label for="txtTipoUnidadVerificacion" class="col-lg-4 form-control-label labelC">
+                            Tipo unidad:
+                        </label>
+                        <div class="col-lg-8">
+                            <p class="form-control-static">
+                                <select class="form-control" id="cboTipoUnidadVerificacion"></select>
+                            <div class="invalid-feedback" id="cboTipoUnidadVerificacionValid"></div>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="form-group align-items-center row">
+                        <label for="txtTecnico" class="col-lg-4 form-control-label labelC">
+                            Nombre del técnico:
+                        </label>
+                        <div class="col-lg-8">
+                            <p class="form-control-static">
+                            <div class="input-group">
+                                <select class="form-control" id="cboTecnico"></select>
+                                <div class="input-group-append">
+                                    <button class="btn btn-success" data-toggle="modal"
+                                        data-target="#modalAgregarTecnico">
+                                        <i class="fa fa-add"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="invalid-feedback" id="cboTecnicoValid"></div>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="form-group align-items-center row">
+                        <label for="txtKilometraje" class="col-lg-4 form-control-label labelC">
+                            Kilometraje:
+                        </label>
+                        <div class="col-lg-8">
+                            <input type="number" class="form-control validar" id="txtKilometraje"
+                                placeholder="Kilometraje" min="1" max="999999999" required />
+                            <div class="invalid-feedback" id="txtKilometrajeValid">
+                                El dato ingresado no es válido
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="form-group align-items-center row">
+                        <label for="txtCapacidad" class="col-lg-4 form-control-label labelC">
+                            Se presentó:
+                        </label>
+                        <div class="col-lg-8">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="radEstatus" id="radEstatus" value="1"
+                                    checked>
+                                <label class="form-check-label" for="radCapacidadK">Cargado</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="radEstatus" id="radEstatus"
+                                    value="0">
+                                <label class="form-check-label" for="radCapacidadL">Vacío</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="form-group align-items-center row">
+                        <label for="cboFecha" class="col-lg-4 form-control-label labelC">
+                            Fecha:
+                        </label>
+                        <div class="col-lg-8 row">
+                            <input type="date" class="form-control validar col-sm-6" name="fecha" id="txtFecha"
+                                placeholder="" required />
+                            <div class="invalid-feedback" id="txtFechaValid">
+                                El dato ingresado no es válido
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="form-group align-items-center row">
+                        <label for="cboTipoUnidad" class="col-lg-4 form-control-label labelC">
+                            Hora:
+                        </label>
+                        <div class="col-lg-8 row">
+                            <p class="col-sm-6 form-control-static text-center" style="margin-bottom: 0px;">
+                                Inicial
+                                <input type="time" class="form-control validar" id="txtHoraInicio" placeholder=""
+                                    required />
+                            </p>
+                            <p class="col-sm-6 form-control-static text-center" style="margin-bottom: 0px;">
+                                Final
+                                <input type="time" class="form-control validar" id="txtHoraFinal" placeholder=""
+                                    required />
+                            </p>
+                            <div class="col-sm-12 invalid-feedback" id="txtHoraValid">
+                                El dato ingresado no es válido
+                            </div>
+                            <div class="col-sm-12 invalid-feedback" id="txtHoraValidMayor">
+                                La hora inicial debe ser mayor a la hora final
+                            </div>
+                            <div class="col-sm-12 invalid-feedback" id="txtHoraValidDif8">
+                                No se permite un tiempo de verificación mayor a 8 horas
+                            </div>
+                            <div class="col-sm-12 invalid-feedback" id="txtHoraValidRango">
+                                No se permite ingresar una hora entre la 1:00 a.m. y las 5:59 a.m.
+                            </div>
+                            <div class="col-sm-12 invalid-feedback" id="txtHoraValidIguales">
+                                La hora inicial y final deben ser diferentes
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="form-group align-items-center row">
+                        <label for="txtCapacidad" class="col-lg-4 form-control-label labelC">
+                            Período:
+                        </label>
+                        <div class="col-lg-8">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="radPeriodo" id="radPeriodo" value="1"
+                                    checked>
+                                <label class="form-check-label" for="radCapacidadK">1</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="radPeriodo" id="radPeriodo"
+                                    value="2">
+                                <label class="form-check-label" for="radCapacidadL">2</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <button type="button" class="btn btn-inline btn-danger" href="javascript:;"
+                    onclick="modVerificaciones();">Cancelar</button>
+                <button id="btnAgregar" type="button" class="btn btn-inline btn-success" disabled>Guardar</button>
+            </div>
+            <div class="col-sm-12">
+                <hr />
+            </div>
+            <div class="col-sm-12 table-responsive">
+                <table id="tblVerificacionesAnteriores" class="table table-bordered table-hover table-light">
+                    <thead class="thead-light">
+                        <tr>
+                            <th class="text-center align-middle"><b>Periodo</b></th>
+                            <th class="text-center align-middle"><b>Fecha</b></th>
+                            <th class="text-center align-middle"><b>Certificado anterior</b></th>
+                            <th class="text-center align-middle"><b>Certificado</b></th>
+                            <th class="text-center align-middle"><b>Año</b></th>
+                            <th class="text-center align-middle"><b>Tipo Verificación</b></th>
+                            <th class="text-center align-middle"><b>Fecha Anterior</b></th>
+                            <th class="text-center align-middle"><b>Acciones</b></th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+        <!-- Modal agregar cliente -->
+        <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+            aria-hidden="true" id="modalAgregarCliente">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="modal-close" data-dismiss="modal" aria-label="Close">
+                            <i class="fa fa-times"></i>
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">Agregar cliente</h4>
+                    </div>
+                    <div class="modal-body row">
+                        <div class="col-sm-6">
+                            <div class="form-group row">
+                                <label for="txtNumeroClienteCliente" class="col-sm-3 form-control-label"
+                                    style="margin-top: 0px;">
+                                    *Número de cliente:
+                                </label>
+                                <div class="col-sm-9">
+                                    <input type="number" class="form-control validar-cliente"
+                                        id="txtNumeroClienteCliente" placeholder="Número de cliente" min="1" required />
+                                    <div class="invalid-feedback" id="txtNumeroClienteClienteValid">
+                                        El dato ingresado no es válido
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group row">
+                                <label for="txtNombreCliente" class="col-sm-3 form-control-label"
+                                    style="margin-top: 0px;">
+                                    *Nombre del cliente:
+                                </label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control validar-cliente" id="txtNombreCliente"
+                                        placeholder="Nombre del cliente" minlength="3" required />
+                                    <div class="invalid-feedback" id="txtNombreClienteValid"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group row">
+                                <label for="txtRFCCliente" class="col-sm-3 form-control-label">
+                                    *RFC:
+                                </label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control validar-cliente" id="txtRFCCliente"
+                                        placeholder="RFC" minlength="12" maxlength="13" required />
+                                    <div class="invalid-feedback" id="txtRFCClienteValid">RFC inválido</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group row">
+                                <label for="txtCurpCliente" class="col-sm-3 form-control-label">
+                                    CURP:
+                                </label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control validar-cliente" id="txtCurpCliente"
+                                        placeholder="CURP" minlength="18" maxlength="18" required />
+                                    <div class="invalid-feedback" id="txtCurpClienteValid"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group row">
+                                <label for="txtCalleCliente" class="col-sm-3 form-control-label">
+                                    *Calle:
+                                </label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control validar-cliente" id="txtCalleCliente"
+                                        placeholder="Calle" minlength="4" maxlength="30" required />
+                                    <div class="invalid-feedback" id="txtCalleClienteValid"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group row">
+                                <label for="txtNumeroCliente" class="col-sm-4 col-lg-3 form-control-label">
+                                    *Número:
+                                </label>
+                                <div class="col-sm-8 col-lg-9">
+                                    <input type="text" class="form-control validar-cliente" id="txtNumeroCliente"
+                                        placeholder="Número del domicilio" minlength="4" maxlength="10" required />
+                                    <div class="invalid-feedback" id="txtNumeroClienteValid"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group row">
+                                <label for="txtColoniaCliente" class="col-sm-3 form-control-label">
+                                    *Colonia:
+                                </label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control validar-cliente" id="txtColoniaCliente"
+                                        placeholder="Colonia" minlength="4" maxlength="50" required />
+                                    <div class="invalid-feedback" id="txtColoniaClienteValid"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group row">
+                                <label for="txtMunicipioCliente" class="col-sm-3 form-control-label">
+                                    *Municipio:
+                                </label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control validar-cliente" id="txtMunicipioCliente"
+                                        placeholder="Municipio" minlength="4" maxlength="50" required />
+                                    <div class="invalid-feedback" id="txtMunicipioClienteValid"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group row">
+                                <label for="txtEstadoCliente" class="col-sm-2 form-control-label">
+                                    *Estado:
+                                </label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control validar-cliente" id="txtEstadoCliente"
+                                        placeholder="Estado" minlength="4" maxlength="25" required />
+                                    <div class="invalid-feedback" id="txtEstadoClienteValid"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group row">
+                                <label for="txtCPCliente" class="col-sm-2 form-control-label">
+                                    *Código postal:
+                                </label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control validar-cliente" id="txtCPCliente"
+                                        placeholder="Código postal" minlength="5" maxlength="5" required />
+                                    <div class="invalid-feedback" id="txtCPClienteValid"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group row">
+                                <label for="txtCorreoCliente" class="col-sm-2 form-control-label"
+                                    style="margin-top: 0px;">
+                                    *Correo electrónico:
+                                </label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control validar-cliente" id="txtCorreoCliente"
+                                        placeholder="Correo electrónico" minlength="6" maxlength="50" required />
+                                    <div class="invalid-feedback" id="txtCorreoClienteValid">
+                                        El correo no es válido
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group row">
+                                <label for="cboRegimenCliente" class="col-sm-2 form-control-label">
+                                    *Régimen fiscal:
+                                </label>
+                                <div class="col-sm-10">
+                                    <select class="form-control cbo-modal" id="cboRegimenCliente"></select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-inline btn-danger" data-dismiss="modal">
+                            Cancelar
+                        </button>
+                        <button id="btnAgregarCliente" type="button" class="btn btn-inline btn-success" disabled>
+                            Guardar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal agregar vehiculo -->
+        <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+            aria-hidden="true" id="modalAgregarVehiculo">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="modal-close" data-dismiss="modal" aria-label="Close">
+                            <i class="fa fa-times"></i>
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">Agregar vehículo</h4>
+                    </div>
+                    <div class="modal-body row">
+                        <div class="col-lg-12">
+                            <h4>Datos del cliente</h4>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group align-items-center row">
+                                        <label for="lblClienteVehiculo"
+                                            class="col-lg-2 form-control-label text-center text-lg-right">
+                                            Cliente:
+                                        </label>
+                                        <label id="lblClienteVehiculo"
+                                            class="col-lg-10 form-control-label text-center text-lg-left"></label>
+                                    </div>
+                                </div>
+                                <!-- <div class="col-lg-3">
+                                    <div class="form-group align-items-center row" style="margin-top: 3px;">
+                                        <label class="col-lg-2 form-control-label lbl-rfc text-center text-lg-right">
+                                            RFC:
+                                        </label>
+                                        <label class="col-lg-10 form-control-label lbl-rfc">
+                                            <b id="lblRfcVehiculo"></b>
+                                        </label>
+                                    </div>
+                                </div> -->
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <h4>Datos del vehículo</h4>
+                            <div class="row">
+                                <div class="col-lg-6 row">
+                                    <div class="col-lg-12">
+                                        <div class="form-group align-items-center row">
+                                            <label for="txtNumSerieVehiculo"
+                                                class="col-lg-4 form-control-label text-center text-lg-right">
+                                                Número de serie:
+                                            </label>
+                                            <div class="col-lg-8">
+                                                <p class="form-control-static">
+                                                    <input type="text" class="form-control validar-vehiculo"
+                                                        id="txtNumSerieVehiculo" placeholder="Número de serie"
+                                                        minlength="17" maxlength="17" required />
+                                                <div class="invalid-feedback" id="txtNumSerieVehiculoValid"></div>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="form-group align-items-center row">
+                                            <label for="txtPlacasVehiculo"
+                                                class="col-lg-4 form-control-label text-center text-lg-right">
+                                                Placas:
+                                            </label>
+                                            <div class="col-lg-8">
+                                                <p class="form-control-static">
+                                                    <input type="text" class="form-control validar-vehiculo"
+                                                        id="txtPlacasVehiculo" placeholder="Placas" minlength="2"
+                                                        maxlength="20" required />
+                                                <div class="invalid-feedback" id="txtPlacasVehiculoValid"></div>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="form-group align-items-center row">
+                                            <label for="cboMarcaVehiculo"
+                                                class="col-lg-4 form-control-label text-center text-lg-right">
+                                                Marca:
+                                            </label>
+                                            <div class="col-lg-8">
+                                                <p class="form-control-static">
+                                                    <select class="form-control" id="cboMarcaVehiculo"></select>
+                                                <div class="invalid-feedback" id="cboMarcaVehiculoValid"></div>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="form-group align-items-center row">
+                                            <label for="txtModeloVehiculo"
+                                                class="col-lg-4 form-control-label text-center text-lg-right">
+                                                Modelo:
+                                            </label>
+                                            <div class="col-lg-8">
+                                                <p class="form-control-static">
+                                                    <input type="text" class="form-control validar-vehiculo"
+                                                        id="txtModeloVehiculo" placeholder="Modelo" minlength="2"
+                                                        maxlength="55" required />
+                                                <div class="invalid-feedback" id="txtModeloVehiculoValid"></div>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="form-group align-items-center row">
+                                            <label for="txtTarjCircVehiculo"
+                                                class="col-lg-4 form-control-label text-center text-lg-right">
+                                                Tarjeta de circulación:
+                                            </label>
+                                            <div class="col-lg-8">
+                                                <p class="form-control-static">
+                                                    <input type="text" class="form-control validar-vehiculo"
+                                                        id="txtTarjCircVehiculo" placeholder="Tarjeta de circulación"
+                                                        minlength="2" maxlength="20" required />
+                                                <div class="invalid-feedback" id="txtTarjCircVehiculoValid"></div>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="form-group align-items-center row">
+                                            <label for="txtAnioVehiculo"
+                                                class="col-lg-4 form-control-label text-center text-lg-right">
+                                                Año:
+                                            </label>
+                                            <div class="col-lg-8">
+                                                <p class="form-control-static">
+                                                    <input type="number" max="2999" min="1930"
+                                                        class="form-control validar-vehiculo" id="txtAnioVehiculo"
+                                                        placeholder="Año" minlength="4" required />
+                                                <div class="invalid-feedback" id="txtAnioVehiculoValid">
+                                                    Ingrese un año válido
+                                                </div>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 row">
+                                    <div class="col-lg-12">
+                                        <div class="form-group align-items-center row">
+                                            <label for="cboTipoVehiculoVehiculo"
+                                                class="col-lg-4 form-control-label text-center text-lg-right">
+                                                Tipo de Vehículo:
+                                            </label>
+                                            <div class="col-lg-8">
+                                                <p class="form-control-static">
+                                                    <select class="form-control" id="cboTipoVehiculoVehiculo"></select>
+                                                <div class="invalid-feedback" id="cboTipoVehiculoVehiculoValid"></div>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="form-group align-items-center row">
+                                            <label for="cboTipoUnidadVehiculo"
+                                                class="col-lg-4 form-control-label text-center text-lg-right">
+                                                Tipo de Unidad:
+                                            </label>
+                                            <div class="col-lg-8">
+                                                <p class="form-control-static">
+                                                    <select class="form-control" id="cboTipoUnidadVehiculo"></select>
+                                                <div class="invalid-feedback" id="cboTipoUnidadVehiculoValid"></div>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="form-group align-items-center row">
+                                            <label for="cboTipoServicioVehiculo"
+                                                class="col-lg-4 form-control-label text-center text-lg-right">
+                                                Tipo de Servicio:
+                                            </label>
+                                            <div class="col-lg-8">
+                                                <p class="form-control-static">
+                                                    <select class="form-control" id="cboTipoServicioVehiculo"></select>
+                                                <div class="invalid-feedback" id="cboTipoServicioVehiculoValid"></div>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="form-group align-items-center row">
+                                            <label for="txtCapacidadVehiculo"
+                                                class="col-lg-4 form-control-label text-center text-lg-right">
+                                                Capacidad:
+                                            </label>
+                                            <div class="col-lg-8">
+                                                <p class="form-control-static">
+                                                    <input type="number" class="form-control validar-vehiculo"
+                                                        id="txtCapacidadVehiculo" placeholder="Capacidad" required />
+                                                <div class="invalid-feedback" id="txtCapacidadVehiculoValid">
+                                                    El dato ingresado no es válido
+                                                </div>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="form-group align-items-center row">
+                                            <div class="col-lg-4"></div>
+                                            <div class="col-lg-8">
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio"
+                                                        name="ragCapacidadVehiculo" id="radCapacidadVehiculoK" value="K"
+                                                        checked>
+                                                    <label class="form-check-label"
+                                                        for="radCapacidadVehiculoK">Kilogramos</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio"
+                                                        name="ragCapacidadVehiculo" id="radCapacidadVehiculoL"
+                                                        value="L">
+                                                    <label class="form-check-label"
+                                                        for="radCapacidadVehiculoL">Litros</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio"
+                                                        name="ragCapacidadVehiculo" id="radCapacidadVehiculoP"
+                                                        value="P">
+                                                    <label class="form-check-label"
+                                                        for="radCapacidadVehiculoP">Personas</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-inline btn-danger" data-dismiss="modal">
+                            Cancelar
+                        </button>
+                        <button id="btnAgregarVehiculo" type="button" class="btn btn-inline btn-success" disabled>
+                            Guardar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal agregar tecnico -->
+        <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+            aria-hidden="true" id="modalAgregarTecnico">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="modal-close" data-dismiss="modal" aria-label="Close">
+                            <i class="fa fa-times"></i>
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">Agregar técnico</h4>
+                    </div>
+                    <div class="modal-body row">
+                        <div class="col-sm-12">
+                            <div class="form-group row">
+                                <label for="txtNombreTecnico" class="col-sm-2 form-control-label">
+                                    *Nombre(s):
+                                </label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control validar-tecnico" id="txtNombreTecnico"
+                                        placeholder="Nombre(s)" minlength="3" maxlength="50" required />
+                                    <div class="invalid-feedback" id="txtNombreTecnicoValid"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group row">
+                                <label for="txtApe_patTecnico" class="col-sm-2 form-control-label">
+                                    *Apellido paterno:
+                                </label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control validar-tecnico" id="txtApe_patTecnico"
+                                        placeholder="Apellido paterno" minlength="2" maxlength="50" required />
+                                    <div class="invalid-feedback" id="txtApe_patTecnicoValid"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group row">
+                                <label for="txtApe_matTecnico" class="col-sm-2 form-control-label">
+                                    Apellido materno:
+                                </label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control validar-tecnico" id="txtApe_matTecnico"
+                                        placeholder="Apellido materno" minlength="2" maxlength="50" required />
+                                    <div class="invalid-feedback" id="txtApe_matTecnicoValid"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group row">
+                                <label for="txtNumControlTecnico" class="col-sm-2 form-control-label">
+                                    *Número de control:
+                                </label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control validar-tecnico" id="txtNumControlTecnico"
+                                        placeholder="Número de control" minlength="2" maxlength="4" required />
+                                    <div class="invalid-feedback" id="txtNumControlTecnicoValid"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group row">
+                                <label for="txtTelefonoTecnico" class="col-sm-2 form-control-label">
+                                    *Número de contacto:
+                                </label>
+                                <div class="col-sm-10 input-group" style="height: 35px;">
+                                    <input type="tel" class="form-control validar-tecnico" id="txtTelefonoTecnico"
+                                        placeholder="Número de contacto" required />
+                                    <div class="invalid-feedback" id="txtTelefonoValid">
+                                        El teléfono no es válido
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-inline btn-danger" data-dismiss="modal">
+                            Cancelar
+                        </button>
+                        <button id="btnAgregarTecnico" type="button" class="btn btn-inline btn-success" disabled>
+                            Guardar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+
+        // let today = new Date().toISOString().split('T')[0];
+        // let date3m = new Date();
+        // date3m.setMonth(date3m.getMonth());
+        // date3m = date3m.toISOString().split('T')[0];
+        var anio = new Date().getFullYear();
+        $('input[name=fecha]').prop('min', '2019-01-01');
+        $('input[name=fecha]').prop('max', `${anio + 1}-12-31`);
+
+        $('.labelC').addClass('text-center');
+        $('.labelC').addClass('text-lg-right');
+        $("input.validar").each(function () {
+            var id = this.id;
+            if (id == 'txtCertificadoAnterior') {
+                this.oninput = function () {
+                    inputNumeros(this);
+                    validarFormulario();
+                };
+                const minLength = parseInt($(this).attr("minlength"));
+                $("#" + id + "Valid").html(`El campo debe contener al menos ${minLength} caracter.`);
+            } else {
+                this.oninput = function () {
+                    validarFormulario();
+                };
+            }
+        });
+        $('#txtKilometraje').keypress(function (key) {
+            if (key.charCode === 101 || key.charCode === 69 || key.charCode === 46) {
+                return false; // Evita agregar "e" o "."
+            }
+            if (this.value.length == 9) {
+                return false;
+            }
+        });
+        $("input.validar-cliente").each(function () {
+            var id = this.id;
+            if (id == 'txtNombreCliente') {
+                this.oninput = function () {
+                    onlyLetras(this);
+                    inputMayus(this);
+                    validarFormularioCliente();
+                }
+            } else if (this.id == 'txtRFCCliente' || this.id == 'txtCurpCliente') {
+                this.oninput = function () {
+                    inputLetrasNumeros(this);
+                    validarFormularioCliente();
+                }
+            } else if (this.id == 'txtNumeroCliente') {
+                this.oninput = function () {
+                    inputLetrasNumerosEspacios(this);
+                    validarFormularioCliente();
+                }
+            } else if (this.id == 'txtCalleCliente') {
+                this.oninput = function () {
+                    inputLetrasNumerosEspacios(this);
+                    validarFormularioCliente();
+                }
+            } else if (this.id == 'txtColoniaCliente') {
+                this.oninput = function () {
+                    validarColonia(this);
+                    inputMayus(this);
+                    validarFormularioCliente();
+                }
+            } else if (this.id == 'txtCPCliente') {
+                this.oninput = function () {
+                    validarNumerosEnteros(this);
+                    validarFormularioCliente();
+                }
+            } else if (this.id == 'txtMunicipioCliente' || this.id == 'txtEstadoCliente') {
+                this.oninput = function () {
+                    onlyLetras(this);
+                    inputMayus(this);
+                    validarFormularioCliente();
+                }
+            } else if (this.id == 'txtCorreoCliente') {
+                this.oninput = function () {
+                    inputMinus(this);
+                    validarFormularioCliente();
+                }
+            } else if (this.id == 'txtNumeroClienteCliente') {
+                this.oninput = function () {
+                    validarFormularioCliente();
+                };
+            } else {
+                this.oninput = function () {
+                    inputMayus(this);
+                    validarFormularioCliente();
+                };
+            }
+            if (this.id != 'txtNumeroClienteCliente' && this.id != 'txtCorreoCliente' && this.id != 'txtRFCCliente') {
+                const minLength = parseInt($(this).attr("minlength"));
+                $("#" + this.id + "Valid").html(`El campo debe contener al menos ${minLength} caracteres.`);
+            }
+        });
+        $("input.validar-vehiculo").each(function () {
+            var id = this.id;
+            if (id == 'txtCapacidadVehiculo') {
+                this.oninput = function () {
+                    inputNumNoLeadZeros(this);
+                    validarFormularioVehiculo();
+                };
+            } else if (id == 'txtAnioVehiculo') {
+                this.oninput = function () {
+                    validarFormularioVehiculo();
+                };
+            } else {
+                if (id == 'txtNumSerieVehiculo') {
+                    this.oninput = function () {
+                        inputLetrasNumeros(this);
+                        validarFormularioVehiculo();
+                    };
+                } else if (id == 'txtPlacasVehiculo' || id == 'txtTarjCircVehiculo') {
+                    this.oninput = function () {
+                        inputLetrasNumerosGuiones(this);
+                        validarFormularioVehiculo();
+                    };
+                } else if (id == 'txtModeloVehiculo') {
+                    this.oninput = function () {
+                        inputLetrasNumerosEspacios(this);
+                        validarFormularioVehiculo();
+                    };
+                } else {
+                    this.oninput = function () {
+                        inputMayus(this);
+                        validarFormularioVehiculo();
+                    };
+                }
+                const minLength = parseInt($(this).attr("minlength"));
+                if (id == 'txtNumSerieVehiculo') {
+                    $("#" + id + "Valid").html(`El campo debe contener ${minLength} caracteres.`);
+                } else {
+                    $("#" + id + "Valid").html(`El campo debe contener al menos ${minLength} caracteres.`);
+                }
+            }
+        });
+        $("input.validar-tecnico").each(function () {
+            var id = this.id;
+            if (id == 'txtNombreTecnico' || id == 'txtApe_patTecnico' || id == 'txtApe_matTecnico') {
+                this.oninput = function () {
+                    inputLetras(this);
+                    validarFormularioTecnico();
+                };
+            } else if (id == 'txtNumControlTecnico') {
+                this.oninput = function () {
+                    inputLetrasNumeros(this);
+                    validarFormularioTecnico();
+                };
+            } else {
+                this.oninput = function () {
+                    inputMayus(this);
+                    validarFormularioTecnico();
+                };
+            }
+            if (id != 'txtTelefonoTecnico') {
+                const minLength = parseInt($(this).attr("minlength"));
+                $("#" + id + "Valid").html(`El campo debe contener al menos ${minLength} caracteres.`);
+            }
+        });
+        $('#txtAnioVehiculo').keypress(function (key) {
+            if (key.charCode === 101 || key.charCode === 69 || key.charCode === 46 || key.charCode === 43 || key.charCode === 45) {
+                return false; // Evita agregar "e" o "."
+            }
+            if (this.value.length == 4) {
+                return false;
+            }
+        });
+        tablaVacia();
+        getCatalogos();
+    });
+    function tablaVacia() {
+        if ($.fn.dataTable.isDataTable('#tblVerificacionesAnteriores')) {
+            $('#tblVerificacionesAnteriores').DataTable().destroy();
+            $('#tblVerificacionesAnteriores tbody').empty();
+        }
+        $('#tblVerificacionesAnteriores').DataTable({
+            ordering: false, searching: true, info: true, paging: true,
+            language: { 'url': 'assets/extra-libs/DataTables/Spanish.html' },
+            initComplete: function () {
+                $(this.api().table().container()).find('input').parent().wrap('<form>').parent().attr('autocomplete', 'off');
+            }
+        })
+    };
+    $('#btnRfsCliente').click(function () {
+        getClientes(0);
+        getVehiculos(0, true);
+    });
+    $('#btnRfsVehiculo').click(function () {
+        getVehiculos(0, true);
+    });
+    var vehiculosListaParcial = [];
+    var indiceVehiculosClientes = 0;
+    $('#cboTipoVerificacion').change(function () {
+        var tipo_verificacion = $('#cboTipoVerificacion').val();
+        var txt = $('#txtCertificadoAnterior')[0];
+        if (tipo_verificacion == '2') {
+            txt.oninput = function () {
+                inputLetrasNumeros(txt);
+                validarFormulario();
+            };
+        } else {
+            inputNumeros(txt);
+            txt.oninput = function () {
+                inputNumeros(txt);
+                validarFormulario();
+            };
+        }
+        cargarDatosAnteriores();
+        certificados(tipo_verificacion);
+    });
+    var vehiculosLista = [];
+    var clientesLista = [];
+
+    function tablaVerificacionesAnteriores(vehiculo_id) {
+        if ($.fn.dataTable.isDataTable('#tblVerificacionesAnteriores')) {
+            $('#tblVerificacionesAnteriores').DataTable().destroy();
+            $('#tblVerificacionesAnteriores tbody').empty();
+        }
+        var columnas = [
+            { "data": "periodo" },
+            { "data": "fecha" },
+            { "data": "folio_ant" },
+            { "data": "folio" },
+            {
+                "render": function (data, type, row, meta) {
+                    return '0';
+                }
+            },
+            { "data": "tipo_verificacion" },
+            { "data": "fecha_ant" },
+            {
+                "render": function (data, type, row, meta) {
+                    var codigoHTML = '';
+                    codigoHTML += `<button type="button" class="btn btn-inline btn-outline-cyan" data-toggle="tooltip" title="Modificar" onclick="modalVerificacionModificar(${row.verificacion_id},'${row.orden}',`;
+                    if (row.estatus == 'APROBADO') {
+                        codigoHTML += 'true';
+                    } else {
+                        codigoHTML += 'false';
+                    }
+                    codigoHTML += `);">`;
+                    codigoHTML += '<i class="fa fa-edit"></i>';
+                    codigoHTML += '</button>';
+                    codigoHTML += '<button type="button" class="btn btn-inline btn-outline-info" data-toggle="tooltip" title="Formato Gestores Ambientales Herkace" onclick="pdf_gah(' + row.verificacion_id + ');">';
+                    codigoHTML += '<i class="fa fa-file-pdf"></i>';
+                    codigoHTML += '</button>';
+                    if (row.estatus == 'APROBADO') {
+                        codigoHTML += `<button onclick="pdf_certificado(${row.verificacion_id});" type="button" class="btn btn-inline btn-outline-warning" data-toggle="tooltip" title="Certificado">`;
+                        codigoHTML += '<i class="fa fa-file-pdf"></i>';
+                        codigoHTML += '</button>';
+                    }
+                    return codigoHTML;
+                }
+            }
+        ];
+        $('#tblVerificacionesAnteriores').DataTable({
+            ordering: false, searching: true, info: true, paging: true,
+            language: { 'url': 'assets/extra-libs/DataTables/Spanish.html' },
+            serverSide: false,
+            ajax: {
+                url: `http://localhost/Herkace_Shared/Web/api/app_ws/Verificaciones/listado_vw?vehiculo_id=${vehiculo_id}`,
+                type: 'GET',
+                dataSrc: ""
+            },
+            columns: columnas,
+            initComplete: function () {
+                $(this.api().table().container()).find('input').parent().wrap('<form>').parent().attr('autocomplete', 'off');
+                cargarDatosAnteriores();
+            }
+        });
+    }
+
+    function certificados(tipo_verificacion_id) {
+        if ($('#cboCertificado').hasClass("select2-hidden-accessible")) {
+            $("#cboCertificado").select2('destroy');
+            $("#cboCertificado").empty();
+        }
+        var datos_tipos = {
+            "tipo_verificacion_id": tipo_verificacion_id,
+            "tipo_unidad": $('#cboTipoUnidadVerificacion').val()
+        }
+        $.ajax({
+            type: "POST",
+            url: 'http://localhost/Herkace_Shared/Web/api/app_ws/Folios/listado_paquete_actual',
+            data: datos_tipos,
+            dataType: 'json',
+            success: function (data) {
+                $.each(data, function (key, item) {
+                    var codigoHTML = `<option value=${item.folio_id}>${item.folio}</option>`;
+                    $('#cboCertificado').append(codigoHTML);
+                });
+                $('#cboCertificado').select2({});
+            }
+        });
+    }
+    $('#cboTipoUnidadVerificacion').change(function () {
+        var tipo_verificacion = $('#cboTipoVerificacion').val();
+        if (tipo_verificacion == "2") {
+            certificados(tipo_verificacion);
+        }
+    });
+    function getClientes(id) {
+        if ($('#cboCliente').hasClass("select2-hidden-accessible")) {
+            $("#cboCliente").select2('destroy');
+            $("#cboCliente").empty();
+        }
+        $.ajax({
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            url: 'http://localhost/Herkace_Shared/Web/api/app_ws/Clientes/clientes',
+            async: false,
+            dataType: 'json',
+            success: function (data) {
+                $('#cboCliente').append('<option value="0">Seleccione un cliente</option>');
+                $.each(data, function (key, item) {
+                    var codigoHTML = `<option value=${item.cliente_id}>${item.nombre}</option>`;
+                    $('#cboCliente').append(codigoHTML);
+                    clientesLista.push(item);
+                });
+                $('#cboCliente').select2({});
+                $('#cboCliente').val(id.toString()).change();
+            }
+        });
+    }
+    function getVehiculos(id, cargaInicial = false) {
+        if ($('#cboVehiculo').hasClass("select2-hidden-accessible")) {
+            $("#cboVehiculo").select2('destroy');
+        }
+        $("#cboVehiculo").empty();
+        vehiculosLista = [];
+        vehiculosListaParcial = [];
+        $.ajax({
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            url: 'http://localhost/Herkace_Shared/Web/api/app_ws/Vehiculos/listado',
+            async: false,
+            dataType: 'json',
+            success: function (data) {
+                $('#cboVehiculo').append('<option value="0">Seleccione un vehículo</option>');
+                $.each(data, function (key, item) {
+                    if (item.cliente_id == parseInt($('#cboCliente').val()) || cargaInicial) {
+                        var codigoHTML = `<option value=${item.vehiculo_id}>${item.num_placas} - ${item.num_serie}</option>`;
+                        $('#cboVehiculo').append(codigoHTML);
+                        vehiculosListaParcial.push(item);
+                    }
+                    vehiculosLista.push(item);
+                });
+                $('#cboVehiculo').select2({});
+                $('#cboVehiculo').val(id.toString()).change();
+            }
+        });
+    }
+    function getTecnicos(id) {
+        if ($('#cboTecnico').hasClass("select2-hidden-accessible")) {
+            $("#cboTecnico").select2('destroy');
+            $("#cboTecnico").empty();
+        }
+        $.ajax({
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            url: 'http://localhost/Herkace_Shared/Web/api/app_ws/Tecnicos/tecnicos?activo=1',
+            dataType: 'json',
+            success: function (data) {
+                $.each(data, function (key, item) {
+                    if (item.activo) {
+                        var codigoHTML = `<option value=${item.tecnico_id}>${item.nombre} ${item.ape_pat} ${item.ape_mat}</option>`;
+                        $('#cboTecnico').append(codigoHTML);
+                    }
+                });
+                $('#cboTecnico').select2({});
+                if (id != 0) {
+                    $('#cboTecnico').val(id.toString()).change();
+                }
+            }
+        });
+    }
+    var bandera = false;
+    var vehiculo_changed = false;
+    var puede_validar;
+    function getCatalogos() {
+        puede_validar = false;
+        getVehiculos(0, true);
+        getClientes(0);
+        $('#cboCliente').change(function () {
+            if (vehiculo_changed) {
+                vehiculo_changed = false;
+            } else {
+                indiceVehiculosClientes = 0;
+            }
+            if ($('#cboVehiculo').hasClass("select2-hidden-accessible")) {
+                $("#cboVehiculo").select2('destroy');
+                $("#cboVehiculo").empty();
+            }
+            vehiculosListaParcial = [];
+            $('#cboVehiculo').append('<option value="0">Seleccione un vehículo</option>');
+            var cliente_id = parseInt($('#cboCliente').val());
+            $.each(vehiculosLista, function (key, item) {
+                if (cliente_id == 0 || item.cliente_id == cliente_id) {
+                    var codigoHTML = `<option value=${item.vehiculo_id}>${item.num_placas} - ${item.num_serie}</option>`;
+                    $('#cboVehiculo').append(codigoHTML);
+                    vehiculosListaParcial.push(item);
+                }
+            });
+            $("#cboVehiculo").select2({});
+            bandera = true;
+            $('#cboVehiculo').val(indiceVehiculosClientes).change();
+            bandera = false;
+            validarFormulario();
+            tablaVerificacionesAnteriores(indiceVehiculosClientes);
+        });
+        $('#cboVehiculo').change(function () {
+            if (bandera == false) {
+                vehiculo_changed = true;
+                var cliente_id = parseInt($('#cboCliente').val());
+                var vehiculo_id = parseInt($(this).val());
+                indiceVehiculosClientes = vehiculo_id;
+                if (vehiculo_id != 0) {
+                    var indice = $(this).prop('selectedIndex');
+                    var ItemMenoUno = vehiculosListaParcial[indice - 1];
+                    var indiceVehiculos = ItemMenoUno.cliente_id;
+                    if (indiceVehiculos != cliente_id) {
+                        $('#cboCliente').val(indiceVehiculos).change();
+                    } else {
+                        vehiculo_changed = false;
+                    }
+                    if ($(this).val() != vehiculo_id) {
+                        $(this).val(vehiculo_id).change();
+                    }
+                }
+                validarFormulario();
+                if (vehiculo_id == 0) {
+                    tablaVacia();
+                } else {
+                    tablaVerificacionesAnteriores(vehiculo_id);
+                }
+            }
+        });
+        puede_validar = true;
+        $.ajax({
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            url: 'http://localhost/Herkace_Shared/Web/api/app_ws/TiposVerificaciones/listado',
+            dataType: 'json',
+            success: function (data) {
+                $.each(data, function (key, item) {
+                    var codigoHTML = `<option value=${item.tipo_verificacion_id}>${item.nombre}</option>`;
+                    $('#cboTipoVerificacion').append(codigoHTML);
+                });
+            }
+        });
+        certificados(1);
+        $.ajax({
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            url: 'http://localhost/Herkace_Shared/Web/api/app_ws/Estatus/listado',
+            dataType: 'json',
+            success: function (data) {
+                $.each(data, function (key, item) {
+                    var codigoHTML = `<option value=${item.estatus_id}>${item.nombre}</option>`;
+                    $('#cboEstatus').append(codigoHTML);
+                });
+            }
+        });
+        $.ajax({
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            url: 'http://localhost/Herkace_Shared/Web/api/app_ws/TiposUnidadesVerificaciones/listado?activo=1',
+            dataType: 'json',
+            success: function (data) {
+                $.each(data, function (key, item) {
+                    if (item.activo) {
+                        var codigoHTML = `<option value=${item.tipo_unidad_verificacion_id}>${item.nombre}</option>`;
+                        $('#cboTipoUnidadVerificacion').append(codigoHTML);
+                    }
+                });
+            }
+        });
+        getTecnicos(0);
+        $.ajax({
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            url: 'http://localhost/Herkace_Shared/Web/api/app_ws/Precios/listado_con_servicios',
+            dataType: 'json',
+            success: function (data) {
+                servicios = data;
+                $.each(data, function (key, item) {
+                    var codigoHTML = `<option value=${item.servicio_id}>${item.nombre}</option>`;
+                    $('#cboServicio').append(codigoHTML);
+                    if ($('#cboSubservicio').html() == '') {
+                        $.each(item.precios, function (subkey, subitem) {
+                            var subHTML = `<option value=${subitem.precio_id}>${subitem.nombre}</option>`;
+                            $('#cboSubservicio').append(subHTML);
+                            if ($('#txtPrecio').val() == '') {
+                                $('#txtPrecio').val(subitem.precio);
+                            }
+                        });
+                        $('#cboSubservicio').select2({});
+                    }
+                });
+            }
+        });
+    }
+
+    var servicios = [];
+
+    $('#cboServicio').change(function () {
+        if ($('#cboSubservicio').hasClass("select2-hidden-accessible")) {
+            $("#cboSubservicio").select2('destroy');
+            $("#cboSubservicio").empty();
+        }
+        $('#txtPrecio').val('');
+        var servicio_id = $(this).val();
+        $.each(servicios, function (key, item) {
+            if (item.servicio_id == servicio_id) {
+                $.each(item.precios, function (subkey, subitem) {
+                    var subHTML = `<option value=${subitem.precio_id}>${subitem.nombre}</option>`;
+                    $('#cboSubservicio').append(subHTML);
+                    if ($('#txtPrecio').val() == '') {
+                        $('#txtPrecio').val(subitem.precio);
+                    }
+                });
+                $('#cboSubservicio').select2({});
+                return false;
+            }
+        });
+    });
+
+    $('#cboSubservicio').change(function () {
+        var servicio_id = $('#cboServicio').val();
+        var subservicio_id = $('#cboSubservicio').val();
+        $.each(servicios, function (key, item) {
+            if (item.servicio_id == servicio_id) {
+                $.each(item.precios, function (subkey, subitem) {
+                    if (subitem.precio_id == subservicio_id) {
+                        $('#txtPrecio').val(subitem.precio);
+                        return false;
+                    }
+                });
+                return false;
+            }
+        });
+    });
+
+    function validarFormulario() {
+        if (!puede_validar) {
+            return;
+        }
+        var error = false;
+        $("input.validar").each(function () {
+            const minLength = parseInt($(this).attr("minlength"));
+            var value = $(this).val();
+            var id = this.id;
+            var valido;
+            if (id == 'txtKilometraje') {
+                var cap = parseInt(value);
+                valido = !(isNaN(cap) || cap == 0);
+            } else if (id == 'txtFecha' || id == 'txtFechaAnterior') {
+                valido = value != "";
+            } else if (id == 'txtCertificadoAnterior') {
+                valido = value.trim().length >= minLength;
+            } else if (id == 'txtHoraInicio' || id == 'txtHoraFinal') {
+                valido = true;
+            }
+            if (valido) {
+                $(this).removeClass('is-invalid');
+                $("#" + this.id + "Valid").removeClass('mostrar');
+            } else {
+                $(this).addClass('is-invalid');
+                $("#" + this.id + "Valid").addClass('mostrar');
+                error = true;
+            }
+        });
+        $('#txtHoraValid').removeClass('mostrar');
+        $('#txtHoraValidMayor').removeClass('mostrar');
+        $('#txtHoraValidDif8').removeClass('mostrar');
+        $('#txtHoraValidRango').removeClass('mostrar');
+        $('#txtHoraValidIguales').removeClass('mostrar');
+        if ($('#txtHoraInicio').val() == "" || $('#txtHoraFinal').val() == "") {
+            $('#txtHoraInicio').addClass('is-invalid');
+            $('#txtHoraFinal').addClass('is-invalid');
+            $('#txtHoraValid').addClass('mostrar');
+            error = true;
+        } else {
+            var horaInicio = $('#txtHoraInicio').val();
+            var horaFinal = $('#txtHoraFinal').val();
+            if (compararHoras(horaInicio, horaFinal) > 1) {
+                $('#txtHoraInicio').addClass('is-invalid');
+                $('#txtHoraFinal').addClass('is-invalid');
+                $('#txtHoraValidMayor').addClass('mostrar');
+                error = true;
+            } else {
+                var startTime = Date.parse('2024-01-01 ' + horaInicio);
+                var endTime = Date.parse('2024-01-01 ' + horaFinal);
+                var duration = (endTime - startTime) / 1000 / 60 / 60;
+                if (duration > 8) {
+                    $('#txtHoraInicio').addClass('is-invalid');
+                    $('#txtHoraFinal').addClass('is-invalid');
+                    $('#txtHoraValidDif8').addClass('mostrar');
+                    error = true;
+                } else {
+                    if (horaInicio == horaFinal) {
+                        $('#txtHoraInicio').addClass('is-invalid');
+                        $('#txtHoraFinal').addClass('is-invalid');
+                        $('#txtHoraValidIguales').addClass('mostrar');
+                        error = true;
+                    } else {
+                        if (horaEnRango(horaInicio)) {
+                            $('#txtHoraInicio').addClass('is-invalid');
+                            $('#txtHoraValidRango').addClass('mostrar');
+                            error = true;
+                        }
+                        if (horaEnRango(horaFinal)) {
+                            $('#txtHoraFinal').addClass('is-invalid');
+                            $('#txtHoraValidRango').addClass('mostrar');
+                            error = true;
+                        }
+                        if (!error) {
+                            $('#txtHoraInicio').removeClass('is-invalid');
+                            $('#txtHoraFinal').removeClass('is-invalid');
+                        }
+                    }
+                }
+            }
+        }
+        var cliente_id = parseInt($('#cboCliente').val());
+        if (cliente_id == 0) {
+            $('#cboCliente + span').addClass('is-invalid');
+            $('#cboClienteValid').addClass('mostrar');
+            error = true;
+        } else {
+            $('#cboCliente + span').removeClass('is-invalid');
+            $('#cboClienteValid').removeClass('mostrar');
+        }
+        var vehiculo_id = parseInt($('#cboVehiculo').val());
+        if (vehiculo_id == 0) {
+            $('#cboVehiculo + span').addClass('is-invalid');
+            $('#cboVehiculoValid').addClass('mostrar');
+            error = true;
+        } else {
+            $('#cboVehiculo + span').removeClass('is-invalid');
+            $('#cboVehiculoValid').removeClass('mostrar');
+        }
+        $("#btnAgregar").attr("disabled", error);
+    }
+
+    var Orden_id, Num_Orden;
+    function Obtener_orden_id(id, num_orden, nombre) {
+        Orden_id = id;
+        Num_Orden = num_orden;
+        if (Orden_id == 0) {
+            $('#titulo').html("Agregar verificación");
+        } else {
+            $('#titulo').html("Agregar verificación a orden " + Num_Orden + "<br />" + "Cliente a facturar: " + nombre);
+
+        }
+
+        console.log(Orden_id, Num_Orden);
+
+    }
+
+    function cargarDatosAnteriores() {
+        if ($('#txtFechaAnterior').val() == '' || $('#txtCertificadoAnterior').val() == '') {
+            var tipo_verificacion = $('#cboTipoVerificacion option:selected').text();
+            var tbl = $('#tblVerificacionesAnteriores').DataTable();
+            var datos = tbl.rows().data().toArray();
+            $.each(datos, function (key, item) {
+                if (item.tipo_verificacion == tipo_verificacion) {
+                    if ($('#txtFechaAnterior').val() == '') {
+                        $('#txtFechaAnterior').val(item.fecha);
+                    }
+                    if ($('#txtCertificadoAnterior').val() == '') {
+                        $('#txtCertificadoAnterior').val(item.folio);
+                    }
+                    return false;
+                }
+            });
+            validarFormulario();
+        }
+    }
+
+
+    $('#btnAgregar').click(function () {
+        $("#btnAgregar").attr("disabled", true);
+        var tipo_verificacion = $('#cboTipoVerificacion').val();
+        var certificado = $('#cboCertificado').val();
+        var num_folio = $('#cboCertificado option:selected').text();
+        var cliente = $('#cboCliente').val();
+        var vehiculo = $('#cboVehiculo').val();
+        var estatus = $('#cboEstatus').val();
+        var estatus_unidad = $('input[name=radEstatus]:checked').val();
+        var tipo_unidad_verificacion = $('#cboTipoUnidadVerificacion').val();
+        var tecnico = $('#cboTecnico').val();
+        var kilometraje = $('#txtKilometraje').val();
+        var fecha = $('#txtFecha').val();
+        var hora_inicio = $('#txtHoraInicio').val();
+        var hora_final = $('#txtHoraFinal').val();
+        var periodo = $('input[name=radPeriodo]:checked').val();
+        var imprime_nom = $("#chkImprimeNom").is(':checked') ? 1 : 0;
+        //Se construye el json con los datos obtenidos
+        var jsonDatos = {
+            "tipo_verificacion_id": tipo_verificacion,
+            "folio_id": certificado,
+            "num_folio": num_folio,
+            "cliente_id": cliente,
+            "tipo_unidad_verificacion_id": tipo_unidad_verificacion,
+            "vehiculo_id": vehiculo,
+            "fecha": fecha,
+            "fecha_ant": $('#txtFechaAnterior').val(),
+            "folio_ant": $('#txtCertificadoAnterior').val(),
+            "estatus_id": estatus,
+            "estatus_unidad": estatus_unidad,
+            "tecnico_id": tecnico,
+            "kilometraje": kilometraje,
+            "periodo": periodo,
+            "hora_inicio": hora_inicio,
+            "hora_final": hora_final,
+            "imprime_nom": imprime_nom,
+            "orden_id": Orden_id,
+            "precio_id": $('#cboSubservicio').val(),
+            "precio": $('#txtPrecio').val(),
+        };
+        //Aquí se debe mandar a llamar el API enviandole el json
+        $.ajax({
+            url: "http://localhost/Herkace_Shared/Web/api/app_ws/Verificaciones/agregar",
+            method: "POST",
+            data: jsonDatos,
+            dataType: "json",
+            success: function (response) {
+                if (response.registrado) {
+                    Swal.fire({
+                        title: 'Registrado correctamente',
+                        icon: 'success'
+                    });
+                    modVerificaciones();
+                } else {
+                    Swal.fire({
+                        title: response.mensaje,
+                        html: true,
+                        icon: 'error'
+                    });
+                    $("#btnAgregar").attr("disabled", false);
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                Swal.fire({
+                    title: 'Ocurrió un error al registrar la verificación. Intente de nuevo más tarde.',
+                    icon: 'error'
+                });
+                $("#btnAgregar").attr("disabled", true);
+            }
+        });
+    });
+    $('#modalAgregarCliente').on('show.bs.modal', function (e) {
+        getRegimenes();
+    });
+    function getRegimenes() {
+        if ($('#cboRegimenCliente').hasClass("select2-hidden-accessible")) {
+            $("#cboRegimenCliente").select2('destroy');
+            $("#cboRegimenCliente").empty();
+        }
+        $.ajax({
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            url: 'http://localhost/Herkace_Shared/Web/api/app_ws/Regimenes/listado',
+            dataType: 'json',
+            success: function (data) {
+                $.each(data, function (key, item) {
+                    var codigoHTML = `<option value=${item.regimen_id}>${item.regimen}</option>`;
+                    $('#cboRegimenCliente').append(codigoHTML);
+                });
+                $('#cboRegimenCliente').select2({ width: '100%' });
+            }
+        });
+    }
+    function validarFormularioCliente() {
+        var error = false;
+        $("input.validar-cliente").each(function () {
+            var value = $(this).val();
+            var id = this.id;
+            const minLength = parseInt($(this).attr("minlength"));
+            var valido;
+            if (id == 'txtNumeroClienteCliente') {
+                var num = parseInt(value);
+                valido = !(isNaN(num) || num == 0);
+            } else if (id == 'txtRFCCliente') {
+                valido = rfcValido(value);
+            } else if (id == 'txtCurpCliente') {
+                valido = curpValida(value) || value.length == 0;
+            } else if (id == 'txtCalleCliente') {
+                valido = value.trim().length >= minLength && strNoEsSoloNumerosNiVacio(value);
+            } else if (id == 'txtNumeroCliente') {
+                valido = !value.trim() == '' && value.trim().length >= minLength;
+            } else if (id == 'txtCorreoCliente') {
+                valido = validateEmail(value);
+            } else {
+                valido = value.length >= minLength;
+            }
+            if (valido) {
+                $(this).removeClass('is-invalid');
+                $("#" + id + "Valid").removeClass('mostrar');
+            } else {
+                $(this).addClass('is-invalid');
+                $("#" + id + "Valid").addClass('mostrar');
+                error = true;
+            }
+        });
+        $("#btnAgregarCliente").attr("disabled", error);
+    }
+    $('#btnAgregarCliente').click(function () {
+        $("#btnAgregarCliente").attr("disabled", true);
+        //Se construye el json con los datos obtenidos
+        var jsonDatos = {
+            "numero_cliente": $("#txtNumeroClienteCliente").val(),
+            "nombre": $('#txtNombreCliente').val(),
+            "rfc": $('#txtRFCCliente').val(),
+            "curp": $('#txtCurpCliente').val(),
+            "calle": $('#txtCalleCliente').val(),
+            "numero": $('#txtNumeroCliente').val(),
+            "colonia": $('#txtColoniaCliente').val(),
+            "municipio": $('#txtMunicipioCliente').val(),
+            "estado": $('#txtEstadoCliente').val(),
+            "codigo_postal": $('#txtCPCliente').val(),
+            "correo": $('#txtCorreoCliente').val(),
+            "regimen_id": $("#cboRegimenCliente").val()
+        };
+        //Aquí se debe mandar a llamar el API enviandole el json
+        $.ajax({
+            url: "http://localhost/Herkace_Shared/Web/api/app_ws/Clientes/InsertarClientes",
+            method: "POST",
+            data: jsonDatos,
+            dataType: "json",
+            success: function (response) {
+                if (response.registrado) {
+                    Swal.fire({
+                        title: 'Registrado correctamente',
+                        icon: 'success'
+                    });
+                    $('#modalAgregarCliente').modal('hide');
+                    getClientes(response.id);
+                } else {
+                    Swal.fire({
+                        title: response.mensaje,
+                        icon: 'error'
+                    });
+                    $("#btnAgregarCliente").attr("disabled", false);
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                Swal.fire({
+                    title: 'Ocurrió un error al registrar el elemento. Intente de nuevo más tarde.',
+                    icon: 'error'
+                });
+                $("#btnAgregarCliente").attr("disabled", false);
+            }
+        });
+    });
+    $('#modalAgregarCliente').on('hidden.bs.modal', function (e) {
+        $("input.validar-cliente").each(function () {
+            $(this).val('');
+            $(this).removeClass('is-invalid');
+            $("#" + this.id + "Valid").removeClass('mostrar');
+        });
+        $("#btnAgregarCliente").attr("disabled", true);
+    });
+    /* MODAL AGREGAR VEHICULO */
+    $('#modalAgregarVehiculo').on('show.bs.modal', function (e) {
+        $('#lblClienteVehiculo').html($('#cboCliente option:selected').text());
+        getCatalogosVehiculo();
+    });
+    function getCatalogosVehiculo() {
+        $.ajax({
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            url: 'http://localhost/Herkace_Shared/Web/api/app_ws/MarcasVehiculos/listado?activo=1',
+            dataType: 'json',
+            success: function (data) {
+                $.each(data, function (key, item) {
+                    if (item.activo) {
+                        var codigoHTML = `<option value=${item.marca_vehiculo_id}>${item.nombre}</option>`;
+                        $('#cboMarcaVehiculo').append(codigoHTML);
+                    }
+                });
+                $('#cboMarcaVehiculo').select2({ width: '100%' });
+                $('#cboMarcaVehiculo option:eq(0)').prop('selected', true).change();
+            }
+        });
+        $.ajax({
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            url: 'http://localhost/Herkace_Shared/Web/api/app_ws/TiposVehiculos/listado?activo=1',
+            dataType: 'json',
+            success: function (data) {
+                $.each(data, function (key, item) {
+                    if (item.activo) {
+                        var codigoHTML = `<option value=${item.tipo_vehiculo_id}>${item.nombre}</option>`;
+                        $('#cboTipoVehiculoVehiculo').append(codigoHTML);
+                    }
+                });
+                $('#cboTipoVehiculoVehiculo').select2({ width: '100%' });
+                $('#cboTipoVehiculoVehiculo option:eq(0)').prop('selected', true).change();
+            }
+        });
+        $.ajax({
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            url: 'http://localhost/Herkace_Shared/Web/api/app_ws/TiposUnidades/listado?activo=1',
+            dataType: 'json',
+            success: function (data) {
+                $.each(data, function (key, item) {
+                    if (item.activo) {
+                        var codigoHTML = `<option value=${item.tipo_unidad_id}>${item.nombre}</option>`;
+                        $('#cboTipoUnidadVehiculo').append(codigoHTML);
+                    }
+                });
+                $('#cboTipoUnidadVehiculo').select2({ width: '100%' });
+                $('#cboTipoUnidadVehiculo option:eq(0)').prop('selected', true).change();
+            }
+        });
+        $.ajax({
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            url: 'http://localhost/Herkace_Shared/Web/api/app_ws/TiposServicios/listado?activo=1',
+            dataType: 'json',
+            success: function (data) {
+                $.each(data, function (key, item) {
+                    if (item.activo) {
+                        var codigoHTML = `<option value=${item.tipo_servicio_id}>${item.nombre}</option>`;
+                        $('#cboTipoServicioVehiculo').append(codigoHTML);
+                    }
+                });
+                $('#cboTipoServicioVehiculo').select2({ width: '100%' });
+                $('#cboTipoServicioVehiculo option:eq(0)').prop('selected', true).change();
+            }
+        });
+    }
+    function validarFormularioVehiculo() {
+        var error = false;
+        $("input.validar-vehiculo").each(function () {
+            const minLength = parseInt($(this).attr("minlength"));
+            var value = $(this).val();
+            var id = this.id;
+            var valido;
+            if (id == 'txtAnioVehiculo') {
+                valido = true;
+            } else if (id == 'txtCapacidadVehiculo') {
+                var cap = parseInt(value);
+                valido = !(isNaN(cap) || cap == 0);
+            } else {
+                valido = value.trim().length >= minLength;
+            }
+            if (valido) {
+                $(this).removeClass('is-invalid');
+                $("#" + this.id + "Valid").removeClass('mostrar');
+            } else {
+                $(this).addClass('is-invalid');
+                $("#" + this.id + "Valid").addClass('mostrar');
+                error = true;
+            }
+        });
+        var anio = $('#txtAnioVehiculo').val();
+        if (anio.length > 4) {
+            $('#txtAnioVehiculo').val(anio.slice(0, 4));
+        }
+        anio = $('#txtAnioVehiculo').val();
+        var date = new Date;
+        var anio_sig = date.getFullYear();
+        anio_sig++;
+        if (isNaN(anio) || anio < 1930 || anio > anio_sig || anio === "0000") {
+            $('#txtAnioVehiculo').addClass('is-invalid');
+            $('#txtAnioVehiculoValid').addClass('mostrar');
+            error = true;
+        } else {
+            $('#txtAnioVehiculo').removeClass('is-invalid');
+            $('#txtAnioVehiculoValid').removeClass('mostrar');
+        }
+        $("#btnAgregarVehiculo").attr("disabled", error);
+    }
+    $('#btnAgregarVehiculo').click(function () {
+        $("#btnAgregarVehiculo").attr("disabled", true);
+        //Se construye el json con los datos obtenidos
+        var jsonDatos = {
+            "cliente_id": $('#cboCliente').val(),
+            "num_serie": $('#txtNumSerieVehiculo').val(),
+            "num_placas": $('#txtPlacasVehiculo').val(),
+            "marca_vehiculo_id": $('#cboMarcaVehiculo').val(),
+            "modelo": $('#txtModeloVehiculo').val(),
+            "tarjeta_circ": $('#txtTarjCircVehiculo').val(),
+            "tipo_vehiculo_id": $('#cboTipoVehiculoVehiculo').val(),
+            "tipo_unidad_id": $('#cboTipoUnidadVehiculo').val(),
+            "tipo_servicio_id": $('#cboTipoServicioVehiculo').val(),
+            "capacidad": $('#txtCapacidadVehiculo').val(),
+            "capacidad_unidad": $('input[name=ragCapacidadVehiculo]:checked').val(),
+            "anio": $('#txtAnioVehiculo').val()
+        };
+        //Aquí se debe mandar a llamar el API enviandole el json
+        $.ajax({
+            url: "http://localhost/Herkace_Shared/Web/api/app_ws/Vehiculos/agregar",
+            method: "POST",
+            data: jsonDatos,
+            dataType: "json",
+            success: function (response) {
+                if (response.registrado) {
+                    Swal.fire({
+                        title: 'Registrado correctamente',
+                        icon: 'success'
+                    });
+                    $('#modalAgregarVehiculo').modal('hide');
+                    getVehiculos(response.id);
+                } else {
+                    Swal.fire({
+                        html: true,
+                        title: response.mensaje,
+                        icon: 'error'
+                    });
+                    $("#btnAgregarVehiculo").attr("disabled", false);
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                Swal.fire({
+                    title: 'Ocurrió un error al registrar el elemento. Intente de nuevo más tarde.',
+                    icon: 'error'
+                });
+                $("#btnAgregarVehiculo").attr("disabled", false);
+            }
+        });
+    });
+    $('#modalAgregarVehiculo').on('hidden.bs.modal', function (e) {
+        $("input.validar-vehiculo").each(function () {
+            $(this).val('');
+            $(this).removeClass('is-invalid');
+            $("#" + this.id + "Valid").removeClass('mostrar');
+        });
+        $("#btnAgregarVehiculo").attr("disabled", true);
+    });
+    /* MODAL AGREGAR TECNICO */
+    Inputmask("999-999-9999").mask("#txtTelefonoTecnico");
+    function validarFormularioTecnico() {
+        var error = false;
+        $("input.validar-tecnico").each(function () {
+            var value = $(this).val();
+            var id = this.id;
+            const minLength = parseInt($(this).attr("minlength"));
+            var valido;
+            if (id == 'txtNumControlTecnico' || id == 'txtApe_matTecnico') {
+                valido = value.length >= minLength || value.length == 0;
+            } else if (id == 'txtTelefonoTecnico') {
+                valido = !noValidoTelefonoMask(value);
+            } else {
+                valido = value.length >= minLength;
+            }
+            if (valido) {
+                $(this).removeClass('is-invalid');
+                $("#" + id + "Valid").removeClass('mostrar');
+            } else {
+                $(this).addClass('is-invalid');
+                $("#" + id + "Valid").addClass('mostrar');
+                error = true;
+            }
+        });
+        $("#btnAgregarTecnico").attr("disabled", error);
+    }
+    $('#btnAgregarTecnico').click(function () {
+        $("#btnAgregarTecnico").attr("disabled", true);
+        //Se construye el json con los datos obtenidos
+        var jsonDatos = {
+            "nombre": $('#txtNombreTecnico').val(),
+            "ape_pat": $('#txtApe_patTecnico').val(),
+            "ape_mat": $('#txtApe_matTecnico').val(),
+            "num_control": $('#txtNumControlTecnico').val(),
+            "telefono": $('#txtTelefonoTecnico').val()
+        };
+        //Aquí se debe mandar a llamar el API enviandole el json
+        $.ajax({
+            url: "http://localhost/Herkace_Shared/Web/api/app_ws/Tecnicos/insertar_tecnico",
+            method: "POST",
+            data: jsonDatos,
+            dataType: "json",
+            success: function (response) {
+                if (response.registrado) {
+                    Swal.fire({
+                        title: 'Registrado correctamente',
+                        icon: 'success'
+                    });
+                    $('#modalAgregarTecnico').modal('hide');
+                    getTecnicos(response.id);
+                } else {
+                    Swal.fire({
+                        html: true,
+                        title: response.mensaje,
+                        icon: 'error'
+                    });
+                    $("#btnAgregarTecnico").attr("disabled", false);
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                Swal.fire({
+                    title: 'Ocurrió un error al registrar el elemento. Intente de nuevo más tarde.',
+                    icon: 'error'
+                });
+                $("#btnAgregarTecnico").attr("disabled", false);
+            }
+        });
+    });
+    $('#modalAgregarTecnico').on('hidden.bs.modal', function (e) {
+        $("input.validar-tecnico").each(function () {
+            $(this).val('');
+            $(this).removeClass('is-invalid');
+            $("#" + this.id + "Valid").removeClass('mostrar');
+        });
+        $("#btnAgregarTecnico").attr("disabled", true);
+    });
+</script>

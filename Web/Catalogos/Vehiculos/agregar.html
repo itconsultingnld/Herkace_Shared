@@ -1,0 +1,488 @@
+<!-- ============================================================== -->
+<!-- breadcrumb -->
+<!-- ============================================================== -->
+<div class="page-breadcrumb">
+    <div class="row">
+        <div class="col-12 d-flex no-block align-items-center">
+            <h4 class="page-title">Agregar vehículo</h4>
+            <div class="ml-auto text-right">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item active">
+                            <a href="javascript:;" onclick="modDashboard();">Dashboard</a>
+                        </li>
+                        <li class="breadcrumb-item active">
+                            <a href="javascript:;" onclick="modCatalogos();">Catálogos</a>
+                        </li>
+                        <li class="breadcrumb-item active">
+                            <a href="javascript:;" onclick="modVehiculos();">Vehículos</a>
+                        </li>
+                        <li class="breadcrumb-item active">Agregar</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- End breadcrumb -->
+<!-- ============================================================== -->
+<style>
+    .form-group {
+        margin-bottom: 0px;
+    }
+
+    .form-control-label {
+        margin-bottom: 16px;
+    }
+
+    .lbl-rfc {
+        margin-bottom: 0px;
+    }
+</style>
+<!-- ============================================================== -->
+<!-- Container -->
+<!-- ============================================================== -->
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12"><br></div>
+        <div class="row col-lg-12 cuadroInsertar">
+            <hr />
+            <div class="col-lg-12">
+                <hr />
+            </div>
+            <div class="col-lg-12">
+                <h4>Datos del cliente</h4>
+                <div class="row">
+                    <div class="col-lg-9">
+                        <div class="form-group align-items-center row">
+                            <label for="cboCliente" class="col-lg-2 form-control-label">Cliente:</label>
+                            <div class="col-lg-10">
+                                <p class="form-control-static">
+                                    <select class="form-control" id="cboCliente"></select>
+                                <div class="invalid-feedback" id="cboClienteValid"></div>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group align-items-center row" style="margin-top: 3px;">
+                            <label class="col-lg-2 form-control-label lbl-rfc">RFC:</label>
+                            <label class="col-lg-10 form-control-label lbl-rfc"><b id="lblRfc"></b></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12 mt-3">
+                <h4>Datos del vehículo</h4>
+                <div class="row">
+                    <div class="col-lg-6 row">
+                        <div class="col-lg-12">
+                            <div class="form-group align-items-center row">
+                                <label for="txtNumSerie" class="col-lg-4 form-control-label">
+                                    Número de serie:
+                                </label>
+                                <div class="col-lg-8">
+                                    <p class="form-control-static">
+                                        <input type="text" class="form-control validar" id="txtNumSerie"
+                                            placeholder="Número de serie" minlength="17" maxlength="17" required />
+                                    <div class="invalid-feedback" id="txtNumSerieValid"></div>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-group align-items-center row">
+                                <label for="txtPlacas" class="col-lg-4 form-control-label">
+                                    Placas:
+                                </label>
+                                <div class="col-lg-8">
+                                    <p class="form-control-static">
+                                        <input type="text" class="form-control validar" id="txtPlacas"
+                                            placeholder="Placas" minlength="2" maxlength="20" required />
+                                    <div class="invalid-feedback" id="txtPlacasValid"></div>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-group align-items-center row">
+                                <label for="cboMarca" class="col-lg-4 form-control-label">
+                                    Marca:
+                                </label>
+                                <div class="col-lg-8">
+                                    <p class="form-control-static">
+                                        <select class="form-control" id="cboMarca"></select>
+                                    <div class="invalid-feedback" id="cboMarcaValid"></div>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-group align-items-center row">
+                                <label for="txtModelo" class="col-lg-4 form-control-label">
+                                    Modelo:
+                                </label>
+                                <div class="col-lg-8">
+                                    <p class="form-control-static">
+                                        <input type="text" class="form-control validar" id="txtModelo"
+                                            placeholder="Modelo" minlength="2" maxlength="55" required />
+                                    <div class="invalid-feedback" id="txtModeloValid"></div>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-group align-items-center row">
+                                <label for="txtTarjCirc" class="col-lg-4 form-control-label">
+                                    Tarjeta de circulación:
+                                </label>
+                                <div class="col-lg-8">
+                                    <p class="form-control-static">
+                                        <input type="text" class="form-control validar" id="txtTarjCirc"
+                                            placeholder="Tarjeta de circulación" minlength="7" maxlength="20" required />
+                                    <div class="invalid-feedback" id="txtTarjCircValid"></div>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-group align-items-center row">
+                                <label for="txtTarjCirc" class="col-lg-4 form-control-label">
+                                    Año:
+                                </label>
+                                <div class="col-lg-8">
+                                    <p class="form-control-static">
+                                        <input type="number" max="2999" min="1930" oninput="validarFormulario();"
+                                            class="form-control" id="txtAnio" placeholder="Año" minlength="4"
+                                            required />
+                                    <div class="invalid-feedback" id="txtAnioValid">
+                                        Ingrese un año válido
+                                    </div>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 row">
+                        <div class="col-lg-12">
+                            <div class="form-group align-items-center row">
+                                <label for="cboTipoVehiculo" class="col-lg-4 form-control-label">
+                                    Tipo de Vehículo:
+                                </label>
+                                <div class="col-lg-8">
+                                    <p class="form-control-static">
+                                        <select class="form-control" id="cboTipoVehiculo"></select>
+                                    <div class="invalid-feedback" id="cboTipoVehiculoValid"></div>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-group align-items-center row">
+                                <label for="cboTipoUnidad" class="col-lg-4 form-control-label">
+                                    Tipo de Unidad:
+                                </label>
+                                <div class="col-lg-8">
+                                    <p class="form-control-static">
+                                        <select class="form-control" id="cboTipoUnidad"></select>
+                                    <div class="invalid-feedback" id="cboTipoUnidadValid"></div>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-group align-items-center row">
+                                <label for="cboTipoServicio" class="col-lg-4 form-control-label">
+                                    Tipo de Servicio de la Unidad:
+                                </label>
+                                <div class="col-lg-8">
+                                    <p class="form-control-static">
+                                        <select class="form-control" id="cboTipoServicio"></select>
+                                    <div class="invalid-feedback" id="cboTipoServicioValid"></div>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-group align-items-center row">
+                                <label for="txtCapacidad" class="col-lg-4 form-control-label">
+                                    Capacidad:
+                                </label>
+                                <div class="col-lg-8">
+                                    <p class="form-control-static">
+                                        <input type="number" class="form-control validar" id="txtCapacidad"
+                                            placeholder="Capacidad" required />
+                                    <div class="invalid-feedback" id="txtCapacidadValid">
+                                        El dato ingresado no es válido
+                                    </div>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-group align-items-center row">
+                                <div class="col-lg-4"></div>
+                                <div class="col-lg-8">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="ragCapacidad"
+                                            id="radCapacidadK" value="K" checked>
+                                        <label class="form-check-label" for="radCapacidadK">Kilogramos</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="ragCapacidad"
+                                            id="radCapacidadL" value="L">
+                                        <label class="form-check-label" for="radCapacidadL">Litros</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="ragCapacidad"
+                                            id="radCapacidadP" value="P">
+                                        <label class="form-check-label" for="radCapacidadP">Personas</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <button href="javascript:;" onclick="modVehiculos();" type="button"
+                    class="btn btn-inline btn-danger">Cancelar</button>
+                <button id="btnRegistrar" type="button" class="btn btn-inline btn-success" disabled>Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- End Container -->
+<!-- ============================================================== -->
+<!--This page JavaScript -->
+<script>
+    $(document).ready(function () {
+        $("input.validar").each(function () {
+            var id = this.id;
+            if (id == 'txtCapacidad') {
+                this.oninput = function () {
+                    inputNumNoLeadZeros(this);
+                    validarFormulario();
+                };
+            } else {
+                if (id == 'txtNumSerie') {
+                    this.oninput = function () {
+                        inputLetrasNumeros(this);
+                        validarFormulario();
+                    };
+                } else if (id == 'txtPlacas' || id == 'txtTarjCirc') {
+                    this.oninput = function () {
+                        inputLetrasNumeros(this);
+                        validarFormulario();
+                    };
+                } else if (id == 'txtModelo') {
+                    this.oninput = function () {
+                        inputLetrasNumerosEspacios(this);
+                        validarFormulario();
+                    };
+                } else {
+                    this.oninput = function () {
+                        inputMayus(this);
+                        validarFormulario();
+                    };
+                }
+                const minLength = parseInt($(this).attr("minlength"));
+                if (id == 'txtNumSerie') {
+                    $("#" + id + "Valid").html(`El campo debe contener ${minLength} caracteres.`);
+                } else {
+                    $("#" + id + "Valid").html(`El campo debe contener al menos ${minLength} caracteres.`);
+                }
+            }
+        });
+        $('#txtAnio').keypress(function (key) {
+            if (key.charCode === 101 || key.charCode === 69 || key.charCode === 46 || key.charCode === 43 || key.charCode === 45) {
+                return false; // Evita agregar "e", ".", "E", "-", "+"
+            }
+            if (this.value.length == 4) {
+                return false;
+            }
+        });
+        getCatalogos();
+    });
+    $('#cboCliente').change(function () {
+        $("#lblRfc").html(clientesLista[$(this)[0].selectedIndex].rfc);
+    });
+    var clientesLista = [];
+    function getCatalogos() {
+        $.ajax({
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            url: 'http://localhost/Herkace_Shared/Web/api/app_ws/Clientes/clientes?tipo=E',
+            dataType: 'json',
+            success: function (data) {
+                $.each(data, function (key, item) {
+                    var codigoHTML = `<option value=${item.cliente_id}>${item.nombre}</option>`;
+                    $('#cboCliente').append(codigoHTML);
+                    clientesLista.push(item);
+                });
+                $('#cboCliente').select2({});
+                $("#lblRfc").html(clientesLista[0].rfc);
+            }
+        });
+        $.ajax({
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            url: 'http://localhost/Herkace_Shared/Web/api/app_ws/MarcasVehiculos/listado?activo=1',
+            dataType: 'json',
+            success: function (data) {
+                $.each(data, function (key, item) {
+                    if (item.activo) {
+                        var codigoHTML = `<option value=${item.marca_vehiculo_id}>${item.nombre}</option>`;
+                        $('#cboMarca').append(codigoHTML);
+                    }
+                });
+                $('#cboMarca').select2({});
+            }
+        });
+        $.ajax({
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            url: 'http://localhost/Herkace_Shared/Web/api/app_ws/TiposVehiculos/listado?activo=1',
+            dataType: 'json',
+            success: function (data) {
+                $.each(data, function (key, item) {
+                    if (item.activo) {
+                        var codigoHTML = `<option value=${item.tipo_vehiculo_id}>${item.nombre}</option>`;
+                        $('#cboTipoVehiculo').append(codigoHTML);
+                    }
+                });
+                $('#cboTipoVehiculo').select2({});
+            }
+        });
+        $.ajax({
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            url: 'http://localhost/Herkace_Shared/Web/api/app_ws/TiposUnidades/listado?activo=1',
+            dataType: 'json',
+            success: function (data) {
+                $.each(data, function (key, item) {
+                    if (item.activo) {
+                        var codigoHTML = `<option value=${item.tipo_unidad_id}>${item.nombre}</option>`;
+                        $('#cboTipoUnidad').append(codigoHTML);
+                    }
+                });
+                $('#cboTipoUnidad').select2({});
+            }
+        });
+        $.ajax({
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            url: 'http://localhost/Herkace_Shared/Web/api/app_ws/TiposServicios/listado?activo=1',
+            dataType: 'json',
+            success: function (data) {
+                $.each(data, function (key, item) {
+                    if (item.activo) {
+                        var codigoHTML = `<option value=${item.tipo_servicio_id}>${item.nombre}</option>`;
+                        $('#cboTipoServicio').append(codigoHTML);
+                    }
+                });
+                $('#cboTipoServicio').select2({});
+            }
+        });
+    }
+    function validarFormulario() {
+        var error = false;
+        $("input.validar").each(function () {
+            const minLength = parseInt($(this).attr("minlength"));
+            var value = $(this).val();
+            var id = this.id;
+            var valido;
+            if (id == 'txtCapacidad') {
+                var cap = parseInt(value);
+                valido = !(isNaN(cap) || cap == 0);
+            } else {
+                valido = value.trim().length >= minLength;
+            }
+            if (valido) {
+                $(this).removeClass('is-invalid');
+                $("#" + this.id + "Valid").removeClass('mostrar');
+            } else {
+                $(this).addClass('is-invalid');
+                $("#" + this.id + "Valid").addClass('mostrar');
+                error = true;
+            }
+        });
+        var anio = $('#txtAnio').val();
+        if (anio.length > 4) {
+            $('#txtAnio').val(anio.slice(0, 4));
+        }
+        anio = $('#txtAnio').val();
+        var date = new Date;
+        var anio_sig = date.getFullYear();
+        anio_sig++;
+        if (isNaN(anio) || anio < 1930 || anio > anio_sig || anio === "0000") {
+            $('#txtAnio').addClass('is-invalid');
+            $('#txtAnioValid').addClass('mostrar');
+            error = true;
+        } else {
+            $('#txtAnio').removeClass('is-invalid');
+            $('#txtAnioValid').removeClass('mostrar');
+        }
+        $("#btnRegistrar").attr("disabled", error);
+    }
+    $('#btnRegistrar').click(function () {
+        $("#btnRegistrar").attr("disabled", true);
+        var cliente = $('#cboCliente').val();
+        var num_serie = $('#txtNumSerie').val();
+        var placas = $('#txtPlacas').val();
+        var marca = $('#cboMarca').val();
+        var modelo = $('#txtModelo').val();
+        var tarj_circ = $('#txtTarjCirc').val();
+        var tipo_vehiculo = $('#cboTipoVehiculo').val();
+        var tipo_unidad = $('#cboTipoUnidad').val();
+        var tipo_servicio = $('#cboTipoServicio').val();
+        var capacidad = $('#txtCapacidad').val();
+        var capacidad_unidad = $('input[name=ragCapacidad]:checked').val();
+        //Se construye el json con los datos obtenidos
+        var jsonDatos = {
+            "cliente_id": cliente,
+            "num_serie": num_serie,
+            "num_placas": placas,
+            "marca_vehiculo_id": marca,
+            "modelo": modelo,
+            "tarjeta_circ": tarj_circ,
+            "tipo_vehiculo_id": tipo_vehiculo,
+            "tipo_unidad_id": tipo_unidad,
+            "tipo_servicio_id": tipo_servicio,
+            "capacidad": capacidad,
+            "capacidad_unidad": capacidad_unidad,
+            "anio": $('#txtAnio').val()
+        };
+        //Aquí se debe mandar a llamar el API enviandole el json
+        $.ajax({
+            url: "http://localhost/Herkace_Shared/Web/api/app_ws/Vehiculos/agregar",
+            method: "POST",
+            data: jsonDatos,
+            dataType: "json",
+            success: function (response) {
+                if (response.registrado) {
+                    Swal.fire({
+                        title: 'Registrado correctamente',
+                        icon: 'success'
+                    });
+                    modVehiculos();
+                } else {
+                    Swal.fire({
+                        title: response.mensaje,
+                        icon: 'error'
+                    });
+                    $("#btnRegistrar").attr("disabled", false);
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                Swal.fire({
+                    title: 'Ocurrió un error al registrar el usuario. Intente de nuevo más tarde.',
+                    icon: 'error'
+                });
+                $("#btnRegistrar").attr("disabled", false);
+            }
+        });
+    });
+</script>

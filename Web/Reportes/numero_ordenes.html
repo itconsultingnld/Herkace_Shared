@@ -1,0 +1,337 @@
+<style>
+    .card {
+        background-color: #ccc;
+    }
+
+    .card-body {
+        padding-bottom: 0px;
+    }
+
+    .input-group-append {
+        cursor: pointer;
+    }
+
+    .select2-selection__rendered {
+        line-height: 31px !important;
+    }
+
+    .select2-container .select2-selection--single {
+        height: 35px !important;
+    }
+
+    .select2-selection__arrow {
+        height: 34px !important;
+    }
+
+    [class^='select2'] {
+        border-radius: 0px !important;
+    }
+
+    .label {
+        font-size: 100%;
+    }
+</style>
+<!-- ============================================================== -->
+<!-- breadcrumb -->
+<!-- ============================================================== -->
+<div class="page-breadcrumb">
+    <div class="row">
+        <div class="col-12 d-flex no-block align-items-center">
+            <h4 class="page-title">Reportes órdenes</h4>
+            <div class="ml-auto text-right">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="javascript:;" onclick="modDashboard();">Dashboard</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <a href="#">Reportes</a>
+                        </li>
+                        <li class="breadcrumb-item active">Reportes órdenes</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- End breadcrumb -->
+<!-- ============================================================== -->
+<!-- ============================================================== -->
+<!-- Container -->
+<!-- ============================================================== -->
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12 col-lg-6 col-xl-4 mb-3 mt-3 row">
+            <label class="col-12 text-center"><b>Rango de fechas</b></label>
+            <div class="col-6">
+                <label>Desde</label>
+                <div class="input-group">
+                    <input type="date" class="form-control" id="dtmFechaInicial" placeholder="FechaInicial">
+                    <div class="input-group-append">
+                        <span class="input-group-text" id="btnLimpiarFechaInicial">
+                            <i class="fa fa-times"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <label>Hasta</label>
+                <div class="input-group">
+                    <input type="date" class="form-control" id="dtmFechaFinal" placeholder="FechaFinal">
+                    <div class="input-group-append">
+                        <span class="input-group-text" id="btnLimpiarFechaFinal">
+                            <i class="fa fa-times"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 col-lg-6 col-xl-4 mb-3 mt-3 row">
+            <label class="col-12 text-center"><b>Rango de números de órdenes</b></label>
+            <div class="col-6">
+                <label>Desde</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" id="txtNumOrdenInicial"
+                        placeholder="Número de orden inicial">
+                    <div class="input-group-append">
+                        <span class="input-group-text" id="btnLimpiarNumOrdenInicial">
+                            <i class="fa fa-times"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <label>Hasta</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" id="txtNumOrdenFinal" placeholder="Número de orden final">
+                    <div class="input-group-append">
+                        <span class="input-group-text" id="btnLimpiarNumOrdenFinal">
+                            <i class="fa fa-times"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mb-3 mt-3 row">
+            <div class="col-12">
+                <label>Cliente</label>
+                <div class="input-group">
+                    <select class="form-control" id="cboCliente"></select>
+                    <div class="input-group-append">
+                        <span class="input-group-text" id="btnLimpiarCliente">
+                            <i class="fa fa-times"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mt-4">
+            <button id="btnLimpiar" type="button" class="btn btn-secondary btn-lg btn-block">
+                Limpiar
+            </button>
+        </div>
+        <div class="col-md-3 mt-4">
+            <button type="button" class="btn btn-primary btn-lg btn-block" onclick="tabla();">
+                Buscar
+            </button>
+        </div>
+        <div class="col-3 d-none d-md-block"></div>
+        <div class="col-md-6 mt-4">
+            <button type="button" class="btn btn-success btn-lg btn-block" onclick="excel_numero_ordenes();">
+                <i class="fa fa-file-excel"></i> Generar reporte
+            </button>
+        </div>
+        <div class="col-12">
+            <hr />
+        </div>
+        <div class="col-sm-12 table-responsive">
+            <table id="tbl" class="table table-bordered table-hover table-light">
+                <thead class="thead-light">
+                    <tr>
+                        <th class="text-center"><b>N° orden</b></th>
+                        <th class="text-center"><b>Cliente</b></th>
+                        <th class="text-center"><b>Fecha</b></th>
+                        <th class="text-center"><b>Estatus</b></th>
+                        <th class="text-center"><b>Acciones</b></th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- End Container -->
+<!-- ============================================================== -->
+<!--This page JavaScript -->
+<script>
+    $(document).ready(function () {
+        $('body').tooltip({ selector: '[data-toggle=tooltip]', trigger: 'hover' });
+        $.ajax({
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            url: 'http://localhost/Herkace_Shared/Web/api/app_ws/Clientes/clientes',
+            async: false,
+            dataType: 'json',
+            success: function (data) {
+                $('#cboCliente').append('<option value="0">Seleccione un cliente</option>');
+                $.each(data, function (key, item) {
+                    var codigoHTML = `<option value=${item.cliente_id}>${item.nombre}</option>`;
+                    $('#cboCliente').append(codigoHTML);
+                });
+                $('#cboCliente').select2({});
+            }
+        });
+        tabla();
+    });
+    function getFiltros() {
+        var cliente;
+        if ($("#cboCliente").val() == 0) {
+            cliente = '';
+        } else {
+            cliente = $('#cboCliente option:selected').text();
+        }
+        var filtros = {
+            "fecha_inicial": $('#dtmFechaInicial').val(),
+            "fecha_final": $('#dtmFechaFinal').val(),
+            "num_inicial": $('#txtNumOrdenInicial').val(),
+            "num_final": $('#txtNumOrdenFinal').val(),
+            "cliente": cliente
+        };
+        return filtros;
+    }
+    function tabla() {
+        $('#modalCargando').modal('show');
+        if ($.fn.dataTable.isDataTable('#tbl')) {
+            $('#tbl').DataTable().destroy();
+        }
+        $('#tbl tbody').empty();
+        var columnas = [
+            { "data": "num_orden" },
+            { "data": "nombre" },
+            { "data": "fecha" },
+            {
+                "render": function (data, type, row, meta) {
+                    if (row.cerrada) {
+                        return '<span class="label label-dark">Cerrada</span>';
+                    } else {
+                        return '<span class="label label-success">Abierta</span>';
+                    }
+                }
+            },
+            {
+                "render": function (data, type, row, meta) {
+                    var codigoHTML = '<a href="javascript:;" onclick="excel_verificaciones(' + row.orden_id + ');">';
+                    codigoHTML += '<button type="button" class="btn btn-inline btn-outline-success" data-toggle="tooltip" title="Verificaciones">';
+                    codigoHTML += '<i class="fa fa-file-excel"></i>';
+                    codigoHTML += '</button>';
+                    codigoHTML += '</a>';
+                    return codigoHTML;
+                }
+            }
+        ];
+        var table = $('#tbl').DataTable({
+            ordering: true, searching: true, info: true, paging: true,
+            language: { 'url': 'assets/extra-libs/DataTables/Spanish.html' },
+            serverSide: false,
+            ajax: {
+                url: 'http://localhost/Herkace_Shared/Web/api/app_ws/Ordenes/listado_vw_filtrado',
+                type: 'POST',
+                data: getFiltros(),
+                dataSrc: ""
+            },
+            columns: columnas,
+            "columnDefs": [{
+                "targets": 4,
+                "orderable": false
+            }],
+            order: [[0, 'desc']],
+            initComplete: function () {
+                $(this.api().table().container()).find('input').parent().wrap('<form>').parent().attr('autocomplete', 'off');
+                $('#modalCargando').modal('hide');
+            }
+        });
+        table.on('draw', function () {
+            $("#tbl tbody tr").each(function () {
+                $(this).children("td").each(function (i, e) {
+                    if (i >= 3) {
+                        $(this).addClass("text-center");
+                    }
+                });
+            });
+        });
+    }
+    function excel_numero_ordenes() {
+        $('#modalCargando').modal('show');
+        var request = new XMLHttpRequest(), file, fileURL;
+        request.open("POST", 'http://localhost/Herkace_Shared/Web/api/app_ws/Ordenes/excel_numero_ordenes');
+        request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        request.responseType = "arraybuffer";
+        request.send(JSON.stringify(getFiltros()));
+        request.onreadystatechange = function () {
+            if (request.readyState === 4 && request.status === 200) {
+                $('#modalCargando').modal('hide');
+                const a = document.createElement('a');
+                document.body.appendChild(a);
+                const blob = new Blob([request.response], {
+                    type: 'octet/stream'
+                });
+                const url = window.URL.createObjectURL(blob);
+                a.href = url;
+                a.download = "Reporte_numero_ordenes.xlsx";
+                a.click();
+                window.URL.revokeObjectURL(url);
+            }
+        };
+    }
+    function excel_verificaciones(orden_id) {
+        $('#modalCargando').modal('show');
+        var Enviar = {
+            "orden_id": orden_id
+        }
+        var request = new XMLHttpRequest(), file, fileURL;
+        request.open("POST", 'http://localhost/Herkace_Shared/Web/api/app_ws/Reportes/excel_reportes_ordenes_verificaciones');
+        request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        request.responseType = "arraybuffer";
+        request.send(JSON.stringify(Enviar));
+        request.onreadystatechange = function () {
+            if (request.readyState === 4 && request.status === 200) {
+                $('#modalCargando').modal('hide');
+                const a = document.createElement('a');
+                document.body.appendChild(a);
+                const blob = new Blob([request.response], {
+                    type: 'octet/stream'
+                });
+                const url = window.URL.createObjectURL(blob);
+                a.href = url;
+                a.download = "Reporte_ordenes_verificaciones.xlsx";
+                a.click();
+                window.URL.revokeObjectURL(url);
+            }
+        };
+    }
+    $("#btnLimpiarFechaInicial").click(function () {
+        $("#dtmFechaInicial").val("").focus();
+    });
+    $("#btnLimpiarFechaFinal").click(function () {
+        $("#dtmFechaFinal").val("").focus();
+    });
+    $("#btnLimpiarNumOrdenInicial").click(function () {
+        $("#txtNumOrdenInicial").val("").focus();
+    });
+    $("#btnLimpiarNumOrdenFinal").click(function () {
+        $("#txtNumOrdenFinal").val("").focus();
+    });
+    $("#btnLimpiarCliente").click(function () {
+        $("#cboCliente").val("0").change();
+    });
+    $("#btnLimpiar").click(function () {
+        $("#dtmFechaInicial").val("");
+        $("#dtmFechaFinal").val("");
+        $("#txtNumOrdenInicial").val("");
+        $("#txtNumOrdenFinal").val("");
+        $("#cboCliente").val("0").change();
+        tabla();
+    });
+</script>

@@ -1,0 +1,742 @@
+<!-- ============================================================== -->
+<!-- Bread crumb and right sidebar toggle -->
+<!-- ============================================================== -->
+<div class="page-breadcrumb">
+    <div class="row">
+        <div class="col-12 d-flex no-block align-items-center">
+            <h4 class="page-title">Prefacturas</h4>
+            <div class="ml-auto text-right">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item active">
+                            <a href="javascript:;" onclick="modDashboard();">Dashboard</a>
+                        </li>
+                        <li class="breadcrumb-item active">Prefacturas</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- End Bread crumb and right sidebar toggle -->
+<!-- ============================================================== -->
+<style>
+    .fc-list-item-time {
+        display: none;
+    }
+
+    #divLp h4 {
+        margin: 0px;
+    }
+
+    .tbl-data td {
+        padding: 8px
+    }
+
+    .circle {
+        width: 32px;
+        height: 32px;
+        line-height: 30px;
+        border-radius: 50%;
+        color: #fff;
+        text-align: center;
+        background: #0f0;
+        border: 2px solid #000;
+    }
+
+    .disp-in-line {
+        display: inline;
+    }
+
+    label.btn {
+        margin-top: 0px !important;
+    }
+
+    .swal2-cancel,
+    .swal2-confirm {
+        margin: 10px !important;
+    }
+</style>
+<!-- ============================================================== -->
+<!-- Container fluid  -->
+<!-- ============================================================== -->
+<div class="container-fluid">
+    <div class="row" style="margin-top: 10px;">
+        <div class="col-lg-12">
+            <div class="row d-flex justify-content-center text-center">
+                <header class="box-typical-header panel-heading ui-sortable-handle">
+                    <button type="button" class="btn btn-success" id="btnGenerarNumPrefactura">
+                        <i class="fa fa-file-plus"></i> Generar
+                    </button>
+                </header>
+            </div>
+            <br />
+            <div class="table-responsive">
+                <table id="tbl" class="table table-bordered table-hover table-light datatable1">
+                    <thead class="thead-light text-center">
+                        <tr>
+                            <th><b>N° prefactura</b></th>
+                            <th><b>N° factura</b></th>
+                            <th><b>Cliente</b></th>
+                            <th><b>Fecha</b></th>
+                            <th><b>Acciones</b></th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+        <!-- MODAL MOSTRAR ORDEN -->
+        <div id="modalMostrarPrefactura" class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog"
+            aria-labelledby="mySmallModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="modal-close" data-dismiss="modal" aria-label="Close">
+                            <i class="fa fa-times"></i>
+                        </button>
+                        <h3 class="modal-title" id="myModalLabelPrefactura">Orden</h3>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-sm-4 text-center">
+                                <h4>Cliente a facturar</h4>
+                                <h6 id="lblClienteFacturar"></h6>
+                            </div>
+                            <div class="col-sm-4 text-center">
+                                <h4>Condiciones</h4>
+                                <h6 id="lblCondiciones"></h6>
+                            </div>
+                            <div class="col-sm-4 text-center">
+                                <h4>Vendedor</h4>
+                                <h6 id="lblVendedor"></h6>
+                            </div>
+                        </div>
+                        <div class="table-responsive mt-3">
+                            <table id="tblVerifsPrefactura" class="table table-bordered table-hover table-light"
+                                style="width: 100%;">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th class="align-middle text-center"><b>Cliente</b></th>
+                                        <th class="align-middle text-center"><b>Folio</b></th>
+                                        <th class="align-middle text-center"><b>Tipo de verificación</b></th>
+                                        <th class="align-middle text-center"><b>Fecha</b></th>
+                                        <th class="align-middle text-center"><b>Número de serie</b></th>
+                                        <th class="align-middle text-center"><b>Número de placas</b></th>
+                                        <th class="align-middle text-center"><b>Marca</b></th>
+                                        <th class="align-middle text-center"><b>Modelo</b></th>
+                                        <th class="align-middle text-center"><b>Tarjeta de circulación</b></th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-inline btn-danger" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- FIN MODAL MOSTRAR ORDEN -->
+        <div id="modalDatosExtra" class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog"
+            aria-labelledby="mySmallModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="modal-close" data-dismiss="modal" aria-label="Close">
+                            <i class="fa fa-times"></i>
+                        </button>
+                        <h3 class="modal-title">Facturar</h3>
+                    </div>
+                    <div class="modal-body">
+                        <div class="col-sm-12">
+                            <div class="form-group row align-items-center">
+                                <label for="lblPrefactura"
+                                    class="col-sm-2 form-control-label text-center text-sm-right">
+                                    Prefactura:
+                                </label>
+                                <div class="col-sm-10 mb-2">
+                                    <b id="lblPrefactura"></b>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group row align-items-center">
+                                <label for="lblFacturador"
+                                    class="col-sm-2 form-control-label text-center text-sm-right">
+                                    Facturador:
+                                </label>
+                                <div class="col-sm-10 mb-2">
+                                    <b id="lblFacturador"></b>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group row align-items-center">
+                                <label for="cboTipoAgregar"
+                                    class="col-sm-2 form-control-label text-center text-sm-right">
+                                    Método de pago:
+                                </label>
+                                <div class="col-sm-10 mb-2">
+                                    <select class="form-control" id="cboMetodoPago">
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group row align-items-center">
+                                <label for="cboTipoAgregar"
+                                    class="col-sm-2 form-control-label text-center text-sm-right">
+                                    Forma de pago:
+                                </label>
+                                <div class="col-sm-10 mb-2">
+                                    <select class="form-control" id="cboFormaPago">
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group row align-items-center">
+                                <label for="cboTipoAgregar"
+                                    class="col-sm-2 form-control-label text-center text-sm-right">
+                                    Moneda:
+                                </label>
+                                <div class="col-sm-10 mb-2">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="radMoneda" id="radMXN"
+                                            value="MXN" checked>
+                                        <label class="form-check-label" for="radMXN">MXN</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="radMoneda" id="radUSD"
+                                            value="USD">
+                                        <label class="form-check-label" for="radUSD">USD</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group row align-items-center">
+                                <label for="cboTipoAgregar"
+                                    class="col-sm-2 form-control-label text-center text-sm-right">
+                                    Tipo de cambio:
+                                </label>
+                                <div class="col-sm-10 mb-2">
+                                    <input class="form-control" type="number" id="txtTipoCambio" disabled />
+                                    <div class="invalid-feedback" id="cboTipoCambioValid">
+                                        Debe ingresar el tipo de cambio
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group row align-items-center">
+                                <label for="cboUsoCFDI" class="col-sm-2 form-control-label text-center text-sm-right">
+                                    Uso de CFDI:
+                                </label>
+                                <div class="col-sm-10 mb-2">
+                                    <select class="form-control" id="cboUsoCFDI">
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-inline btn-danger" data-dismiss="modal">Cancelar</button>
+                        <button id="btnFacturar" type="button" class="btn btn-inline btn-success">Facturar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- End Container fluid  -->
+<!-- ============================================================== -->
+<script>
+    function formatNumber(num) {
+        return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+    }
+
+    $(document).ready(function () {
+        $('body').tooltip({ selector: '[data-toggle=tooltip]', trigger: 'hover' });
+        listado();
+        getCatalogosParaFactura();
+    });
+
+    function listado() {
+        if ($.fn.dataTable.isDataTable('#tbl')) {
+            $('#tbl').DataTable().destroy();
+        }
+        $('#tbl tbody').empty();
+        $.ajax({
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            url: 'http://localhost/Herkace_Shared/Web/api/app_ws/Prefacturas/listado_vw',
+            dataType: 'json',
+            success: function (data) {
+                $('#tbl tbody').empty();
+                $.each(data, function (key, item) {
+                    var facturada = item.facturada;
+                    var codigoHTML = '';
+                    codigoHTML += '<tr>';
+                    codigoHTML += '<td class="text-center">';
+                    codigoHTML += '<h3>' + item.num_prefactura + '</h3>';
+                    codigoHTML += '</td>';
+                    codigoHTML += '<td class="text-center">';
+                    codigoHTML += '<h3>' + item.num_factura + '</h3>';
+                    codigoHTML += '</td>';
+                    codigoHTML += '<td class="text-center">';
+                    codigoHTML += '<h5>' + item.nombre + '</h5>';
+                    codigoHTML += '</td>';
+                    codigoHTML += '<td class="text-center">';
+                    codigoHTML += '<h5>' + item.fecha + '</h5>';
+                    codigoHTML += '</td>';
+                    codigoHTML += '<td class="text-center">';
+                    if (item.activo) {
+                        if (!facturada) {
+                            codigoHTML += `<button type="button" class="btn btn-inline btn-outline-primary" data-toggle="tooltip" title="Ver prefactura" onclick="mostrarPrefactura(${item.prefactura_id}, '${item.num_prefactura}', '${item.nombre}','${item.condiciones}','${item.vendedor}');">`;
+                            codigoHTML += '<i class="fa fa-eye"></i>';
+                            codigoHTML += '</button>';
+                            codigoHTML += `<button type="button" class="btn btn-inline btn-outline-cyan" data-toggle="tooltip" title="Editar prefactura" onclick="modClasificador(${item.prefactura_id},'${item.num_prefactura}',${item.cliente_facturacion_id},'${item.condiciones}',${item.usuario_id_vendedor});">`;
+                            codigoHTML += '<i class="fa fa-pen-to-square"></i>';
+                            codigoHTML += '</button>';
+                            codigoHTML += '<button type="button" class="btn btn-inline btn-outline-danger" data-toggle="tooltip" title="Pre factura" onclick="prefactura(' + item.prefactura_id + ',\'' + item.num_prefactura + '\');">';
+                            codigoHTML += '<i class="fa fa-file-pdf"></i>';
+                            codigoHTML += '</button>';
+                        } else {
+                            codigoHTML += `<button type="button" class="btn btn-inline btn-outline-danger" data-toggle="tooltip" title="Factura" onclick="generar_pdf_factura('${item.uid}');">`;
+                            codigoHTML += '<i class="fa fa-file-pdf"></i>';
+                            codigoHTML += '</button>';
+                            codigoHTML += `<button type="button" class="btn btn-inline btn-outline-secondary" data-toggle="tooltip" title="XML" onclick="generar_xml_factura('${item.uid}','${item.num_factura}');">`;
+                            codigoHTML += '<i class="fa fa-file-code"></i>';
+                            codigoHTML += '</button>';
+                            codigoHTML += `<button type="button" class="btn btn-inline btn-outline-dark" data-toggle="tooltip" title="Enviar a correos" onclick="enviar_correo_factura('${item.cliente_facturacion_id}','${item.nombre}','${item.num_factura}','${item.uid}');">`;
+                            codigoHTML += '<i class="fa fa-envelope"></i>';
+                            codigoHTML += '</button>';
+                        }
+                        codigoHTML += '<button type="button" data-toggle="tooltip" class="btn btn-inline btn-';
+                        if (facturada) {
+                            codigoHTML += 'success" title="Facturada">';
+                            codigoHTML += '<i class="fa fa-circle-check"></i>';
+                        } else {
+                            codigoHTML += `outline-success" title="Facturar" onclick="cerrarPrefactura(${item.prefactura_id},'${item.num_prefactura}',${item.cliente_facturacion_id},'${item.nombre}','${item.uso_cfdi}');">`;
+                            codigoHTML += '<i class="fa fa-file-invoice-dollar"></i>';
+                        }
+                        codigoHTML += '</button>';
+                    } else {
+                        codigoHTML += `<button type="button" class="btn btn-inline btn-outline-info" data-toggle="tooltip" title="Razones de Cancelación" onclick="info(${item.prefactura_id});">`;
+                        codigoHTML += '<i class="fa fa-circle-info"></i>';
+                        codigoHTML += '</button>';
+                    }
+                    codigoHTML += '</td>';
+                    codigoHTML += '</tr>';
+                    $('#tbl tbody').append(codigoHTML);
+                })
+            },
+            complete: function (jqXHR, textStatus) {
+                $('#tbl').DataTable({
+                    ordering: true, searching: true, info: false, scrolling: false, paging: true, lengthMenu: [
+                        [5, 10, 15, 20],
+                        [5, 10, 15, 20]
+                    ], language: { 'url': 'assets/extra-libs/DataTables/Spanish.html' },
+                    "columnDefs": [{
+                        "targets": 4,
+                        "orderable": false
+                    }],
+                    order: [[0, 'desc']],
+                    initComplete: function () {
+                        $(this.api().table().container()).find('input').parent().wrap('<form>').parent().attr('autocomplete', 'off');
+                    }
+
+                });
+            }
+        });
+    }
+
+    function enviar_correo_factura(cliente_facturacion_id, facturador, num_factura, uid) {
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: "btn btn-success",
+                cancelButton: "btn btn-danger",
+            },
+            buttonsStyling: false
+        });
+        swalWithBootstrapButtons.fire({ title: `¿Seguro que desea enviar la factura ${num_factura} a los correos del cliente ${facturador}?`, icon: 'info', showCancelButton: true, confirmButtonColor: "#DD6B55", cancelButtonText: 'Cancelar', confirmButtonText: 'Confirmar', reverseButtons: true, cancelButtonColor: "#FF6833" }).then((result) => {
+            if (result.isConfirmed) {
+                $('#modalCargando').modal('show');
+                let datos = {
+                    'cliente_facturacion_id': cliente_facturacion_id,
+                    'uid': uid
+                };
+                $.ajax({
+                    type: "POST",
+                    url: 'http://localhost/Herkace_Shared/Web/api/app_ws/Prefacturas/enviar_factura',
+                    data: datos,
+                    dataType: 'json',
+                    success: function (data) {
+                        $('#modalCargando').modal('hide');
+                        Swal.fire({ title: 'Factura enviada a los correos del cliente', icon: 'success' })
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        $('#modalCargando').modal('hide');
+                        Swal.fire({ title: 'Error al enviar factura a correos', icon: 'error' })
+                    }
+                });
+            }
+        });
+
+
+    }
+
+    function info(prefactura_id) {
+        $.ajax({
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            url: 'http://localhost/Herkace_Shared/Web/api/app_ws/Prefacturas/prefactura_por_id?prefactura_id=' + prefactura_id,
+            dataType: 'json',
+            async: false,
+            success: function (data) {
+                const swalWithBootstrapButtons = Swal.mixin({
+                    customClass: {
+                        confirmButton: "btn btn-success",
+                    },
+                    buttonsStyling: false
+                });
+                swalWithBootstrapButtons.fire({ title: 'RAZONES DE CANCELACIÓN', text: data.razones_cancelacion, icon: 'info', confirmButtonColor: "#DD6B55", confirmButtonText: 'OK' });
+            }
+        });
+    }
+
+    function generar_pdf_factura(uid) {
+        $('#modalCargando').modal('show');
+        let datos = {
+            "uid": uid
+        }
+        var request = new XMLHttpRequest(), file, fileURL;
+        request.open("POST", 'http://localhost/Herkace_Shared/Web/api/app_ws/Prefacturas/pdf_factura');
+        request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        request.responseType = "arraybuffer";
+        request.send(JSON.stringify(datos));
+        request.onreadystatechange = function () {
+            if (request.readyState === 4 && request.status === 200) {
+                $('#modalCargando').modal('hide');
+                Swal.fire({
+                    title: 'Archivo abierto en una nueva pestaña',
+                    text: 'Si no es así, revise la configuración de las pantallas emergentes (pop-up) de su navegador.',
+                    icon: 'info',
+                    confirmButtonText: 'ACEPTAR'
+                });
+                file = new Blob([request.response], { type: 'application/pdf' });
+                if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+                    window.navigator.msSaveOrOpenBlob(file);
+                } else {
+                    fileURL = URL.createObjectURL(file);
+                    window.open(fileURL);
+                    window.document.title = ``;
+                }
+            }
+        };
+    }
+
+    function generar_xml_factura(uid, num_factura) {
+        $('#modalCargando').modal('show');
+        let datos = {
+            "uid": uid
+        }
+        var request = new XMLHttpRequest(), file, fileURL;
+        request.open("POST", 'http://localhost/Herkace_Shared/Web/api/app_ws/Prefacturas/xml_factura');
+        request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        request.responseType = "arraybuffer";
+        request.send(JSON.stringify(datos));
+        request.onreadystatechange = function () {
+            if (request.readyState === 4 && request.status === 200) {
+                $('#modalCargando').modal('hide');
+                const a = document.createElement('a');
+                document.body.appendChild(a);
+                const blob = new Blob([request.response], {
+                    type: 'octet/stream'
+                });
+                const url = window.URL.createObjectURL(blob);
+                a.href = url;
+                a.download = `factura_${num_factura}.xml`;
+                a.click();
+                window.URL.revokeObjectURL(url);
+            }
+        };
+    }
+
+    $('#btnGenerarNumPrefactura').click(function () {
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: "btn btn-success",
+                cancelButton: "btn btn-danger",
+            },
+            buttonsStyling: false
+        });
+        swalWithBootstrapButtons.fire({ title: 'AVISO', text: '¿Seguro que desea generar un nuevo número de prefactura?', icon: 'info', showCancelButton: true, confirmButtonColor: "#DD6B55", cancelButtonText: 'Cancelar', confirmButtonText: 'Confirmar', reverseButtons: true, cancelButtonColor: "#FF6833" }).then((result) => {
+            if (result.isConfirmed) {
+                var datos = {
+                    "usuario_id": localStorage.getItem('AE')
+                };
+                $.ajax({
+                    type: "POST",
+                    url: 'http://localhost/Herkace_Shared/Web/api/app_ws/Prefacturas/generar',
+                    data: datos,
+                    dataType: 'json',
+                    success: function (data) {
+                        modClasificador(data.prefactura_id, data.num_prefactura, 0, '', 0);
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        Swal.fire({ title: 'Error', text: 'No se pudo generar el N° de prefactura', icon: 'error' })
+                    }
+                });
+            }
+        });
+
+    })
+
+    function mostrarPrefactura(prefactura_id, num_prefactura, cliente_fac, condiciones, vendedor) {
+        $("#myModalLabelPrefactura").html(`Prefactura ${num_prefactura}`);
+        $("#lblClienteFacturar").html(cliente_fac);
+        $("#lblCondiciones").html(condiciones);
+        $("#lblVendedor").html(vendedor);
+        if ($.fn.dataTable.isDataTable('#tblVerifsPrefactura')) {
+            $('#tblVerifsPrefactura').DataTable().destroy();
+        }
+        $('#tblVerifsPrefactura tbody').empty();
+        var columnas = [
+            { "data": "cliente" },
+            { "data": "folio" },
+            { "data": "tipo_verificacion" },
+            { "data": "fecha" },
+            { "data": "num_serie" },
+            { "data": "num_placas" },
+            { "data": "marca" },
+            { "data": "modelo" },
+            { "data": "tarjeta_circ" }
+        ];
+        var table = $('#tblVerifsPrefactura').DataTable({
+            ordering: false, searching: true, info: true, paging: true,
+            language: { 'url': 'assets/extra-libs/DataTables/Spanish.html' },
+            serverSide: false,
+            ajax: {
+                url: `http://localhost/Herkace_Shared/Web/api/app_ws/Verificaciones/listado_vw_prefactura?prefactura_id=${prefactura_id}`,
+                type: 'GET',
+                dataSrc: ""
+            },
+            columns: columnas,
+            initComplete: function () {
+                $(this.api().table().container()).find('input').parent().wrap('<form>').parent().attr('autocomplete', 'off');
+                $("#modalMostrarPrefactura").modal('show');
+            }
+        });
+    }
+
+    function prefactura(prefactura_id, num_prefactura) {
+        $('#modalCargando').modal('show');
+        var Enviar = {
+            "prefactura_id": prefactura_id,
+            "num_prefactura": num_prefactura
+        }
+        var request = new XMLHttpRequest(), file, fileURL;
+        request.open("POST", 'http://localhost/Herkace_Shared/Web/api/app_ws/Prefacturas/pdf_prefactura');
+        request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        request.responseType = "arraybuffer";
+        request.send(JSON.stringify(Enviar));
+        request.onreadystatechange = function () {
+            if (request.readyState === 4 && request.status === 200) {
+                $('#modalCargando').modal('hide');
+                Swal.fire({
+                    title: 'Archivo abierto en una nueva pestaña',
+                    text: 'Si no es así, revise la configuración de las pantallas emergentes (pop-up) de su navegador.',
+                    icon: 'info',
+                    confirmButtonText: 'ACEPTAR'
+                });
+                file = new Blob([request.response], { type: 'application/pdf' });
+                if (window.navigator && window.navigator.msSaveOrOpenBlob) { // IE
+                    window.navigator.msSaveOrOpenBlob(file);
+                } else {
+                    fileURL = URL.createObjectURL(file);
+                    window.open(fileURL);
+
+                }
+            }
+        };
+    }
+    var Prefactura_id;
+    function cerrarPrefactura(prefactura_id, num_prefactura, cliente_id, nombre_cliente, usoCFDI) {
+        if (cliente_id == 0) {
+            Swal.fire({
+                title: 'Para facturar, debe asignar un cliente facturador para esta prefactura',
+                icon: 'error',
+                confirmButtonText: 'ACEPTAR',
+            });
+            return;
+        }
+        let uid = '';
+        $.ajax({
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            url: 'http://localhost/Herkace_Shared/Web/api/app_ws/ClientesFacturacion/get_por_id/' + cliente_id,
+            dataType: 'json',
+            async: false,
+            success: function (data) {
+                uid = data.uid;
+            }
+        });
+        if (uid == '') {
+            Swal.fire({
+                title: 'Este cliente requiere modificación, favor de revisarlo en el catálogo Clientes (Facturación) de este sistema.',
+                icon: 'warning',
+                confirmButtonColor: "#28b87a",
+                showCancelButton: true,
+                confirmButtonText: 'IR A CATÁLOGO',
+                cancelButtonText: 'CANCELAR',
+                reverseButtons: true,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    modClientesFac();
+                }
+            });
+            return;
+        }
+        Swal.fire({
+            title: `¿Está seguro que desea facturar la prefactura ${num_prefactura}?`,
+            text: 'Una vez facturada, no se podrá agregar o eliminar ninguna verificación. ¿Está seguro de proceder?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: "#d73d32",
+            cancelButtonText: 'CANCELAR',
+            confirmButtonText: 'CONFIRMAR',
+            reverseButtons: true,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $('#modalDatosExtra').modal('show');
+                $('#lblPrefactura').html(num_prefactura);
+                $('#lblFacturador').html(nombre_cliente);
+                $('#cboUsoCFDI').val(usoCFDI).change();
+                Prefactura_id = prefactura_id;
+
+                // var datos = {
+                //     "prefactura_id": prefactura_id
+                // };
+                // $.ajax({
+                //     type: "PUT",
+                //     url: 'http://localhost/Herkace_Shared/Web/api/app_ws/Prefacturas/facturar',
+                //     data: datos,
+                //     dataType: 'json',
+                //     success: function (data) {
+                //         if (data.registrado) {
+                //             Swal.fire({ title: data.mensaje, icon: 'success' });
+                //             listado();
+                //         } else {
+                //             Swal.fire({ title: data.mensaje, icon: 'error' });
+                //         }
+                //     },
+                //     error: function (XMLHttpRequest, textStatus, errorThrown) {
+                //         Swal.fire({ title: 'No se pudo realizar la operación', icon: 'error' });
+                //     }
+                // });
+            }
+        });
+    }
+
+    document.getElementById('txtTipoCambio').oninput = function () {
+        validarModalFacturar();
+    }
+
+    function validarModalFacturar() {
+        $('#radUSD').prop('checked') && $('#txtTipoCambio').val() == '' ? $("#txtTipoCambio").addClass('is-invalid') && $("#cboTipoCambioValid").addClass('mostrar') && $('#btnFacturar').prop('disabled', true) : $("#txtTipoCambio").removeClass('is-invalid') && $("#cboTipoCambioValid").removeClass('mostrar') && $('#btnFacturar').prop('disabled', false);
+    }
+
+    $('input[name=radMoneda]').change(function () {
+        let tipoCambio = $('#txtTipoCambio').prop('disabled');
+        $('#txtTipoCambio').prop('disabled', !tipoCambio);
+        validarModalFacturar();
+    })
+
+    $('#btnFacturar').click(function () {
+        $('#modalDatosExtra').modal('hide');
+        $('#modalCargando').modal('show');
+        let json_datos_factura = {
+            prefactura_id: Prefactura_id,
+            metodoPago: $('#cboMetodoPago').val(),
+            formaPago: $('#cboFormaPago').val(),
+            tipoCambio: $('#txtTipoCambio').val(),
+            usoCFDI: $('#cboUsoCFDI').val(),
+            moneda: $('input[name=radMoneda]:checked').val()
+        }
+        $.ajax({
+            type: "PUT",
+            url: 'http://localhost/Herkace_Shared/Web/api/app_ws/Prefacturas/facturar',
+            data: json_datos_factura,
+            dataType: 'json',
+            success: function (data) {
+                $('#modalCargando').modal('hide');
+                if (data.registrado) {
+                    Swal.fire({ title: data.mensaje, icon: 'success' });
+                    listado();
+                } else {
+                    Swal.fire({ title: 'ERROR', text: data.mensaje, icon: 'error' });
+                }
+            },
+        });
+    });
+
+    function modClasificador(prefactura_id, num_prefactura, cliente_id, condiciones, vendedor_) {
+        $('[data-toggle="tooltip"]').tooltip('hide');
+        $("#container").empty();
+        $("#container").load("Clasificador/listado.html", function () {
+            mostrarNumPrefactura(prefactura_id, num_prefactura, cliente_id, condiciones, vendedor_);
+        });
+    };
+
+    function getCatalogosParaFactura() {
+        $.ajax({
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            url: 'http://localhost/Herkace_Shared/Web/api/app_ws/UsosCfdi/listado',
+            dataType: 'json',
+            //async: false,
+            success: function (data) {
+                $.each(data, function (key, item) {
+                    var codigoHTML = `<option value='${item.key}'>${item.key} - ${item.name}</option>`;
+                    $('#cboUsoCFDI').append(codigoHTML);
+                });
+                $('#cboUsoCFDI').select2({ width: '100%' });
+            }
+        });
+        $.ajax({
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            url: 'http://localhost/Herkace_Shared/Web/api/app_ws/FormasPago/listado',
+            dataType: 'json',
+            //async: false,
+            success: function (data) {
+                $.each(data, function (key, item) {
+                    var codigoHTML = `<option value='${item.key}'>${item.key} - ${item.name}</option>`;
+                    $('#cboFormaPago').append(codigoHTML);
+                });
+                $('#cboFormaPago').select2({ width: '100%' });
+            }
+        });
+        $.ajax({
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            url: 'http://localhost/Herkace_Shared/Web/api/app_ws/MetodosPago/listado',
+            dataType: 'json',
+            //async: false,
+            success: function (data) {
+                $.each(data, function (key, item) {
+                    var codigoHTML = `<option value='${item.key}'>${item.key} - ${item.name}</option>`;
+                    $('#cboMetodoPago').append(codigoHTML);
+                });
+                $('#cboMetodoPago').select2({ width: '100%' });
+            }
+        });
+    }
+
+</script>

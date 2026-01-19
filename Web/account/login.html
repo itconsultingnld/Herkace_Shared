@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Favicon icon -->
+    <!--<link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon.png">-->
+    <link rel="apple-touch-icon" sizes="57x57" href="../assets/images/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="../assets/images/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="../assets/images/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="../assets/images/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="../assets/images/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="../assets/images/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="../assets/images/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="../assets/images/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="../assets/images/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="../assets/images/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="../assets/images/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon-16x16.png">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
+    <title>Inicio de Sesion | Herkace</title>
+    <!-- Custom CSS -->
+    <link href="../css/style.min.css" rel="stylesheet">
+
+    <style>
+        button {
+            border-radius: 25px !important;
+        }
+
+        .div-forma {
+            padding: 10px;
+            background-color: white;
+            border-radius: 5px;
+        }
+
+        .invalid-feedback {
+            font-size: 14px;
+            color: red;
+        }
+
+        .swal-height {
+            height: 400px;
+        }
+    </style>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+</head>
+
+<body>
+    <div class="main-wrapper">
+        <!-- ============================================================== -->
+        <!-- Preloader - style you can find in spinners.css -->
+        <!-- ============================================================== -->
+        <div class="preloader">
+            <div class="lds-ripple">
+                <div class="lds-pos"></div>
+                <div class="lds-pos"></div>
+            </div>
+        </div>
+        <!-- ============================================================== -->
+        <!-- Preloader - style you can find in spinners.css -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Login box.scss -->
+        <!-- ==============================================================  align-items-center-->
+        <div class="auth-wrapper d-flex no-block justify-content-center bg-dark">
+            <div class="auth-box bg-dark ">
+                <div id="loginform" class="div-forma">
+                    <div class="text-center p-t-20 p-b-20">
+                    </div>
+                    <!-- Form -->
+                    <form class="form-horizontal mt-20" id="loginform2">
+                        <div class="row p-b-30">
+                            <div class="col-12">
+                                <div class="input-group mb-3">
+                                    <input type="text" id="Email" class="form-control form-control-lg"
+                                        placeholder="Usuario" aria-label="Email" aria-describedby="basic-addon1"
+                                        required="Ingrese su Correo Electronico" value="">
+                                </div>
+                                <div class="input-group mb-3">
+                                    <input type="password" id="Password" class="form-control form-control-lg"
+                                        placeholder="Contraseña" aria-label="contraseña" aria-describedby="basic-addon1"
+                                        required="Ingrese su Contraseña" value="">
+                                </div>
+                                <div class="input-group mb-3">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input id="ShowPassword" type="checkbox">
+                                            <span style="color:black" class="text">Mostrar Contraseña</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <div class="p-t-20 text-center">
+                                        <button id="BtnLogin" type="button" class="btn btn-warning "
+                                            data-toggle="tooltip" href="javascript:;" onclick="postLogin()"
+                                            role="button">Iniciar
+                                            sesión</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <div class="p-t-20 text-center">
+                                        <button class="btn btn-info" id="to-recover" type="button">
+                                            <i class="fa fa-lock m-r-5"></i>
+                                            ¿Contraseña perdida?
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <br>
+                    <div class="text-center p-t-20 p-b-20 mt-3 mb-3">
+                    </div>
+                    <br>
+                </div>
+                <div id="recoverform" class="div-forma">
+                    <!-- Form -->
+                    <form class="form-horizontal m-t-20">
+                        <div class="row p-b-30">
+                            <p class="col-12" id="pRecover" style="margin-top: 12px;">
+                                Ingrese el nombre de usuario
+                            </p>
+                            <div class="col-12">
+                                <div class="input-group mb-3">
+                                    <input type="text" id="EmailRecover" class="form-control form-control-lg"
+                                        placeholder="Usuario" required="Ingrese su nombre de usuario" value="">
+                                    <div class="invalid-feedback" id="txtRecoverValid">
+                                        Debe tener al menos 4 caracteres
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <div class="p-t-20 text-center">
+                                        <button id="btnRecover" class="btn btn-info" type="button" disabled>
+                                            Continuar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <div class="p-t-20 text-center">
+                                        <button id="to-login" type="button" class="btn btn-warning"
+                                            data-toggle="tooltip" href="javascript:;" role="button">
+                                            <i class="fa fa-arrow-left m-r-5"></i>
+                                            Volver a inicio de sesión
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <br>
+                    <div class="text-center p-t-20 p-b-20 mt-3 mb-3">
+                    </div>
+                    <br>
+                </div>
+
+            </div>
+        </div>
+        <!-- ============================================================== -->
+        <!-- Login box.scss -->
+        <!-- ============================================================== -->
+    </div>
+    <!-- ============================================================== -->
+    <!-- All Required js -->
+    <!-- ============================================================== -->
+    <script src="../assets/libs/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap tether Core JavaScript -->
+    <script src="../assets/libs/popper.js/dist/umd/popper.min.js"></script>
+    <script src="../assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="../js/jwt-decode.js"></script>
+    <script src="../js/keex.js"></script>
+    <!-- ============================================================== -->
+    <!-- This page plugin js -->
+    <!-- ============================================================== -->
+    <!-- <link href="../css/sweetalert/sweetalert.css" rel="stylesheet" />
+    <script src="../js/sweetalert.min.js"></script> -->
+    <!-- <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script> -->
+    <script src="../js/js.cookies.min.js"></script>
+    <script src="../js/sweetaler2.min.js"></script>
+    <script src="../js/strings.js"></script>
+    <script>
+        $(document).ready(function () {
+            //CheckBox mostrar contraseña
+            localStorage.clear();
+            Cookies.remove('tokenSesion');
+            $('#ShowPassword').click(function () {
+                $('#Password').attr('type', $(this).is(':checked') ? 'text' : 'password');
+            });
+            // Get the input field
+            var txtPass = document.getElementById("Password");
+            // Execute a function when the user presses a key on the keyboard
+            txtPass.addEventListener("keypress", function (event) {
+                // If the user presses the "Enter" key on the keyboard
+                if (event.key === "Enter") {
+                    // Cancel the default action, if needed
+                    event.preventDefault();
+                    // Trigger the button element with a click
+                    document.getElementById("BtnLogin").click();
+                }
+            });
+        });
+        $('[data-toggle="tooltip"]').tooltip();
+        $(".preloader").fadeOut();
+        // ============================================================== 
+        // Login and Recover Password 
+        // ============================================================== 
+        $('#to-recover').on("click", function () {
+            $("#loginform").slideUp();
+            $("#recoverform").fadeIn();
+        });
+        $('#to-login').click(function () {
+            $("#recoverform").hide();
+            $("#loginform").fadeIn();
+            $("#EmailRecover").removeClass('is-invalid');
+            $("#EmailRecover").val('');
+            $("#btnRecover").prop('disabled', true);
+        });
+        function postLogin() {
+            var email = document.getElementById("Email").value;
+            var pass = document.getElementById("Password").value;
+            if (email != "" && pass != "") {
+                var json = {
+                    "username": email,
+                    "password": pass
+                };
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    url: "http://localhost/Herkace_Shared/Web/api/app_ws/Auth/authenticateUsuInspEmp",
+                    data: JSON.stringify(json),
+                    async: false,
+                    success: function (response) {
+                        var decoded = jwt_decode(response.token);
+                        document.cookie = "tokenSesion=" + response.token + "; path=/; max-age=" + decoded.exp + "";
+                        var datos = decoded.datos;
+                        if (datos.message == "Autentificado" && datos.activo == true) {
+                            localStorage.setItem("AA", datos.nombre);
+                            localStorage.setItem("AB", datos.correo);
+                            localStorage.setItem("AD", datos.activo.toString().toLowerCase());
+                            localStorage.setItem("AE", datos.idusuario);
+                            localStorage.setItem("AF", datos.message);
+                            localStorage.setItem("BA", response.token);
+                            localStorage.setItem("rol_id", datos.rol_id);
+                            location.href = "../index.html";
+                        } else {
+                            Swal.fire({ title: 'Inicio de sesión', html: 'No es posible iniciar sesión con el usuario indicado. <br /> Verifique que su usuario y contraseña son correctos', icon: 'error' });
+                        }
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        Swal.fire({ title: 'Inicio de sesión', html: 'No fue posible iniciar sesión verifique sus datos de acceso. <br/> Debe respetar mayúsculas y minúsculas. <br/> Si continúa con problemas intente iniciar sesión más tarde.', icon: 'error' });
+                    }
+                })
+            }
+            else {
+                Swal.fire({ title: 'Inicio de sesión', html: 'Los campos \"Usuario\" y \"Contraseña\" son obligatorios', icon: 'error' });
+            }
+        };
+        $("#EmailRecover").keyup(function () {
+            valDatoRecover();
+        });
+        function valDatoRecover() {
+            var txt = $("#EmailRecover").val();
+            if (txt.length >= 4) {
+                $("#EmailRecover").removeClass('is-invalid');
+                $("#btnRecover").prop('disabled', false);
+            } else {
+                $("#EmailRecover").addClass('is-invalid');
+                $("#btnRecover").prop('disabled', true);
+            }
+        }
+        $("#btnRecover").click(function () {
+            var jsonDatos = {
+                "username": $("#EmailRecover").val()
+            };
+            $.ajax({
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                url: "http://localhost/Herkace_Shared/Web/api/app_ws/Auth/recover_pass",
+                data: JSON.stringify(jsonDatos),
+                dataType: 'json',
+                success: function (data) {
+                    if (data.enviado) {
+                        Swal.fire({
+                            title: 'Solicitud enviada',
+                            text: 'En caso de que el usuario esté en el sistema, se enviará al correo registrado los pasos a seguir para continuar con el proceso.',
+                            icon: 'success',
+                            allowOutsideClick: false,
+                            allowEscapeKey: false,
+                            showConfirmButton: true
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                location.href = "login.html";
+                            }
+                        });
+                    } else {
+                        Swal.fire({
+                            title: 'El servicio no está disponible temporalmente. Por favor, intente más tarde.',
+                            icon: 'error',
+                            showConfirmButton: true
+                        });
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

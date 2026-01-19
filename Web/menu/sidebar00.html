@@ -1,0 +1,67 @@
+<!-- MENU sidebar-->
+<script src="js/sidebarmenu.js"></script>
+
+<nav class="sidebar-nav" style="background-color: #306a76;">
+    <ul id="sidebarnav" class="p-t-30">
+        <li id="dashboard" class="sidebar-item">
+            <a class="sidebar-link waves-effect waves-dark" href="javascript:;" aria-expanded="false" onclick="modDashboard();">
+                <i class="fa fa-home"></i>
+                <span class="hide-menu">Dashboard</span>
+            </a>
+        </li>
+        <li id="catalogos" class="sidebar-item">
+            <a class="sidebar-link waves-effect waves-dark" href="javascript:;" aria-expanded="false" onclick="modCatalogos();">
+                <i class="fa fa-list"></i>
+                <span class="hide-menu">Catálogos</span>
+            </a>
+        </li>
+        <li id="verificaciones" class="sidebar-item">
+            <a class="sidebar-link waves-effect waves-dark" href="javascript:;" aria-expanded="false" onclick="modVerificaciones();">
+                <i class="fa fa-clipboard-list"></i>
+                <span class="hide-menu">Verificaciones</span>
+            </a>
+        </li>
+        <li id="reportes" class="sidebar-item">
+            <a class="sidebar-link waves-effect waves-dark" href="javascript:;" aria-expanded="false" onclick="">
+                <i class="fa fa-table"></i>
+                <span class="hide-menu">Reportes</span>
+            </a>
+            <ul aria-expanded="false" class="collapse  first-level">
+                <li id="reportesNumeroOrdenes" class="sidebar-item">
+                    <a href="javascript:;" aria-expanded="false" class="sidebar-link" onclick="modReportesNumeroOrdenes();">
+                        <i class="fa fa-file-invoice"></i>
+                        <span class="hide-menu">
+                            Número de órdenes
+                        </span>
+                    </a>
+                </li>
+                <li id="reportesVerificaciones" class="sidebar-item">
+                    <a href="javascript:;" aria-expanded="false" class="sidebar-link" onclick="modReportesVerificaciones();">
+                        <i class="fa fa-clipboard-list" aria-hidden="true"></i>
+                        <span class="hide-menu">
+                            Reportes verificaciones</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <!-- <li id="clasificador" class="sidebar-item">
+            <a class="sidebar-link waves-effect waves-dark" href="javascript:;" aria-expanded="false" onclick="modClasificador(1, 'RKC-1000',0,'',0,);">
+                <i class="fa fa-list-check"></i>
+                <span class="hide-menu">Clasificador</span>
+            </a>
+        </li> -->
+        <li id="prefacturas" class="sidebar-item">
+            <a class="sidebar-link waves-effect waves-dark" href="javascript:;" aria-expanded="false" onclick="modPrefacturas();">
+                <i class="fa fa-file-invoice"></i>
+                <span class="hide-menu">Prefacturas</span>
+            </a>
+        </li>
+        <div style="height: 25px;"></div>
+        <li class="sidebar-item">
+            <a class="sidebar-link waves-effect waves-dark" href="account/login">
+                <i class="fa fa-power-off text-rojo"></i>
+                <span class="hide-menu">Cerrar sesión </span>
+            </a>
+        </li>
+    </ul>
+</nav>

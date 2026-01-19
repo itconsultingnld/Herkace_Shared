@@ -1,0 +1,889 @@
+<!-- ============================================================== -->
+<!-- breadcrumb -->
+<!-- ============================================================== -->
+<div class="page-breadcrumb">
+    <div class="row">
+        <div class="col-12 d-flex no-block align-items-center">
+            <h4 class="page-title">Agregar verificaciones a orden</h4>
+            <div class="ml-auto text-right">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item active">
+                            <a href="javascript:;" onclick="modDashboard();">Dashboard</a>
+                        </li>
+                        <li class="breadcrumb-item active">Agregar verificaciones a orden</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .form-group {
+        margin-bottom: 0px;
+    }
+
+    .form-control-label {
+        margin-bottom: 16px;
+    }
+
+    .select2-selection__rendered {
+        line-height: 31px !important;
+    }
+
+    .select2-container .select2-selection--single {
+        height: 35px !important;
+    }
+
+    .select2-selection__arrow {
+        height: 34px !important;
+    }
+
+    [class^='select2'] {
+        border-radius: 0px !important;
+    }
+
+    #modalAgregarCliente .form-control-label {
+        margin-top: 8px;
+    }
+
+    #modalAgregarVehiculo .form-control-label {
+        margin-bottom: 12px;
+    }
+
+    @media(max-width: 768px) {
+
+        #txtACondiciones,
+        #cboVendedor {
+            width: 100%;
+        }
+
+        .labelx {
+            text-align: center !important;
+        }
+    }
+
+    @media(max-width: 574px) {
+
+        #txtACondiciones,
+        #cboVendedor {
+            width: 100%;
+        }
+
+        .labelx {
+            text-align: center !important;
+        }
+    }
+
+    @media(max-width: 425px) {
+
+        #txtACondiciones,
+        #cboVendedor {
+            width: 100%;
+        }
+
+        .labelx {
+            text-align: center !important;
+        }
+    }
+</style>
+<!-- ============================================================== -->
+<!-- End breadcrumb -->
+<!-- ============================================================== -->
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12"><br></div>
+        <div class="row col-lg-12 cuadroInsertar">
+            <div class="col-lg-12">
+            </div>
+            <div class="col-lg-12">
+                <h4>Datos del cliente</h4>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="form-group align-items-center row">
+                            <label for="cboCliente" class="col-lg-3 form-control-label text-right labelx">Cliente (Gestor):</label>
+                            <div class="col-lg-9">
+                                <p class="form-control-static">
+                                    <select class="form-control" id="cboClienteAFacturar"></select>
+                                <div class="invalid-feedback" id="cboClienteValid"></div>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="form-group align-items-center row">
+                            <label for="txtCondiciones"
+                                class="col-lg-3 form-control-label text-right labelx">Observaciones:</label>
+                            <div class="col-lg-9">
+                                <p class="form-control-static">
+                                    <textarea name="txtCondiciones" id="txtACondiciones" cols="85" rows="5"
+                                        oninput="inputMayus(this);"></textarea>
+                                <div class="invalid-feedback" id="txtCondicionesValid"></div>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="form-group align-items-center row">
+                            <label for="cboVendedor"
+                                class="col-lg-3 form-control-label text-right labelx">Vendedor:</label>
+                            <div class="col-lg-9">
+                                <p class="form-control-static">
+                                    <select class="form-control" id="cboVendedor"></select>
+                                <div class="invalid-feedback" id="cboVendedorValid"></div>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 text-center">
+                        <button id="btnGuardarDatosOrden" type="button" class="btn btn-inline btn-success">
+                            Guardar cambios
+                        </button>
+                    </div>
+                    <div class="col-lg-12">
+                        <hr />
+                    </div>
+                    <div class="col-lg-12 text-center">
+                        <button type="button" class="btn btn-primary" id="btnGenerarRegistro">
+                            <i class="fa fa-plus"></i>
+                        </button>
+                        <button type="button" class="btn btn-info" id="btnGuardarRegistro">
+                            <i class="fa-solid fa-floppy-disk"></i>
+                        </button>
+                        <button type="button" class="btn btn-success" id="btnExcelNumeroServicios">
+                            <i class="fa-solid fa-file-csv"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <hr />
+                </div>
+                <div class="col-md-12 mt-4 mb-3 text-center">
+                    <button type="button" class="btn btn-success btn-lg btn-block" id="btnExcelOrdenesServicios">
+                        <i class="fa fa-file-excel"></i> Generar reporte
+                    </button>
+                </div>
+                <div class="col-md-12 mt-2 mb-3 text-center">
+                    <button type="button" class="btn btn-warning btn-lg btn-block" id="btnAutorizaVerif"
+                        onclick="autorizaVerif();">
+                        <i class="fa fa-clipboard-list"></i> Autorizar verificaciones
+                    </button>
+                </div>
+                <div class="table-responsive">
+                    <table id="tblOrdenes" class="table table-bordered table-hover table-light">
+                        <thead class="thead-light">
+                            <tr>
+                                <th class="align-middle text-center"><b>Elimiar</b></th>
+                                <th class="align-middle text-center"><b>Cliente</b></th>
+                                <th class="align-middle text-center"><b>Unidad</b></th>
+                                <th class="align-middle text-center"><b><i
+                                            class="fa-solid fa-magnifying-glass mr-2"></i>NIV</b></th>
+                                <th class="align-middle text-center"><b><i
+                                            class="fa-solid fa-magnifying-glass mr-2"></i>Placa</b></th>
+                                <th class="align-middle text-center"><b><i
+                                            class="fa-solid fa-magnifying-glass mr-2"></i>Tarjeta Circulación.</b></th>
+                                <th class="align-middle text-center">
+                                    <b>Tipo de Verificación</b>
+                                </th>
+                                <th class="align-middle text-center">
+                                    <b><i class="fa-solid fa-magnifying-glass mr-2"></i>Tarifa</b>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- MODAL ELIMINAR -->
+            <div id="modalEliminar" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog"
+                aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="modal-close" data-dismiss="modal" aria-label="Close">
+                                <i class="fa fa-times"></i>
+                            </button>
+                            <h4 class="modal-title" id="myModalLabel">Confirmación</h4>
+                        </div>
+                        <div class="modal-body">
+                            <strong>¿Está seguro que desea eliminar el elemento?</strong>
+                            <br />
+                            No podrá deshacer esta acción.
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-inline btn-default"
+                                data-dismiss="modal">Cancelar</button>
+                            <button id="btnEliminar" type="button" class="btn btn-inline btn-danger"
+                                data-dismiss="modal">Eliminar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- FIN MODAL ELIMINAR -->
+            <!-- MODAL AGREGAR VERIFICACIÓN PARCIAL -->
+            <div id="modalAgregarParcial" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog"
+                aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="modal-close" data-dismiss="modal" aria-label="Close">
+                                <i class="fa fa-times"></i>
+                            </button>
+                            <h4 class="modal-title" id="myModalLabel">Confirmación</h4>
+                        </div>
+                        <div class="modal-body">
+                            <input type="hidden" id="inputHidden" />
+                            <strong>¿Está seguro que desea agregar este elemento como verificación?</strong>
+                            <br />
+                            No podrá deshacer esta acción.
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-inline btn-danger"
+                                data-dismiss="modal">Cancelar</button>
+                            <button id="btnAgregarParcial" type="button" class="btn btn-inline btn-success"
+                                data-dismiss="modal">Agregar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- FIN MODAL AGREGAR VERIFICACIÓN PARCIAL -->
+            <!-- INICIO MODAL AUTORIZAR VERIFICACIONES-->
+            <div id="modalAutorizarVerif" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog"
+                aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="modal-close" data-dismiss="modal" aria-label="Close">
+                                <i class="fa fa-times"></i>
+                            </button>
+                            <h4 class="modal-title" id="myModalLabel">Confirmación</h4>
+                        </div>
+                        <div class="modal-body">
+                            <input type="hidden" id="inputHidden" />
+                            <strong>¿Está seguro que desea agregar TODOS estos elementos como verificaciones?</strong>
+                            <br />
+                            No podrá deshacer esta acción.
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-inline btn-danger"
+                                data-dismiss="modal">Cancelar</button>
+                            <button id="btnAutorizaVerifModal" type="button" class="btn btn-inline btn-success"
+                                data-dismiss="modal">Autorizar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var Cliente_id_fact;
+    var orden_id;
+    var Num_ORDEN;
+    var vendedor;
+    function mostrarNumOrden(orden_id_, num_orden, cliente_id, condiciones, vendedor_) {
+        $(".page-title").html("Agregar verificaciones a orden " + num_orden);
+        Cliente_id_fact = cliente_id;
+        orden_id = orden_id_;
+        Num_ORDEN = num_orden;
+        vendedor = vendedor_;
+        $('#txtACondiciones').val(condiciones);
+    }
+    $(document).ready(function () {
+        $('#btnExcelNumeroServicios').prop('disabled', true);
+        $('#btnExcelOrdenesServicios').prop('disabled', true);
+        $('#btnAutorizaVerif').prop('disabled', true);
+        getUsuarios();
+        getCatalogosOrdenesServicios();
+        getClientes();
+        getOrdenesServicios();
+    });
+
+    function getOrdenesServicios() {
+        $('#tblOrdenes tbody').empty();
+        $.ajax({
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            url: `http://localhost/Herkace_Shared/Web/api/app_ws/OrdenesServicios/listado?orden_id=${orden_id}&activo=1`,
+            dataType: 'json',
+            async: false,
+            success: function (data) {
+                $.each(data, function (key, item) {
+                    tablaOrdenServicios();
+                    let contador = cont - 1;
+                    $('#orden_servicio_id' + contador).val(item.orden_servicio_id);
+                    $('#cboPlacasV' + contador).val(item.vehiculo_id).change();
+                    $('#cboTipoUnidVerif' + contador).val(item.tipo_unidad_verificacion_id).change();
+                    // $('#cboServicio' + contador).val(item.servicio_id).change();
+                    $(`#chkEc${contador}`).prop('checked', item.ec);
+                    $(`#chkFm${contador}`).prop('checked', item.fm);
+                    // $('#cboSubServicio' + contador).val(item.precio_id).change();
+                    if (item.precio_id_ec != 0) {
+                        $(`#cboSubServicioEc${contador}`).val(item.precio_id_ec).change();
+                    }
+                    if (item.precio_id_fm != 0) {
+                        $(`#cboSubServicioFm${contador}`).val(item.precio_id_fm).change();
+                    }
+                    $('#agregarVerifParcial' + contador).removeClass('ocultar');
+                    $('#btnExcelNumeroServicios').prop('disabled', false);
+                    $('#btnExcelOrdenesServicios').prop('disabled', false);
+                    $('#btnAutorizaVerif').prop('disabled', false);
+                    if (item.verif_creada) {
+                        $('#agregarVerifParcial' + contador).removeClass('btn-outline-secondary');
+                        $('#agregarVerifParcial' + contador).addClass('btn-outline-success');
+                        $('#agregarVerifParcial' + contador).html('<i class="fa fa-check"></i>');
+                        $('#agregarVerifParcial' + contador).prop('onclick', '');
+                        $('#agregarVerifParcial' + contador).prop('title', 'Verificación agregada');
+                        $('#EliminarFila' + contador).hide();
+                        $('#cboPlacasV' + contador).prop('disabled', true);
+                        $('#cboTipoUnidVerif' + contador).prop('disabled', true);
+                        // $('#cboServicio' + contador).prop('disabled', true);
+                        $(`#chkEc${contador}`).prop('disabled', true);
+                        $(`#chkFm${contador}`).prop('disabled', true);
+                        $('#cboNIV' + contador).prop('disabled', true);
+                        $('#cboTC' + contador).prop('disabled', true);
+                        // $('#cboSubServicio' + contador).prop('disabled', true);
+                        $(`#cboSubServicioEc${contador}`).prop('disabled', true);
+                        $(`#cboSubServicioFm${contador}`).prop('disabled', true);
+                    } else {
+                        if (item.ec) {
+                            $(`#cboSubServicioEc${contador}`).prop('disabled', false);
+                        }
+                        if (item.fm) {
+                            $(`#cboSubServicioFm${contador}`).prop('disabled', false);
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+    function getUsuarios() {
+        let usuario = localStorage.getItem('AA');
+        let id_usuario = localStorage.getItem('AE');
+        $.ajax({
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            url: 'http://localhost/Herkace_Shared/Web/api/app_ws/Usuarios/listado',
+            dataType: 'json',
+            success: function (data) {
+                $.each(data, function (key, item) {
+                    if (item.activo) {
+                        var codigoHTML = `<option value=${item.usuario_id}>${item.nombre + ' ' + item.ape_pat + ' ' + item.ape_mat}</option>`;
+                        $('#cboVendedor').append(codigoHTML);
+                    }
+                });
+                $('#cboVendedor').select2({});
+                if (vendedor == 0) {
+                    $('#cboVendedor').val(id_usuario).change();
+                } else {
+                    $('#cboVendedor').val(vendedor).change();
+                }
+            }
+        });
+    }
+
+    var TiposUnidadesVerificaciones_ordenes = [];
+    var Servicios_ordenes = [];
+    var Subservicios = [];
+
+    function getCatalogosOrdenesServicios() {
+        vehiculos_ordenes = [];
+        TiposUnidadesVerificaciones_ordenes = [];
+        Servicios_ordenes = [];
+        Subservicios = [];
+
+        $.ajax({
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            url: 'http://localhost/Herkace_Shared/Web/api/app_ws/Vehiculos/listado_vw',
+            dataType: 'json',
+            async: false,
+            success: function (data) {
+                $.each(data, function (key, item) {
+                    if (item.activo) {
+                        vehiculos_ordenes.push(item);
+                    }
+                });
+            }
+        });
+        $.ajax({
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            url: 'http://localhost/Herkace_Shared/Web/api/app_ws/TiposUnidadesVerificaciones/listado',
+            dataType: 'json',
+            async: false,
+            success: function (data) {
+                $.each(data, function (key, item) {
+                    TiposUnidadesVerificaciones_ordenes.push(item)
+                });
+            }
+        });
+        $.ajax({
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            url: 'http://localhost/Herkace_Shared/Web/api/app_ws/Servicios/listado',
+            dataType: 'json',
+            async: false,
+            success: function (data) {
+                $.each(data, function (key, item) {
+                    Servicios_ordenes.push(item);
+                });
+            }
+        });
+        $.ajax({
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            url: 'http://localhost/Herkace_Shared/Web/api/app_ws/Precios/listado_con_servicios',
+            dataType: 'json',
+            async: false,
+            success: function (data) {
+                $.each(data, function (key, objeto) {
+                    let { servicio_id, nombre, precios } = objeto;
+                    $.each(precios, function (key, item) {
+                        Subservicios.push(item);
+                    });
+                });
+            }
+        });
+    }
+
+    function getClientes() {
+        if ($('#cboCliente').hasClass("select2-hidden-accessible")) {
+            $("#cboCliente").select2('destroy');
+            $("#cboCliente").empty();
+        }
+        $.ajax({
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            url: 'http://localhost/Herkace_Shared/Web/api/app_ws/Clientes/clientes?tipo=G',
+            async: false,
+            dataType: 'json',
+            success: function (data) {
+                if ($('#cboClienteAFacturar').html() == "") {
+                    $('#cboClienteAFacturar').append('<option value="0">Seleccione un cliente</option>');
+                    $.each(data, function (key, item) {
+                        var codigoHTML = `<option value=${item.cliente_id}>${item.nombre}</option>`;
+                        $('#cboClienteAFacturar').append(codigoHTML);
+                    });
+                    $('#cboClienteAFacturar').select2({});
+                    $('#cboClienteAFacturar').val(Cliente_id_fact.toString()).change();
+                    cliente_fact();
+                }
+            }
+        });
+    }
+    function cliente_fact() {
+        $('#cboClienteAFacturar').change(function () {
+            var cliente = {
+                "orden_id": orden_id,
+                "cliente_id": $(this).val()
+            }
+            $.ajax({
+                type: "POST",
+                url: 'http://localhost/Herkace_Shared/Web/api/app_ws/Ordenes/cliente_to_orden',
+                async: false,
+                data: cliente,
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data.mensaje);
+                }
+            });
+        });
+    }
+
+    var banderilla = true;
+    var vehiculos_ordenes = [];
+    var cont = 0;
+    var filaPorEliminar = null;
+
+    $('#btnGenerarRegistro').click(function () {
+        tablaOrdenServicios();
+    });
+
+    function eliminarFila(filaId) {
+        let valorHidden = $('#orden_servicio_id' + filaId).val();
+        if (valorHidden == '0') {
+            $("#fila" + filaId).remove();
+        } else {
+            setFilaPorEliminar(valorHidden);
+        }
+    }
+
+    function setFilaPorEliminar(id) {
+        filaPorEliminar = id;
+        $('#modalEliminar').modal('show');
+    }
+
+    function agregarVerifParcial(filaId) {
+        $('#inputHidden').val(filaId);
+        $('#modalAgregarParcial').modal('show');
+    }
+
+    $('#btnAgregarParcial').click(function () {
+        let filaId = $('#inputHidden').val();
+        let orden_servicio_id = $('#orden_servicio_id' + filaId).val();
+
+        let jsonVerifParcial = {
+            "orden_servicio_id": orden_servicio_id
+        }
+        $.ajax({
+            url: "http://localhost/Herkace_Shared/Web/api/app_ws/Verificaciones/agregar_desde_orden_servicio",
+            method: "POST",
+            data: jsonVerifParcial,
+            dataType: "json"
+        }).then(function (result) {
+            if (result['registrado']) {
+                Swal.fire({ title: result['mensaje'], icon: 'success' })
+                getOrdenesServicios();
+            }
+            else {
+                Swal.fire({ title: result['mensaje'], icon: 'warning' })
+            }
+        }).fail(function (err) {
+            Swal.fire({ title: 'Error', icon: 'error' })
+        });
+    })
+
+    $('#btnEliminar').click(function () {
+        let jsonDesactivar = `{
+                "orden_servicio_id":"${filaPorEliminar}"
+            }`
+        $.ajax({
+            url: "http://localhost/Herkace_Shared/Web/api/app_ws/OrdenesServicios/desactivar",
+            method: "PUT",
+            data: JSON.parse(jsonDesactivar),
+            dataType: "json"
+        }).then(function (result) {
+            if (result['cambio']) {
+                Swal.fire({ title: result['mensaje'], icon: 'success' })
+                getOrdenesServicios();
+            }
+            else {
+                Swal.fire({ title: result['mensaje'], icon: 'warning' })
+            }
+        }).fail(function (err) {
+            Swal.fire({ title: 'Error', icon: 'error' })
+        });
+    })
+
+    var estatusBD = false;
+    $('#btnGuardarRegistro').click(function () {
+        let datotes = {};
+        let datos = [];
+        datotes["orden_id"] = orden_id;
+        let contObj = 0;
+        $('#tblOrdenes tbody tr').each(function () {
+            let fila = $(this);
+            let datosFila = {};
+
+            do {
+                if ($('#orden_servicio_id' + contObj).length) {
+                    datosFila['orden_servicio_id'] = $('#orden_servicio_id' + contObj).val();
+                    var chk;
+                    chk = $(`#chkEc${contObj}`)[0];
+                    datosFila['ec'] = chk.checked;
+                    chk = $(`#chkFm${contObj}`)[0];
+                    datosFila['fm'] = chk.checked;
+                    break;
+                } else {
+                    contObj++;
+                }
+            } while (true);
+            fila.find("select").each(function (index) {
+                datosFila["select" + (index + 1)] = $(this).val();
+            });
+            datos.push(datosFila);
+            contObj++;
+        });
+        var valido = true;
+        $.each(datos, function (key, item) {
+            if (!item['ec'] && !item['fm']) {
+                valido = false;
+                return false;
+            }
+        });
+        if (!valido) {
+            Swal.fire({
+                title: 'Verifique que todos los registros cuentan con al menos un tipo de verificación',
+                icon: 'error'
+            });
+            return;
+        }
+        datotes["servicios"] = datos;
+        console.log("Datos a guardar:", datotes);
+
+        $.ajax({
+            url: "http://localhost/Herkace_Shared/Web/api/app_ws/OrdenesServicios/agregar_modificar",
+            method: "POST",
+            data: datotes,
+            dataType: "json",
+            success: function (response) {
+                if (response.estatus) {
+                    Swal.fire({
+                        title: response.mensaje,
+                        icon: 'success'
+                    });
+                    estatusBD = response.estatus;
+                    $('#btnExcelNumeroServicios').prop('disabled', false);
+                    $('#btnExcelOrdenesServicios').prop('disabled', false);
+                    $('#btnAutorizaVerif').prop('disabled', false);
+                    getOrdenesServicios();
+                } else {
+                    Swal.fire({
+                        title: response.mensaje,
+                        icon: 'error'
+                    });
+                    console.warn("No se pudo registrar");
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                // Swal.fire({
+                //     title: 'Ocurrió un error al realizar la operacion. Intente de nuevo más tarde.',
+                //     icon: 'error'
+                // });
+                console.error('Ocurrio un error al insertar');
+            },
+            complete: function (jqXHR, textStatus) {
+                // $("#btnGuardarRegistro").attr("disabled", false);
+            }
+        });
+    });
+
+    function tablaOrdenServicios() {
+        estatusBD = true;
+
+        let nuevaFila = $("<tr id='fila" + cont + "'></tr>");
+        nuevaFila.append("<td class='table-icon-cell text-center'><button id='EliminarFila" + cont + "' onclick='eliminarFila(" + cont + ");' data-fila='" + cont + "' type='button' class='btn btn-inline btn-outline-danger' data-toggle='tooltip' title='Eliminar'><i class='fa fa-times'></i></button><button onclick='agregarVerifParcial(" + cont + ");' data-fila='" + cont + "' type='button' id='agregarVerifParcial" + cont + "' class='btn btn-inline btn-outline-secondary ocultar' data-toggle='tooltip' title='Agregar como verificación'><i class='fa fa-clipboard-list'></i></button></td>");
+        nuevaFila.append("<td><label for='cliente" + cont + "' id='lblCliente" + cont + "'></label><input type='hidden' id='orden_servicio_id" + cont + "' value='0' /></td>");
+        nuevaFila.append("<td><select id='cboTipoUnidVerif" + cont + "'></select></td>");
+        nuevaFila.append("<td><select id='cboNIV" + cont + "'></select></td>");
+        nuevaFila.append("<td><select id='cboPlacasV" + cont + "'></select></td>");
+        nuevaFila.append("<td><select id='cboTC" + cont + "'></select></td>");
+        // nuevaFila.append("<td><select id='cboServicio" + cont + "'></select></td>");
+        nuevaFila.append(`<td><div class="form-check form-check-inline"><input class="form-check-input" type="checkbox" id="chkEc${cont}"><label class="form-check-label" for="chkEc${cont}">EC</label></div><div class="form-check form-check-inline"><input class="form-check-input" type="checkbox" id="chkFm${cont}"><label class="form-check-label" for="chkFm${cont}">FM</label></div></td>`);
+        // nuevaFila.append("<td><select id='cboSubServicio" + cont + "'></select></td>");
+        nuevaFila.append(`<td>EC<select id='cboSubServicioEc${cont}' disabled></select>FM<select id='cboSubServicioFm${cont}' disabled></select></td>`);
+
+        $("#tblOrdenes").append(nuevaFila);
+
+        $.each(vehiculos_ordenes, function (key, item) {
+            $('#cboPlacasV' + cont).append(`<option value=${item.vehiculo_id}>${item.num_placas}</option>`);
+            $('#cboNIV' + cont).append(`<option value=${item.vehiculo_id}>${item.num_serie}</option>`);
+            $('#cboTC' + cont).append(`<option value=${item.vehiculo_id}>${item.tarjeta_circ}</option>`);
+
+            let indice = $('#cboNIV' + cont).prop('selectedIndex');
+            $('#lblCliente' + cont).html(vehiculos_ordenes[indice].cliente);
+        });
+        $('#cboPlacasV' + cont).select2({});
+        $('#cboNIV' + cont).select2({});
+        $('#cboTC' + cont).select2({});
+
+        $.each(TiposUnidadesVerificaciones_ordenes, function (key, item) {
+            $('#cboTipoUnidVerif' + cont).append(`<option value=${item.tipo_unidad_verificacion_id}>${item.nombre}</option>`);
+        });
+        $('#cboTipoUnidVerif' + cont).select2({ minimumResultsForSearch: -1 });
+
+        $.each(Servicios_ordenes, function (key, item) {
+            $('#cboServicio' + cont).append(`<option value=${item.servicio_id}>${item.nombre}</option>`);
+        });
+        $('#cboServicio' + cont).select2({});
+
+        $.each(Subservicios, function (key, item) {
+            // $('#cboSubServicio' + cont).append(`<option value=${item.precio_id}>${item.nombre}</option>`);
+            if ([2, 6].includes(item.servicio_id)) {
+                $(`#cboSubServicioEc${cont}`).append(`<option value=${item.precio_id}>${item.nombre}</option>`);
+            } else {
+                $(`#cboSubServicioFm${cont}`).append(`<option value=${item.precio_id}>${item.nombre}</option>`);
+            }
+        });
+        // $('#cboSubServicio' + cont).select2({});
+        $(`#cboSubServicioEc${cont}`).select2({ width: '100%' });
+        $(`#cboSubServicioFm${cont}`).select2({ width: '100%' });
+
+
+        $('#cboNIV' + cont).change(function () {
+            if (banderilla) {
+                let NIV_ID = this.id;
+                NIV_ID = NIV_ID.replace('cboNIV', '');
+                let indice = $(this).prop('selectedIndex');
+                $('#lblCliente' + NIV_ID).html(vehiculos_ordenes[indice].cliente);
+                let niv = $(this).val();
+                banderilla = false;
+                $('#cboPlacasV' + NIV_ID).val(niv).change();
+                $('#cboTC' + NIV_ID).val(niv).change();
+                banderilla = true;
+            }
+        });
+
+        $('#cboPlacasV' + cont).change(function () {
+            if (banderilla) {
+                let PLACAS_ID = this.id;
+                PLACAS_ID = PLACAS_ID.replace('cboPlacasV', '');
+                let indice = $(this).prop('selectedIndex');
+                $('#lblCliente' + PLACAS_ID).html(vehiculos_ordenes[indice].cliente);
+                let placas = $(this).val();
+                banderilla = false;
+                $('#cboNIV' + PLACAS_ID).val(placas).change();
+                $('#cboTC' + PLACAS_ID).val(placas).change();
+                banderilla = true;
+            }
+        });
+
+        $('#cboTC' + cont).change(function () {
+            if (banderilla) {
+                let TC_ID = this.id;
+                TC_ID = TC_ID.replace('cboTC', '');
+                let indice = $(this).prop('selectedIndex');
+                $('#lblCliente' + TC_ID).html(vehiculos_ordenes[indice].cliente);
+                let tc = $(this).val();
+                banderilla = false;
+                $('#cboPlacasV' + TC_ID).val(tc).change();
+                $('#cboNIV' + TC_ID).val(tc).change();
+                banderilla = true;
+            }
+        });
+        var SubserviciosListaParcial = [];
+        $('#cboServicio' + cont).change(function () {
+            let servicio_ID = this.id;
+            servicio_ID = servicio_ID.replace('cboServicio', '');
+            if ($('#cboSubServicio' + servicio_ID).hasClass("select2-hidden-accessible")) {
+                $('#cboSubServicio' + servicio_ID).select2('destroy');
+                $('#cboSubServicio' + servicio_ID).empty();
+            }
+            SubserviciosListaParcial = [];
+            $.each(Subservicios, function (key, item) {
+                let servicio_id = parseInt($('#cboServicio' + servicio_ID).val());
+                if (item.servicio_id == servicio_id || servicio_id == 0) {
+                    var codigoHTML = `<option value=${item.precio_id}>${item.nombre}</option>`;
+                    $('#cboSubServicio' + servicio_ID).append(codigoHTML);
+                    SubserviciosListaParcial.push(item);
+                }
+                $("#cboSubServicio" + servicio_ID).select2({ width: '100%' });
+            });
+        });
+        $(`#chkEc${cont}`).change(function () {
+            let num_row = this.id;
+            num_row = num_row.replace('chkEc', '');
+            $(`#cboSubServicioEc${num_row}`).prop('disabled', !this.checked);
+        });
+        $(`#chkFm${cont}`).change(function () {
+            let num_row = this.id;
+            num_row = num_row.replace('chkFm', '');
+            $(`#cboSubServicioFm${num_row}`).prop('disabled', !this.checked);
+        });
+        cont++;
+    }
+
+    $('#btnGuardarDatosOrden').click(function () {
+        $('#btnGuardarDatosOrden').prop('disabled', true);
+        var datos = {
+            "orden_id": orden_id,
+            "cliente_id": $('#cboClienteAFacturar').val(),
+            "condiciones": $('#txtACondiciones').val(),
+            "usuario_id_vendedor": $('#cboVendedor').val()
+        }
+        $.ajax({
+            type: "PUT",
+            url: 'http://localhost/Herkace_Shared/Web/api/app_ws/Ordenes/modificar',
+            data: datos,
+            dataType: 'json',
+            success: function (data) {
+                Swal.fire({
+                    title: 'Cambios registrados correctamente',
+                    icon: 'success'
+                });
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                Swal.fire({
+                    title: 'Ocurrió un error al actualizar los datos. Intente de nuevo más tarde.',
+                    icon: 'error'
+                });
+            },
+            complete: function (jqXHR, textStatus) {
+                $('#btnGuardarDatosOrden').prop('disabled', false);
+            }
+        });
+    });
+
+    $("#btnExcelOrdenesServicios").click(function () {
+        $('#modalCargando').modal('show');
+        var Enviar = {
+            "num_orden": Num_ORDEN
+        }
+        var request = new XMLHttpRequest(), file, fileURL;
+        request.open("POST", 'http://localhost/Herkace_Shared/Web/api/app_ws/OrdenesServicios/excel_reportes_servicios_ordenes');
+        request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        request.responseType = "arraybuffer";
+        request.send(JSON.stringify(Enviar));
+        request.onreadystatechange = function () {
+            if (request.readyState === 4 && request.status === 200) {
+                $('#modalCargando').modal('hide');
+                const a = document.createElement('a');
+                document.body.appendChild(a);
+                const blob = new Blob([request.response], {
+                    type: 'octet/stream'
+                });
+                const url = window.URL.createObjectURL(blob);
+                a.href = url;
+                a.download = "Reporte_servicios_ordenes_" + Num_ORDEN + ".xlsx";
+                a.click();
+                window.URL.revokeObjectURL(url);
+            }
+        };
+    });
+
+    $("#btnExcelNumeroServicios").click(function () {
+        $('#modalCargando').modal('show');
+        var Enviar = {
+            "num_orden": Num_ORDEN
+        }
+        var request = new XMLHttpRequest(), file, fileURL;
+        request.open("POST", 'http://localhost/Herkace_Shared/Web/api/app_ws/OrdenesServicios/excel_reporte_numero_servicios');
+        request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        request.responseType = "arraybuffer";
+        request.send(JSON.stringify(Enviar));
+        request.onreadystatechange = function () {
+            if (request.readyState === 4 && request.status === 200) {
+                $('#modalCargando').modal('hide');
+                const a = document.createElement('a');
+                document.body.appendChild(a);
+                const blob = new Blob([request.response], {
+                    type: 'octet/stream'
+                });
+                const url = window.URL.createObjectURL(blob);
+                a.href = url;
+                a.download = "Reporte_numero_servicios_" + Num_ORDEN + ".xlsx";
+                a.click();
+                window.URL.revokeObjectURL(url);
+            }
+        };
+    });
+
+    function autorizaVerif() {
+        $('#modalAutorizarVerif').modal('show');
+    }
+
+    $('#btnAutorizaVerifModal').click(function () { 
+        let datos = {
+            'orden_id': orden_id
+        }
+        $.ajax({
+            url: "http://localhost/Herkace_Shared/Web/api/app_ws/Verificaciones/autorizar_verificaciones",
+            method: "POST",
+            data: datos,
+            dataType: "json"
+        }).then(function (result) {
+            if (result['registrado']) {
+                Swal.fire({ title: result['mensaje'], icon: 'success' })
+                getOrdenesServicios();
+            }
+            else {
+                Swal.fire({ title: result['mensaje'], icon: 'warning' })
+            }
+        }).fail(function (err) {
+            Swal.fire({ title: 'Error', icon: 'error' })
+        });
+    })
+
+</script>

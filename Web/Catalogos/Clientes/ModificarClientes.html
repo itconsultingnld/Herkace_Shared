@@ -1,0 +1,452 @@
+<style>
+    .select2-selection__rendered {
+        line-height: 31px !important;
+    }
+
+    .select2-container .select2-selection--single {
+        height: 35px !important;
+    }
+
+    .select2-selection__arrow {
+        height: 34px !important;
+    }
+</style>
+<!-- ============================================================== -->
+<!-- breadcrumb -->
+<!-- ============================================================== -->
+<div class="page-breadcrumb">
+    <div class="row">
+        <div class="col-12 d-flex no-block align-items-center">
+            <h4 class="page-title">Modificar cliente</h4>
+            <div class="ml-auto text-right">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item active">
+                            <a href="javascript:;" onclick="modDashboard();">Dashboard</a>
+                        </li>
+                        <li class="breadcrumb-item active">
+                            <a href="javascript:;" onclick="modCatalogos();">Catálogos</a>
+                        </li>
+                        <li class="breadcrumb-item active">
+                            <a href="javascript:;" onclick="modClientes();">Clientes</a>
+                        </li>
+                        <li class="breadcrumb-item active">Modificar</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- End breadcrumb -->
+<!-- ============================================================== -->
+<!-- ============================================================== -->
+<!-- Container -->
+<!-- ============================================================== -->
+<div class="container-fluid">
+    <div class="row">
+        <!-- TIPOS MOVIMIENTOS -->
+        <div class="col-sm-12"><br></div>
+        <div class="row col-sm-12 cuadroInsertar">
+            <hr />
+            <div class="col-sm-12">
+                <hr />
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group row">
+                    <label class="col-sm-2 form-control-label">*Tipo de cliente:</label>
+                    <div class="col-sm-10">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" name="cboTipoEmpresa" id="cboxTipoEmpresa"
+                                value="E">
+                            <label class="form-check-label" for="cboxTipoEmpresa">EMPRESA</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" name="cboTipogGestor" id="cboxTipoGestor"
+                                value="G">
+                            <label class="form-check-label" for="cboxTipoGestor">GESTOR</label>
+                        </div>
+                        <div class="invalid-feedback" id="cboTipoClienteValid">
+                            Debe seleccionar al menos un tipo de cliente
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group row">
+                    <label for="txtNombreTipoMovimiento" class="col-sm-2 form-control-label">*Número de cliente:</label>
+                    <div class="col-sm-10">
+                        <input type="number" class="form-control validar" id="txtNumeroCliente"
+                            placeholder="Número de cliente" min="1" required />
+                        <div class="invalid-feedback" id="txtNumeroClienteValid">
+                            El dato ingresado no es válido
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group row">
+                    <label for="txtNombreTipoMovimiento" class="col-sm-2 form-control-label">Nombre del cliente:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control validar" id="txtNombre"
+                            placeholder="Nombre del cliente" minlength="3" maxlength="50" required />
+                        <div class="invalid-feedback" id="txtNombreValid"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group row">
+                    <label for="txtDescripcionTipoMovimiento" class="col-sm-2 form-control-label">*RFC:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control validar" id="txtRFC" placeholder="RFC" minlength="1"
+                            maxlength="13" required />
+                        <div class="invalid-feedback" id="txtRFCValid">RFC inválido</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group row">
+                    <label for="txtDescripcionTipoMovimiento" class="col-sm-2 form-control-label">CURP:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control validar" id="txtCurp" placeholder="CURP" minlength="18"
+                            maxlength="18" required />
+                        <div class="invalid-feedback" id="txtCurpValid"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group row">
+                    <label for="txtDescripcionTipoMovimiento" class="col-sm-2 form-control-label">*Calle:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control validar" id="txtCalle" placeholder="Calle" minlength="4" maxlength="100"
+                            required />
+                        <div class="invalid-feedback" id="txtCalleValid"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group row">
+                    <label for="txtDescripcionTipoMovimiento" class="col-sm-2 form-control-label">*Número:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control validar" id="txtNumero"
+                            placeholder="Número del domicilio" minlength="1" maxlength="20" required />
+                        <div class="invalid-feedback" id="txtNumeroValid"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group row">
+                    <label for="txtDescripcionTipoMovimiento" class="col-sm-2 form-control-label">*Colonia:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control validar" id="txtColonia" placeholder="Colonia"
+                            minlength="1" maxlength="100" required />
+                        <div class="invalid-feedback" id="txtColoniaValid"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group row">
+                    <label for="txtDescripcionTipoMovimiento" class="col-sm-2 form-control-label">*Municipio:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control validar" id="txtMunicipio" placeholder="Municipio"
+                            minlength="4" maxlength="50" required />
+                        <div class="invalid-feedback" id="txtMunicipioValid"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group row">
+                    <label for="txtDescripcionTipoMovimiento" class="col-sm-2 form-control-label">*Estado:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control validar" id="txtEstado" placeholder="Estado"
+                            minlength="4" maxlength="25" required />
+                        <div class="invalid-feedback" id="txtEstadoValid"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group row">
+                    <label for="txtDescripcionTipoMovimiento" class="col-sm-2 form-control-label">*Código
+                        postal:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control validar" id="txtCP" placeholder="Código postal"
+                            minlength="1" maxlength="10" required />
+                        <div class="invalid-feedback" id="txtCPValid"></div>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="col-sm-12">
+                <div class="form-group row">
+                    <label for="txtDescripcionTipoMovimiento" class="col-sm-2 form-control-label">*Correo
+                        electrónico:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control validar" id="txtCorreo"
+                            placeholder="Correo electrónico" minlength="6" maxlength="50" required />
+                        <div class="invalid-feedback" id="txtCorreoValid">
+                            El correo no es válido
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group row">
+                    <label for="cboRegimen" class="col-sm-2 form-control-label">*Régimen fiscal:</label>
+                    <div class="col-sm-10">
+                        <select class="form-control" id="cboRegimen"></select>
+                    </div>
+                </div>
+            </div> -->
+            <div class="col-sm-12">
+                <button href="javascript:;" onclick="modClientes();" type="button"
+                    class="btn btn-inline btn-danger">Cancelar</button>
+                <button id="btnModificarCliente" type="button" class="btn btn-inline btn-success">Modificar</button>
+            </div>
+        </div>
+        <!-- FIN TIPOS MOVIMIENTOS -->
+    </div>
+</div>
+</div>
+<!-- ============================================================== -->
+<!-- End Container -->
+<!-- ============================================================== -->
+<!--This page JavaScript -->
+
+<script>
+    $(document).ready(function () {
+        $("input.validar").each(function () {
+            if (this.id == 'txtNombre') {
+                this.oninput = function () {
+                    inputLetrasNumerosEspacios(this);
+                    inputMayus(this);
+                    validarFormulario();
+                }
+            } else if (this.id == 'txtRFC' || this.id == 'txtCurp') {
+                this.oninput = function () {
+                    inputLetrasNumeros(this);
+                    validarFormulario();
+                }
+            } else if(this.id == 'txtNumero'){
+                this.oninput = function () {
+                    inputLetrasNumerosEspacios(this);
+                    validarFormulario();
+                }
+            } else if (this.id == 'txtCalle') {
+                this.oninput = function () {
+                    inputLetrasNumerosPuntosEspacios(this);
+                    validarFormulario();
+                }
+            } else if (this.id == 'txtColonia') {
+                this.oninput = function () {
+                    validarColonia(this);
+                    inputMayus(this);
+                    validarFormulario();
+                }
+            } else if (this.id == 'txtCP') {
+                this.oninput = function () {
+                    validarNumerosEnteros(this);
+                    validarFormulario();
+                }
+            } else if (this.id == 'txtMunicipio' || this.id == 'txtEstado') {
+                this.oninput = function () {
+                    onlyLetras(this);
+                    inputMayus(this);
+                    validarFormulario();
+                }
+            // } else if (this.id == 'txtCorreo') {
+            //     this.oninput = function () {
+            //         inputMinus(this);
+            //         validarFormulario();
+            //     }
+            } else if (this.id == 'txtNumeroCliente') {
+                this.oninput = function () {
+                    validarFormulario();
+                };
+            } else {
+                this.oninput = function () {
+                    inputMayus(this);
+                    validarFormulario();
+                };
+            }
+            if (this.id != 'txtNumeroCliente') {
+                const minLength = parseInt($(this).attr("minlength"));
+                $("#" + this.id + "Valid").html(`El campo debe contener al menos ${minLength} caracteres.`);
+            }
+        });
+        $('#txtNumeroCliente').keypress(function (key) {
+            if (key.charCode === 101 || key.charCode === 69 || key.charCode === 46) {
+                return false; // Evita agregar "e" o "."
+            }
+            if (this.value.length == 9) {
+                return false;
+            }
+        });
+    });
+    // function getRegimenes() {
+    //     $.ajax({
+    //         type: "GET",
+    //         contentType: "application/json; charset=utf-8",
+    //         url: 'http://localhost/Herkace_Shared/Web/api/app_ws/Regimenes/listado',
+    //         dataType: 'json',
+    //         async: false,
+    //         success: function (data) {
+    //             $.each(data, function (key, item) {
+    //                 var codigoHTML = `<option value=${item.regimen_id}>${item.regimen}</option>`;
+    //                 $('#cboRegimen').append(codigoHTML);
+    //             });
+    //             $('#cboRegimen').select2({});
+    //         }
+    //     });
+    // }
+
+    // Inputmask("email").mask("#txtCorreo");
+    // Inputmask("999-999-9999").mask("#txtTelefono");
+
+    // $("#txtCorreo").focus(function() {
+    //     $("#btnModificarCliente").prop('disabled', true);
+    // });
+
+    function validarFormulario() {
+        var error = false;
+        $("input.validar").each(function () {
+            var value = $(this).val();
+            var id = this.id;
+            const minLength = parseInt($(this).attr("minlength"));
+            var valido;
+            if (id == 'txtNumeroCliente') {
+                var num = parseInt(value);
+                valido = !(isNaN(num) || num == 0);
+            } else if (id == 'txtCurp') {
+                valido = true;
+            } else if(id == 'txtCalle') {
+                valido = value.trim().length >= minLength && strNoEsSoloNumerosNiVacio(value);
+            } else if(id == 'txtNumero'){
+                valido = !value.trim() == '' && value.trim().length >= minLength;
+            // } else if (id == 'txtCorreo') {
+            //     valido = validateEmail(value);
+            } else {
+                valido = value.length >= minLength;
+            }
+            if (valido) {
+                $(this).removeClass('is-invalid');
+                $("#" + id + "Valid").removeClass('mostrar');
+            } else {
+                $(this).addClass('is-invalid');
+                $("#" + id + "Valid").addClass('mostrar');
+                error = true;
+            }
+        });
+        $("#btnModificarCliente").attr("disabled", error);
+    }
+
+    // var urlParams = new URLSearchParams(window.location.search);
+    // var clienteID = urlParams.get('ClienteID');
+    var ClienteID;
+
+    function cargarDatosClientes(clienteID) {
+        $('#modalCargando').modal('show');
+        // getRegimenes();
+        ClienteID = clienteID;
+        $.ajax({
+            url: "http://localhost/Herkace_Shared/Web/api/app_ws/Clientes/clientePorID/" + clienteID,
+            method: "GET",
+            success: function (item) {
+                $("#txtNumeroCliente").val(item.numero_cliente);
+                if (item.tipo_empresa) {
+                    $('#cboxTipoEmpresa').prop('checked', true);
+                }
+                if (item.tipo_gestor) {
+                    $('#cboxTipoGestor').prop('checked', true);
+                }
+                $('#txtNombre').val(item.nombre);
+                $('#txtRFC').val(item.rfc);
+                $('#txtCurp').val(item.curp);
+                $('#txtCalle').val(item.calle);
+                $('#txtNumero').val(item.numero);
+                $('#txtColonia').val(item.colonia);
+                $('#txtMunicipio').val(item.municipio);
+                $('#txtEstado').val(item.estado);
+                $('#txtCP').val(item.codigo_postal);
+                // $('#txtCorreo').val(item.correo);
+                // $('#cboRegimen').val(item.regimen_id).change();
+            },
+            complete: function (jqXHR, textStatus) {
+                $('#modalCargando').modal('hide');
+            }
+        });
+    }
+
+    var DatosCliente = [], Arrtipo_cliente = [];
+    var tipo_cliente;
+    $('#btnModificarCliente').click(function () {
+        if ($('#cboxTipoEmpresa').prop('checked')) {
+            Arrtipo_cliente.push($('#cboxTipoEmpresa').val());
+        }
+        if ($('#cboxTipoGestor').prop('checked')) {
+            Arrtipo_cliente.push($('#cboxTipoGestor').val());
+        }
+        tipo_cliente = Arrtipo_cliente.join();
+        DatosCliente['TipoCliente'] = tipo_cliente;
+        var numero_cliente = $("#txtNumeroCliente").val();
+        DatosCliente['NombreCliente'] = document.getElementById('txtNombre').value;
+        DatosCliente['RFC'] = document.getElementById('txtRFC').value;
+        DatosCliente['CURP'] = document.getElementById('txtCurp').value;
+        DatosCliente['Calle'] = document.getElementById('txtCalle').value;
+        DatosCliente['Numero'] = document.getElementById('txtNumero').value;
+        DatosCliente['Colonia'] = document.getElementById('txtColonia').value;
+        DatosCliente['Municipio'] = document.getElementById('txtMunicipio').value;
+        DatosCliente['Estado'] = document.getElementById('txtEstado').value;
+        DatosCliente['CP'] = document.getElementById('txtCP').value;
+        // DatosCliente['Correo'] = document.getElementById('txtCorreo').value;
+        // var regimen_id = $("#cboRegimen").val();
+        if (DatosCliente['NombreCliente'].trim() == '' || DatosCliente['RFC'].trim() == '' || DatosCliente['Calle'].trim() == '' || DatosCliente['Numero'].trim() == '' || DatosCliente['Colonia'].trim() == '' || DatosCliente['Municipio'].trim() == '' || DatosCliente['Estado'].trim() == '' || DatosCliente['CP'].trim() == '') {
+            validarInputs();
+            Swal.fire({ html: true, title: 'Error', text: 'Todos los campos son obligatorios', icon: 'error' });
+            return;
+        }
+        $("#btnModificarCliente").attr("disabled", true);
+        //Se construye el json con los datos obtenidos
+        var jsonDatosCliente = `{
+            "numero_cliente":"${numero_cliente}",
+            "nombre":"${DatosCliente['NombreCliente']}", 
+            "rfc":"${DatosCliente['RFC']}", 
+            "curp":"${DatosCliente['CURP']}", 
+            "calle":"${DatosCliente['Calle']}", 
+            "numero":"${DatosCliente['Numero']}", 
+            "colonia":"${DatosCliente['Colonia']}", 
+            "municipio":"${DatosCliente['Municipio']}", 
+            "estado":"${DatosCliente['Estado']}",  
+            "codigo_postal":"${DatosCliente['CP']}",
+            "tipo_cliente":"${tipo_cliente}"
+        }`;
+
+        //Aquí se debe mandar a llamar el API enviandole el json "jsonDatosCliente"
+        $.ajax({
+            url: `http://localhost/Herkace_Shared/Web/api/app_ws/Clientes/actualizarClientes/${ClienteID}`,
+            method: "PUT",
+            data: JSON.parse(jsonDatosCliente),
+            dataType: "json",
+            success: function (response) {
+                if (response.registrado) {
+                    Swal.fire({
+                        title: 'Actualizado correctamente',
+                        icon: 'success'
+                    });
+                    modClientes();
+                } else {
+                    Swal.fire({
+                        title: response.mensaje,
+                        icon: 'error'
+                    });
+                    $("#btnModificarCliente").attr("disabled", false);
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                Swal.fire({
+                    title: 'Ocurrió un error al actualizar el elemento. Intente de nuevo más tarde.',
+                    icon: 'error'
+                });
+                $("#btnModificarCliente").attr("disabled", false);
+            }
+        });
+    });
+</script>

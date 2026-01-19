@@ -1,0 +1,342 @@
+<!-- ============================================================== -->
+<!-- breadcrumb -->
+<!-- ============================================================== -->
+<div class="page-breadcrumb">
+    <div class="row">
+        <div class="col-12 d-flex no-block align-items-center">
+            <h4 class="page-title">Agregar verificaciones a orden</h4>
+            <div class="ml-auto text-right">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item active">
+                            <a href="javascript:;" onclick="modDashboard();">Dashboard</a>
+                        </li>
+                        <li class="breadcrumb-item active">Agregar verificaciones a orden</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .form-group {
+        margin-bottom: 0px;
+    }
+
+    .form-control-label {
+        margin-bottom: 16px;
+    }
+</style>
+<!-- ============================================================== -->
+<!-- End breadcrumb -->
+<!-- ============================================================== -->
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12"><br /></div>
+        <div class="row col-lg-12 cuadroInsertar">
+            <div class="col-lg-12 row mt-3">
+                <div class="col-lg-6">
+                    <div class="form-group align-items-center row">
+                        <label for="cboCliente" class="col-lg-4 form-control-label text-center text-lg-right">
+                            Cliente:
+                        </label>
+                        <div class="col-lg-8">
+                            <p class="form-control-static">
+                                <select class="form-control" id="cboCliente"></select>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group align-items-center row">
+                        <label for="cboCertificado" class="col-lg-4 form-control-label text-center text-lg-right">
+                            Certificado:
+                        </label>
+                        <div class="col-lg-8">
+                            <p class="form-control-static">
+                                <select class="form-control" id="cboCertificado"></select>
+                            <div class="invalid-feedback" id="cboCertificadoValid">
+                                Debe seleccionar un certificado
+                            </div>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 row mt-3">
+                <div class="col-lg-12">
+                    <div class="form-group align-items-center row">
+                        <label for="txtTipoVerificacion" class="col-lg-4 form-control-label text-center text-lg-right">
+                            Tipo de verificación:
+                        </label>
+                        <div class="col-lg-8">
+                            <p class="form-control-static">
+                                <input type="text" class="form-control" id="txtTipoVerificacion" disabled />
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="form-group align-items-center row">
+                        <label for="txtFecha" class="col-lg-4 form-control-label text-center text-lg-right">
+                            Fecha:
+                        </label>
+                        <div class="col-lg-8">
+                            <p class="form-control-static">
+                                <input type="text" class="form-control" id="txtFecha" disabled />
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="form-group align-items-center row">
+                        <label for="txtNumSerie" class="col-lg-4 form-control-label text-center text-lg-right">
+                            Número de serie:
+                        </label>
+                        <div class="col-lg-8">
+                            <p class="form-control-static">
+                                <input type="text" class="form-control" id="txtNumSerie" disabled />
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="form-group align-items-center row">
+                        <label for="txtTipoVerificacion" class="col-lg-4 form-control-label text-center text-lg-right">
+                            Número de placas:
+                        </label>
+                        <div class="col-lg-8">
+                            <p class="form-control-static">
+                                <input type="text" class="form-control" id="txtNumPlacas" disabled />
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 row mt-3">
+                <div class="col-lg-12">
+                    <div class="form-group align-items-center row">
+                        <label for="txtMarca" class="col-lg-4 form-control-label text-center text-lg-right">
+                            Marca:
+                        </label>
+                        <div class="col-lg-8">
+                            <p class="form-control-static">
+                                <input type="text" class="form-control" id="txtMarca" disabled />
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="form-group align-items-center row">
+                        <label for="txtModelo" class="col-lg-4 form-control-label text-center text-lg-right">
+                            Modelo:
+                        </label>
+                        <div class="col-lg-8">
+                            <p class="form-control-static">
+                                <input type="text" class="form-control" id="txtModelo" disabled />
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="form-group align-items-center row">
+                        <label for="txtTarjetaCirc" class="col-lg-4 form-control-label text-center text-lg-right">
+                            Tarjeta de circulación:
+                        </label>
+                        <div class="col-lg-8">
+                            <p class="form-control-static">
+                                <input type="text" class="form-control" id="txtTarjetaCirc" disabled />
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <button type="button" class="btn btn-inline btn-danger" href="javascript:;"
+                    onclick="modDashboard();">Cerrar</button>
+                <button id="btnAgregar" type="button" class="btn btn-inline btn-success">Agregar</button>
+            </div>
+            <div class="col-lg-12">
+                <hr />
+            </div>
+            <h4>Verificaciones incluidas en la orden</h4>
+            <div class="table-responsive">
+                <table id="tbl" class="table table-bordered table-hover table-light">
+                    <thead class="thead-light">
+                        <tr>
+                            <th class="align-middle text-center"><b>Cliente</b></th>
+                            <th class="align-middle text-center"><b>Folio</b></th>
+                            <th class="align-middle text-center"><b>Tipo de verificación</b></th>
+                            <th class="align-middle text-center"><b>Fecha</b></th>
+                            <th class="align-middle text-center"><b>Número de serie</b></th>
+                            <th class="align-middle text-center"><b>Número de placas</b></th>
+                            <th class="align-middle text-center"><b>Marca</b></th>
+                            <th class="align-middle text-center"><b>Modelo</b></th>
+                            <th class="align-middle text-center"><b>Tarjeta de circulación</b></th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var orden_id;
+    function mostrarNumOrden(orden_id_, num_orden) {
+        $(".page-title").html("Agregar verificaciones a orden " + num_orden);
+        orden_id = orden_id_;
+    }
+    $(document).ready(function () {
+        tabla();
+        $('#modalCargando').modal('show');
+        $.ajax({
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            url: 'http://localhost/Herkace_Shared/Web/api/app_ws/Clientes/clientes',
+            async: false,
+            dataType: 'json',
+            success: function (data) {
+                $.each(data, function (key, item) {
+                    var codigoHTML = `<option value=${item.cliente_id}>${item.nombre}</option>`;
+                    $('#cboCliente').append(codigoHTML);
+                });
+                $('#cboCliente').select2({});
+                cargarCertificados();
+            }
+        });
+    });
+    $('#cboCliente').change(function () {
+        cargarCertificados();
+    });
+    function cargarCertificados() {
+        if ($('#cboCertificado').hasClass("select2-hidden-accessible")) {
+            $("#cboCertificado").select2('destroy');
+            $("#cboCertificado").empty();
+        }
+        $.ajax({
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            url: 'http://localhost/Herkace_Shared/Web/api/app_ws/Verificaciones/listado_agregar_to_orden/' + $('#cboCliente').val(),
+            async: false,
+            dataType: 'json',
+            success: function (data) {
+                $.each(data, function (key, item) {
+                    var codigoHTML = `<option value=${item.verificacion_id}>${item.folio}</option>`;
+                    $('#cboCertificado').append(codigoHTML);
+                });
+                $('#cboCertificado').select2({});
+                $('#modalCargando').modal('hide');
+                cargarVerificacion($('#cboCertificado').val());
+            }
+        });
+    }
+    $('#cboCertificado').change(function () {
+        cargarVerificacion($(this).val());
+    });
+
+    function cargarVerificacion(verificacion_id) {
+        if (verificacion_id == null) {
+            $('#txtTipoVerificacion').val('');
+            $('#txtFecha').val('');
+            $('#txtNumSerie').val('');
+            $('#txtNumPlacas').val('');
+            $('#txtMarca').val('');
+            $('#txtModelo').val('');
+            $('#txtTarjetaCirc').val('');
+            $("#btnAgregar").prop('disabled', true);
+            $('#cboCertificado + span').addClass('is-invalid');
+            $('#cboCertificadoValid').addClass('mostrar');
+        } else {
+            $('#modalCargando').modal('show');
+            $("#btnAgregar").prop('disabled', false);
+            $('#cboCertificado + span').removeClass('is-invalid');
+            $('#cboCertificadoValid').removeClass('mostrar');
+            $.ajax({
+                url: "http://localhost/Herkace_Shared/Web/api/app_ws/Verificaciones/obtener_por_id_vw/" + verificacion_id,
+                async: false,
+                method: "GET",
+                success: function (item) {
+                    $('#txtTipoVerificacion').val(item.tipo_verificacion);
+                    $('#txtFecha').val(item.fecha);
+                    $('#txtNumSerie').val(item.num_serie);
+                    $('#txtNumPlacas').val(item.num_placas);
+                    $('#txtMarca').val(item.marca);
+                    $('#txtModelo').val(item.modelo);
+                    $('#txtTarjetaCirc').val(item.tarjeta_circ);
+                },
+                complete: function (jqXHR, textStatus) {
+                    $('#modalCargando').modal('hide');
+                }
+            });
+        }
+    }
+
+    $('#btnAgregar').click(function () {
+        //Se construye el json con los datos obtenidos
+        var jsonDatos = {
+            "orden_id": orden_id,
+            "verificacion_id": $('#cboCertificado').val()
+        };
+        //Aquí se debe mandar a llamar el API enviandole el json
+        $.ajax({
+            url: "http://localhost/Herkace_Shared/Web/api/app_ws/Verificaciones/asignar_orden",
+            method: "PUT",
+            data: jsonDatos,
+            dataType: "json",
+            success: function (response) {
+                if (response.registrado) {
+                    Swal.fire({
+                        title: 'La verificación ha sido agregada correctamente a la orden',
+                        icon: 'success'
+                    });
+                    cargarCertificados();
+                    tabla();
+                } else {
+                    Swal.fire({
+                        html: true,
+                        title: response.mensaje,
+                        icon: 'error'
+                    });
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                Swal.fire({
+                    title: 'Ocurrió un error al actualizar el elemento. Intente de nuevo más tarde.',
+                    icon: 'error'
+                });
+            }
+        });
+    });
+    function tabla() {
+        if ($.fn.dataTable.isDataTable('#tbl')) {
+            $('#tbl').DataTable().destroy();
+        }
+        $('#tbl tbody').empty();
+        var columnas = [
+            { "data": "cliente" },
+            { "data": "folio" },
+            { "data": "tipo_verificacion" },
+            { "data": "fecha" },
+            { "data": "num_serie" },
+            { "data": "num_placas" },
+            { "data": "marca" },
+            { "data": "modelo" },
+            { "data": "tarjeta_circ" }
+        ];
+        var table = $('#tbl').DataTable({
+            ordering: false, searching: true, info: true, paging: true,
+            language: { 'url': 'assets/extra-libs/DataTables/Spanish.html' },
+            serverSide: false,
+            ajax: {
+                url: `http://localhost/Herkace_Shared/Web/api/app_ws/Verificaciones/listado_vw?orden_id=${orden_id}`,
+                type: 'GET',
+                dataSrc: ""
+            },
+            columns: columnas,
+            initComplete: function () {
+                $(this.api().table().container()).find('input').parent().wrap('<form>').parent().attr('autocomplete', 'off');
+            }
+        });
+    }
+</script>

@@ -1,0 +1,599 @@
+<style>
+    .select2-selection__rendered {
+        line-height: 31px !important;
+    }
+
+    .select2-container .select2-selection--single {
+        height: 35px !important;
+    }
+
+    .select2-selection__arrow {
+        height: 34px !important;
+    }
+</style>
+<!-- ============================================================== -->
+<!-- breadcrumb -->
+<!-- ============================================================== -->
+<div class="page-breadcrumb">
+    <div class="row">
+        <div class="col-12 d-flex no-block align-items-center">
+            <h4 class="page-title">Modificar cliente</h4>
+            <div class="ml-auto text-right">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item active">
+                            <a href="javascript:;" onclick="modDashboard();">Dashboard</a>
+                        </li>
+                        <li class="breadcrumb-item active">
+                            <a href="javascript:;" onclick="modCatalogos();">Catálogos</a>
+                        </li>
+                        <li class="breadcrumb-item active">
+                            <a href="javascript:;" onclick="modClientesFac();">Clientes facturación</a>
+                        </li>
+                        <li class="breadcrumb-item active">Modificar</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- End breadcrumb -->
+<!-- ============================================================== -->
+<!-- ============================================================== -->
+<!-- Container -->
+<!-- ============================================================== -->
+<div class="container-fluid">
+    <div class="row">
+        <!-- TIPOS MOVIMIENTOS -->
+        <div class="col-sm-12"><br></div>
+        <div class="row col-sm-12 cuadroInsertar">
+            <hr />
+            <div class="col-sm-12">
+                <hr />
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group row">
+                    <label for="txtNombreTipoMovimiento" class="col-sm-2 form-control-label">*Número de cliente:</label>
+                    <div class="col-sm-10">
+                        <input type="number" class="form-control validar" id="txtNumeroCliente"
+                            placeholder="Número de cliente" min="1" required />
+                        <div class="invalid-feedback" id="txtNumeroClienteValid">
+                            El dato ingresado no es válido
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group row">
+                    <label class="col-sm-2 form-control-label">*Tipo de persona:</label>
+                    <div class="col-sm-10">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="cboTipo" id="cboTipoFisica" value="F"
+                                checked>
+                            <label class="form-check-label" for="cboTipoFisica">FÍSICA</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="cboTipo" id="cboTipoMoral" value="M">
+                            <label class="form-check-label" for="cboTipoMoral">MORAL</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group row">
+                    <label for="txtNombreTipoMovimiento" class="col-sm-2 form-control-label">*Razón social (sin régimen
+                        capital):</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control validar" id="txtRazonSocial" placeholder="Razón social"
+                            minlength="3" maxlength="50" required />
+                        <div class="invalid-feedback" id="txtRazonSocialValid"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group row">
+                    <label for="txtDescripcionTipoMovimiento" class="col-sm-2 form-control-label">*RFC:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control validar" id="txtRFC" placeholder="RFC" minlength="1"
+                            maxlength="13" required />
+                        <div class="invalid-feedback" id="txtRFCValid">RFC inválido</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group row">
+                    <label for="txtDescripcionTipoMovimiento" class="col-sm-2 form-control-label">CURP:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control validar" id="txtCurp" placeholder="CURP" minlength="18"
+                            maxlength="18" required />
+                        <div class="invalid-feedback" id="txtCurpValid"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group row">
+                    <label for="txtDescripcionTipoMovimiento" class="col-sm-2 form-control-label">*Calle:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control validar" id="txtCalle" placeholder="Calle" minlength="4"
+                            maxlength="30" required />
+                        <div class="invalid-feedback" id="txtCalleValid"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group row">
+                    <label for="txtDescripcionTipoMovimiento" class="col-sm-2 form-control-label">*Número
+                        exterior:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control validar" id="txtNumeroExt" placeholder="Número exterior"
+                            minlength="3" maxlength="300" required />
+                        <div class="invalid-feedback" id="txtNumeroExtValid"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group row">
+                    <label for="txtDescripcionTipoMovimiento" class="col-sm-2 form-control-label">Número
+                        interior:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control validar" id="txtNumeroInt" placeholder="Número interior"
+                            minlength="3" maxlength="300" required />
+                        <div class="invalid-feedback" id="txtNumeroIntValid"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group row">
+                    <label for="txtDescripcionTipoMovimiento" class="col-sm-2 form-control-label">*Colonia:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control validar" id="txtColonia" placeholder="Colonia"
+                            minlength="4" maxlength="50" required />
+                        <div class="invalid-feedback" id="txtColoniaValid"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group row">
+                    <label for="txtDescripcionTipoMovimiento" class="col-sm-2 form-control-label">*Localidad:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control validar" id="txtLocalidad" placeholder="Localidad"
+                            minlength="2" maxlength="50" required />
+                        <div class="invalid-feedback" id="txtLocalidadValid"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group row">
+                    <label for="txtDescripcionTipoMovimiento" class="col-sm-2 form-control-label">*Municipio:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control validar" id="txtMunicipio" placeholder="Municipio"
+                            minlength="4" maxlength="50" required />
+                        <div class="invalid-feedback" id="txtMunicipioValid"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group row">
+                    <label for="txtDescripcionTipoMovimiento" class="col-sm-2 form-control-label">*Estado:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control validar" id="txtEstado" placeholder="Estado"
+                            minlength="4" maxlength="25" required />
+                        <div class="invalid-feedback" id="txtEstadoValid"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group row">
+                    <label for="txtDescripcionTipoMovimiento" class="col-sm-2 form-control-label">*País</label>
+                    <div class="col-sm-10">
+                        <select class="form-control" id="cboPais">
+                            <option value="MEX">MÉXICO</option>
+                            <option value="USA">ESTADOS UNIDOS</option>
+                        </select>
+                    </div>
+                    <div class="invalid-feedback" id="cboPaisValid"></div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group row">
+                    <label for="txtDescripcionTipoMovimiento" class="col-sm-2 form-control-label">*Código
+                        postal:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control validar" id="txtCP" placeholder="Código postal"
+                            minlength="2" maxlength="5" required />
+                        <div class="invalid-feedback" id="txtCPValid"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group row">
+                    <label for="txtDescripcionTipoMovimiento" class="col-sm-2 form-control-label">*Correo
+                        electrónico 1:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="txtCorreo1" placeholder="Correo electrónico 1"
+                            minlength="6" maxlength="50" required />
+                        <!-- <div class="invalid-feedback" id="txtCorreo1Valid">
+                            El correo no es válido
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group row">
+                    <label for="txtDescripcionTipoMovimiento" class="col-sm-2 form-control-label">Correo
+                        electrónico 2:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="txtCorreo2" placeholder="Correo electrónico 2"
+                            minlength="6" maxlength="50" required />
+                        <!-- <div class="invalid-feedback" id="txtCorreo2Valid">
+                            El correo no es válido
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group row">
+                    <label for="txtDescripcionTipoMovimiento" class="col-sm-2 form-control-label">Correo
+                        electrónico 3:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="txtCorreo3" placeholder="Correo electrónico 3"
+                            minlength="6" maxlength="50" required />
+                        <!-- <div class="invalid-feedback" id="txtCorreo3Valid">
+                            El correo no es válido
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group row">
+                    <label for="txtDescripcionTipoMovimiento" class="col-sm-2 form-control-label">Correo
+                        electrónico 4:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="txtCorreo4" placeholder="Correo electrónico 4"
+                            minlength="6" maxlength="50" required />
+                        <!-- <div class="invalid-feedback" id="txtCorreo4Valid">
+                            El correo no es válido
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group row">
+                    <label for="txtDescripcionTipoMovimiento" class="col-sm-2 form-control-label">Correo
+                        electrónico 5:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="txtCorreo5" placeholder="Correo electrónico 5"
+                            minlength="6" maxlength="50" required />
+                        <!-- <div class="invalid-feedback" id="txtCorreo5Valid">
+                            El correo no es válido
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group row">
+                    <label for="cboRegimen" class="col-sm-2 form-control-label">*Régimen fiscal:</label>
+                    <div class="col-sm-10">
+                        <select class="form-control" id="cboRegimen"></select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group row">
+                    <label for="cboUsoCFDI" class="col-sm-2 form-control-label">*Uso de CFDI:</label>
+                    <div class="col-sm-10">
+                        <select class="form-control" id="cboUsoCFDI"></select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <button href="javascript:;" onclick="modClientesFac();" type="button"
+                    class="btn btn-inline btn-danger">Cancelar</button>
+                <button id="btnModificarCliente" type="button" class="btn btn-inline btn-success">Modificar</button>
+            </div>
+        </div>
+        <!-- FIN TIPOS MOVIMIENTOS -->
+    </div>
+</div>
+</div>
+<!-- ============================================================== -->
+<!-- End Container -->
+<!-- ============================================================== -->
+<!--This page JavaScript -->
+
+<script>
+    $(document).ready(function () {
+        $("input.validar").each(function () {
+            if (this.id == 'txtRazonSocial') {
+                this.oninput = function () {
+                    onlyLetras(this);
+                    inputMayus(this);
+                    validarFormulario();
+                }
+            } else if (this.id == 'txtRFC' || this.id == 'txtCurp') {
+                this.oninput = function () {
+                    inputLetrasNumeros(this);
+                    validarFormulario();
+                }
+            } else if (this.id == 'txtNumeroExt' || this.id == 'txtNumeroInt') {
+                this.oninput = function () {
+                    inputLetrasNumerosEspacios(this);
+                    validarFormulario();
+                }
+            } else if (this.id == 'txtCalle') {
+                this.oninput = function () {
+                    inputLetrasNumerosEspacios(this);
+                    validarFormulario();
+                }
+            } else if (this.id == 'txtColonia') {
+                this.oninput = function () {
+                    validarColonia(this);
+                    inputMayus(this);
+                    validarFormulario();
+                }
+            } else if (this.id == 'txtCP') {
+                this.oninput = function () {
+                    validarNumerosEnteros(this);
+                    validarFormulario();
+                }
+            } else if (this.id == 'txtMunicipio' || this.id == 'txtLocalidad' || this.id == 'txtEstado' || this.id == 'txtPais') {
+                this.oninput = function () {
+                    onlyLetras(this);
+                    inputMayus(this);
+                    validarFormulario();
+                }
+                // } else if (this.id == 'txtCorreo') {
+                //     this.oninput = function () {
+                //         inputMinus(this);
+                //         validarFormulario();
+                //     }
+            } else if (this.id == 'txtNumeroCliente') {
+                this.oninput = function () {
+                    validarFormulario();
+                };
+            } else {
+                this.oninput = function () {
+                    inputMayus(this);
+                    validarFormulario();
+                };
+            }
+            if (this.id != 'txtNumeroCliente') {
+                const minLength = parseInt($(this).attr("minlength"));
+                $("#" + this.id + "Valid").html(`El campo debe contener al menos ${minLength} caracteres.`);
+            }
+        });
+        $('#txtNumeroCliente').keypress(function (key) {
+            if (key.charCode === 101 || key.charCode === 69 || key.charCode === 46) {
+                return false; // Evita agregar "e" o "."
+            }
+            if (this.value.length == 9) {
+                return false;
+            }
+        });
+    });
+    function getRegimenes() {
+        $.ajax({
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            url: 'http://localhost/Herkace_Shared/Web/api/app_ws/Regimenes/listado',
+            dataType: 'json',
+            async: false,
+            success: function (data) {
+                $.each(data, function (key, item) {
+                    var codigoHTML = `<option value=${item.key}>${item.key} - ${item.name}</option>`;
+                    $('#cboRegimen').append(codigoHTML);
+                });
+                $('#cboRegimen').select2({});
+            }
+        });
+    }
+    function getUsosCFDI() {
+        $.ajax({
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            url: 'http://localhost/Herkace_Shared/Web/api/app_ws/UsosCfdi/listado',
+            dataType: 'json',
+            async: false,
+            success: function (data) {
+                $.each(data, function (key, item) {
+                    var codigoHTML = `<option value='${item.key}'>${item.key} - ${item.name}</option>`;
+                    $('#cboUsoCFDI').append(codigoHTML);
+                });
+                $('#cboUsoCFDI').select2({});
+            }
+        });
+    }
+
+    function validarFormulario() {
+        var error = false;
+        $("input.validar").each(function () {
+            var value = $(this).val();
+            var id = this.id;
+            const minLength = parseInt($(this).attr("minlength"));
+            var valido;
+            if (id == 'txtNumeroCliente') {
+                var num = parseInt(value);
+                valido = !(isNaN(num) || num == 0);
+            } else if (id == 'txtCurp') {
+                valido = curpValida(value) || value.length == 0;
+            } else if (id == 'txtCalle') {
+                valido = value.trim().length >= minLength && strNoEsSoloNumerosNiVacio(value);
+            } else if (id == 'txtNumeroExt') {
+                valido = !value.trim() == '' && value.trim().length >= minLength;
+            } else if(id == 'txtNumeroInt' ) {
+                valido = value.trim() == '' && value.length == 0;
+                // } else if (id == 'txtCorreo') {
+                //     valido = validateEmail(value);
+            } else {
+                valido = value.length >= minLength;
+            }
+            if (valido) {
+                $(this).removeClass('is-invalid');
+                $("#" + id + "Valid").removeClass('mostrar');
+            } else {
+                $(this).addClass('is-invalid');
+                $("#" + id + "Valid").addClass('mostrar');
+                error = true;
+            }
+        });
+        $("#btnModificarCliente").attr("disabled", error);
+    }
+    var ClienteID;
+    function cargarDatosClientesFacturacion(clienteID) {
+        $('#modalCargando').modal('show');
+        getRegimenes();
+        getUsosCFDI();
+        $('#cboPais').select2({ minimumResultsForSearch: -1 });
+        ClienteID = clienteID;
+        $.ajax({
+            url: "http://localhost/Herkace_Shared/Web/api/app_ws/ClientesFacturacion/get_por_id/" + clienteID,
+            method: "GET",
+            success: function (item) {
+                $("#txtNumeroCliente").val(item.numero_cliente);
+                if (item.tipo_empresa) {
+                    $('#cboxTipoEmpresa').prop('checked', true);
+                }
+                if (item.tipo_gestor) {
+                    $('#cboxTipoGestor').prop('checked', true);
+                }
+                if (item.tipo_facturador) {
+                    $('#cboxTipoFacturador').prop('checked', true);
+                }
+                if (item.tipo_persona == '') {
+                    $("input[name=cboTipo][value=F]").prop('checked', true);
+                } else {
+                    $("input[name=cboTipo][value=" + item.tipo_persona + "]").prop('checked', true);
+                }
+                $('#txtRazonSocial').val(item.razon_social);
+                $('#txtRFC').val(item.rfc);
+                $('#txtCurp').val(item.curp);
+                $('#txtCalle').val(item.calle);
+                $('#txtNumeroExt').val(item.numero_ext);
+                $('#txtNumeroInt').val(item.numero_int);
+                $('#txtColonia').val(item.colonia);
+                $('#txtLocalidad').val(item.localidad);
+                $('#txtMunicipio').val(item.municipio);
+                $('#txtEstado').val(item.estado);
+                $('#txtCP').val(item.codigo_postal);
+                $('#cboPais').val(item.pais).change();
+                $('#txtCorreo1').val(item.correo1);
+                $('#txtCorreo2').val(item.correo2);
+                $('#txtCorreo3').val(item.correo3);
+                $('#txtCorreo4').val(item.correo4);
+                $('#txtCorreo5').val(item.correo5);
+                $('#cboRegimen').val(item.regimen_id).change();
+                $('#cboUsoCFDI').val(item.uso_cfdi).change();
+            },
+            complete: function (jqXHR, textStatus) {
+                $('#modalCargando').modal('hide');
+            }
+        });
+    }
+
+    var DatosCliente = [], Arrtipo_cliente = [];
+    var tipo_cliente;
+    $('#btnModificarCliente').click(function () {
+        if ($('#cboxTipoEmpresa').prop('checked')) {
+            Arrtipo_cliente.push($('#cboxTipoEmpresa').val());
+        }
+        if ($('#cboxTipoGestor').prop('checked')) {
+            Arrtipo_cliente.push($('#cboxTipoGestor').val());
+        }
+        if ($('#cboxTipoFacturador').prop('checked')) {
+            Arrtipo_cliente.push($('#cboxTipoFacturador').val());
+        }
+        tipo_cliente = Arrtipo_cliente.join();
+        DatosCliente['TipoCliente'] = tipo_cliente;
+        var numero_cliente = $("#txtNumeroCliente").val();
+        DatosCliente['TipoPersona'] = $('input[name=cboTipo]:checked').val();
+        DatosCliente['RazonSocial'] = document.getElementById('txtRazonSocial').value;
+        DatosCliente['RFC'] = document.getElementById('txtRFC').value;
+        DatosCliente['CURP'] = document.getElementById('txtCurp').value;
+        DatosCliente['Calle'] = document.getElementById('txtCalle').value;
+        DatosCliente['Numero_Int'] = document.getElementById('txtNumeroInt').value;
+        DatosCliente['Numero_Ext'] = document.getElementById('txtNumeroExt').value;
+        DatosCliente['Colonia'] = document.getElementById('txtColonia').value;
+        DatosCliente['Localidad'] = document.getElementById('txtLocalidad').value;
+        DatosCliente['Municipio'] = document.getElementById('txtMunicipio').value;
+        DatosCliente['Estado'] = document.getElementById('txtEstado').value;
+        DatosCliente['CP'] = document.getElementById('txtCP').value;
+        DatosCliente['Pais'] = $("#cboPais").val();
+        DatosCliente['Correo1'] = document.getElementById('txtCorreo1').value;
+        DatosCliente['Correo2'] = document.getElementById('txtCorreo2').value;
+        DatosCliente['Correo3'] = document.getElementById('txtCorreo3').value;
+        DatosCliente['Correo4'] = document.getElementById('txtCorreo4').value;
+        DatosCliente['Correo5'] = document.getElementById('txtCorreo5').value;
+        var regimen = $("#cboRegimen").val();
+        var uso_cfdi = $("#cboUsoCFDI").val();
+        if (DatosCliente['Correo1'].trim() == '' && DatosCliente['Correo2'].trim() == '' && DatosCliente['Correo3'].trim() == '' && DatosCliente['Correo4'].trim() == '' && DatosCliente['Correo5'].trim() == '') {
+            Swal.fire({ html: false, title: 'Debe ingresar al menos el correo 1', icon: 'warning' });
+            return;
+        }
+        if (DatosCliente['RazonSocial'].trim() == '' || DatosCliente['RFC'].trim() == '' || DatosCliente['Calle'].trim() == '' || DatosCliente['Numero_Ext'].trim() == '' || DatosCliente['Colonia'].trim() == '' || DatosCliente['Localidad'].trim() == '' || DatosCliente['Municipio'].trim() == '' || DatosCliente['Estado'].trim() == '' || DatosCliente['Pais'].trim() == '' || DatosCliente['CP'].trim() == '' || DatosCliente['Pais'].trim() == '') {
+            validarFormulario();
+            Swal.fire({ title: 'Error', text: 'Todos los campos son obligatorios', icon: 'error' });
+            return;
+        }
+        $("#btnModificarCliente").attr("disabled", true);
+        $('#modalCargando').modal('show');
+
+        //Se construye el json con los datos obtenidos
+        var jsonDatosCliente = `{
+            "numero_cliente":"${numero_cliente}",
+            "razon_social":"${DatosCliente['RazonSocial']}", 
+            "tipo":"${DatosCliente['TipoPersona']}", 
+            "rfc":"${DatosCliente['RFC']}", 
+            "curp":"${DatosCliente['CURP']}", 
+            "calle":"${DatosCliente['Calle']}", 
+            "numero_ext":"${DatosCliente['Numero_Ext']}", 
+            "numero_int":"${DatosCliente['Numero_Int']}", 
+            "colonia":"${DatosCliente['Colonia']}", 
+            "municipio":"${DatosCliente['Municipio']}", 
+            "localidad":"${DatosCliente['Localidad']}", 
+            "estado":"${DatosCliente['Estado']}",  
+            "codigo_postal":"${DatosCliente['CP']}",
+            "pais":"${DatosCliente['Pais']}",
+            "correo1":"${DatosCliente['Correo1']}",
+            "correo2":"${DatosCliente['Correo2']}",
+            "correo3":"${DatosCliente['Correo3']}",
+            "correo4":"${DatosCliente['Correo4']}",
+            "correo5":"${DatosCliente['Correo5']}",
+            "regimen":"${regimen}",
+            "uso_cfdi":"${uso_cfdi}",
+            "cliente_facturacion_id":"${ClienteID}"
+        }`;
+
+        //Aquí se debe mandar a llamar el API enviandole el json "jsonDatosCliente"
+        $.ajax({
+            url: "http://localhost/Herkace_Shared/Web/api/app_ws/ClientesFacturacion/modificar",
+            method: "PUT",
+            data: JSON.parse(jsonDatosCliente),
+            dataType: "json",
+            success: function (response) {
+                $('#modalCargando').modal('hide');
+                if (response.registrado) {
+                    Swal.fire({
+                        title: 'Actualizado correctamente',
+                        icon: 'success'
+                    });
+                    modClientesFac();
+                } else {
+                    Swal.fire({
+                        title: response.mensaje,
+                        icon: 'error'
+                    });
+                    $("#btnModificarCliente").attr("disabled", false);
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                $('#modalCargando').modal('hide');
+                Swal.fire({
+                    title: 'Ocurrió un error al actualizar el elemento. Intente de nuevo más tarde.',
+                    icon: 'error'
+                });
+                $("#btnModificarCliente").attr("disabled", false);
+            }
+        });
+    });
+</script>

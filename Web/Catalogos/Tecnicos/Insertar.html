@@ -1,0 +1,247 @@
+<style>
+    .select2-selection__rendered {
+        line-height: 31px !important;
+    }
+
+    .select2-container .select2-selection--single {
+        height: 35px !important;
+    }
+
+    .select2-selection__arrow {
+        height: 34px !important;
+    }
+
+    .select2-selection {
+        width: 152px;
+    }
+
+    #divSelLadas {
+        width: 152px;
+    }
+</style>
+<!-- ============================================================== -->
+<!-- breadcrumb -->
+<!-- ============================================================== -->
+<div class="page-breadcrumb">
+    <div class="row">
+        <div class="col-12 d-flex no-block align-items-center">
+            <h4 class="page-title">Agregar técnico</h4>
+            <div class="ml-auto text-right">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item active">
+                            <a href="javascript:;" onclick="modDashboard();">Dashboard</a>
+                        </li>
+                        <li class="breadcrumb-item active"><a href="javascript:;"
+                                onclick="modCatalogos();">Catálogos</a></li>
+                        <li class="breadcrumb-item active"><a href="javascript:;" onclick="modTecnicos();">Técnicos</a>
+                        </li>
+                        <li class="breadcrumb-item active">Agregar</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- End breadcrumb -->
+<!-- ============================================================== -->
+<!-- ============================================================== -->
+<!-- Container -->
+<!-- ============================================================== -->
+<div class="container-fluid">
+    <div class="row">
+        <!-- TIPOS MOVIMIENTOS -->
+        <!-- <a href="javascript:;" onclick="modTecnicos();">
+            <button type="button" class="btn-square-icon">
+                <i class="fa fa-reply-all"></i>
+                Volver
+            </button>
+        </a> -->
+        <div class="col-sm-12"><br></div>
+        <div class="row col-sm-12 cuadroInsertar">
+            <hr />
+            <div class="col-sm-12">
+                <hr />
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group row">
+                    <label for="txtNombreTipoMovimiento" class="col-sm-2 form-control-label">*Nombre(s):</label>
+                    <div class="col-sm-10">
+                        <p class="form-control-static">
+                            <input type="text" oninput="this.value = this.value.toUpperCase()"
+                                class="form-control validar" id="txtNombre"
+                                placeholder="Nombre(s)" minlength="3" maxlength="50" required />
+                        <div class="invalid-feedback" id="txtNombreValid"></div>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group row">
+                    <label for="txtDescripcionTipoMovimiento" class="col-sm-2 form-control-label">*Apellido paterno:</label>
+                    <div class="col-sm-10">
+                        <p class="form-control-static">
+                            <input type="text" oninput="this.value = this.value.toUpperCase()"
+                                class="form-control validar" id="txtApe_pat" placeholder="Apellido paterno" minlength="2" maxlength="50" required />
+                        <div class="invalid-feedback" id="txtApe_patValid"></div>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group row">
+                    <label for="txtDescripcionTipoMovimiento" class="col-sm-2 form-control-label">Apellido materno:</label>
+                    <div class="col-sm-10">
+                        <p class="form-control-static">
+                            <input type="text" oninput="this.value = this.value.toUpperCase()"
+                                class="form-control validar" id="txtApe_mat" placeholder="Apellido materno" minlength="1" maxlength="50" required />
+                        <div class="invalid-feedback" id="txtApe_matValid"></div>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group row">
+                    <label for="txtDescripcionTipoMovimiento" class="col-sm-2 form-control-label">Número de control:</label>
+                    <div class="col-sm-10">
+                        <p class="form-control-static">
+                            <input type="text" oninput="this.value = this.value.toUpperCase()"
+                                class="form-control validar" id="txtNumControl" placeholder="Número de control" minlength="2" maxlength="4" required />
+                        <div class="invalid-feedback" id="txtNumControlValid"></div>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group row">
+                    <label for="txtDescripcionTipoMovimiento" class="col-sm-2 form-control-label">*Número de
+                        contacto:</label>
+                    <div class="col-sm-10 input-group" style="height: 35px;">
+                        <input type="tel" class="form-control validar" id="txtTelefono" placeholder="Número de contacto" required />
+                        <div class="invalid-feedback" id="txtTelefonoValid">
+                            El teléfono no es válido
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-sm-12">
+                <button href="javascript:;" onclick="modTecnicos();" type="button"
+                    class="btn btn-inline btn-danger">Cancelar</button>
+                <button id="btnRegistrarTecnico" type="button" class="btn btn-inline btn-success"
+                    disabled>Guardar</button>
+            </div>
+        </div>
+        <!-- FIN TIPOS MOVIMIENTOS -->
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- End Container -->
+<!-- ============================================================== -->
+<!--This page JavaScript -->
+
+<script>
+
+    $(document).ready(function () {
+        $("input.validar").each(function () {
+            if (this.id == 'txtNombre') {
+                this.oninput = function () {
+                    onlyLetras(this);
+                    inputMayus(this);
+                    validarFormulario();
+                };
+            } else if (this.id == 'txtApe_pat' || this.id == 'txtApe_mat' ) {
+                this.oninput = function () {
+                    onlyLetras(this);
+                    inputMayus(this);
+                    validarFormulario();
+                };
+            } else if (this.id == 'txtNumControl') {
+                this.oninput = function () {
+                    inputLetrasNumeros(this);
+                    validarFormulario();
+                };
+            } else {
+                this.oninput = function () {
+                    inputMayus(this);
+                    validarFormulario();
+                };
+            }
+            if (this.id != 'txtTelefono') {
+                const minLength = parseInt($(this).attr("minlength"));
+                $("#" + this.id + "Valid").html(`El campo debe contener al menos ${minLength} caracteres.`);
+            }
+        });
+    });
+
+    function validarFormulario() {
+        var error = false;
+        $("input.validar").each(function () {
+            var value = $(this).val();
+            var id = this.id;
+            const minLength = parseInt($(this).attr("minlength"));
+            var valido;
+            if (id == 'txtNumControl' || id == 'txtApe_mat'){
+                valido = value.length >= minLength || value.length == 0;
+            } else if (id == 'txtTelefono') {
+                valido =!noValidoTelefonoMask(value);
+            } else {
+                valido = value.length >= minLength;
+            }
+            if (valido) {
+                $(this).removeClass('is-invalid');
+                $("#" + id + "Valid").removeClass('mostrar');
+            } else {
+                $(this).addClass('is-invalid');
+                $("#" + id + "Valid").addClass('mostrar');
+                error = true;
+            }
+        });
+        $("#btnRegistrarTecnico").attr("disabled", error);
+    }
+    Inputmask("999-999-9999").mask("#txtTelefono");
+    var DatosTecnico = [];
+    $('#btnRegistrarTecnico').click(function () {
+        DatosTecnico['Nombre'] = document.getElementById('txtNombre').value;
+        DatosTecnico['Ape_pat'] = document.getElementById('txtApe_pat').value;
+        DatosTecnico['Ape_mat'] = document.getElementById('txtApe_mat').value;
+        DatosTecnico['Num_control'] = document.getElementById('txtNumControl').value;
+        DatosTecnico['Telefono'] = document.getElementById('txtTelefono').value;
+        if(DatosTecnico['Ape_pat'].trim() == '' && DatosTecnico['Ape_mat'].trim() == ''){
+            Swal.fire({ title: 'Es obligatorio ingresar el apellido paterno', icon: 'error' });
+            return;
+        }
+        if (DatosTecnico['Nombre'].trim() == '' || DatosTecnico['Telefono'].trim() == '') {
+            Swal.fire({ title: 'Todos los campos son obligatorios', icon: 'error' });
+            return;
+        }
+        $("#btnRegistrarTecnico").attr("disabled", true);
+        //Se construye el json con los datos obtenidos
+        var jsonDatosTecnico = `{
+            "nombre":"${DatosTecnico['Nombre']}", 
+            "ape_pat":"${DatosTecnico['Ape_pat']}", 
+            "ape_mat":"${DatosTecnico['Ape_mat']}", 
+            "num_control":"${DatosTecnico['Num_control']}", 
+            "telefono":"${DatosTecnico['Telefono']}"
+        }`;
+
+
+        //Aquí se debe mandar a llamar el API enviandole el json "jsonDatosTecnico"
+        var request = new XMLHttpRequest()
+        request.open('POST', 'http://localhost/Herkace_Shared/Web/api/app_ws/Tecnicos/insertar_tecnico', true);
+        request.setRequestHeader('Content-type', 'application/json; charset=utf-8');//Se establece que el body será de tipo json con caracterización UTF8
+        request.send(jsonDatosTecnico);
+        request.onload = function () {
+            // Begin accessing JSON data here
+            var res = JSON.parse(this.response);
+
+            if (res['mensaje'] == 'Se inserto el registro') {
+                Swal.fire({ title: 'Registrado correctamente', icon: 'success' });
+                modTecnicos();
+            }
+            else Swal.fire({ title: res.mensaje, icon: 'error' });
+            $("#btnRegistrarTecnico").attr("disabled", false);
+        };
+    });
+</script>

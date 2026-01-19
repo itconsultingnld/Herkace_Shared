@@ -1,0 +1,254 @@
+<!-- ============================================================== -->
+<!-- breadcrumb -->
+<!-- ============================================================== -->
+<div class="page-breadcrumb">
+    <div class="row">
+        <div class="col-12 d-flex no-block align-items-center">
+            <h4 class="page-title">Vehículos</h4>
+            <div class="ml-auto text-right">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item active">
+                            <a href="javascript:;" onclick="modDashboard();">Dashboard</a>
+                        </li>
+                        <li class="breadcrumb-item active">
+                            <a href="javascript:;" onclick="modCatalogos();">Catálogos</a>
+                        </li>
+                        <li class="breadcrumb-item active">Vehículos</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    p {
+        margin-bottom: 0;
+    }
+</style>
+<!-- ============================================================== -->
+<!-- End breadcrumb -->
+<!-- ============================================================== -->
+<!-- ============================================================== -->
+<!-- Container -->
+<!-- ============================================================== -->
+<div class="container-fluid">
+    <div class="row">
+        <a href="javascript:;" onclick="modVehiculosAgregar();">
+            <button type="button" class="btn-square-icon">
+                <i class="fa fa-plus"></i>
+                Agregar vehículo
+            </button>
+        </a>
+        <button type="button" class="btn btn-success btn-square-icon" id="btnExcel">
+            <i class="fa fa-file-excel"></i> XLSX
+        </button>
+        <div class="table-responsive">
+            <table id="tbl" class="table table-bordered table-hover table-light">
+                <thead class="thead-light">
+                    <tr>
+                        <th class="align-middle"><b>Cliente</b></th>
+                        <th class="align-middle"><b>Marca de vehículo</b></th>
+                        <th class="align-middle"><b>Tipo de vehículo</b></th>
+                        <th class="align-middle"><b>Tipo de unidad</b></th>
+                        <th class="align-middle"><b>Tipo de servicio</b></th>
+                        <th class="align-middle"><b>Modelo</b></th>
+                        <th class="align-middle"><b>Número de serie</b></th>
+                        <th class="align-middle"><b>Año</b></th>
+                        <th class="align-middle"><b>Número de placas</b></th>
+                        <th class="align-middle"><b>Tarjeta de circulación</b></th>
+                        <th class="align-middle"><b>Capacidad</b></th>
+                        <th class="align-middle"><b>Activo</b></th>
+                        <th class="align-middle"><b>Acciones</b></th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+        <div id="modalEliminar" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog"
+            aria-labelledby="mySmallModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="modal-close" data-dismiss="modal" aria-label="Close">
+                            <i class="fa fa-times"></i>
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">Confirmación</h4>
+                    </div>
+                    <div class="modal-body">
+                        <strong>¿Está seguro que desea eliminar el Vehículo?</strong><br>No podrá deshacer esta
+                        acción.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-inline btn-default" data-dismiss="modal">Cancelar</button>
+                        <button id="btnDesactivar" type="button" class="btn btn-inline btn-danger"
+                            data-dismiss="modal">Eliminar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- End Container -->
+<!-- ============================================================== -->
+<!--This page JavaScript -->
+<script>
+    $(document).ready(function () {
+        $('body').tooltip({ selector: '[data-toggle=tooltip]', trigger: 'hover' });
+        $("table thead tr th").addClass("text-center");
+    });
+
+    function tabla() {
+        if ($.fn.dataTable.isDataTable('#tbl')) {
+            $('#tbl').DataTable().destroy();
+        }
+        $.ajax({
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            url: 'http://localhost/Herkace_Shared/Web/api/app_ws/Vehiculos/listado_vw',
+            dataType: 'json',
+            success: function (data) {
+                $('#tbl tbody').empty();
+                $.each(data, function (key, item) {
+                    var codigoHTML = '';
+                    codigoHTML += '<tr>';
+                    codigoHTML += '<td>' + item.cliente + '</td>';
+                    codigoHTML += '<td>' + item.marca_vehiculo + '</td>';
+                    codigoHTML += '<td>' + item.tipo_vehiculo + '</td>';
+                    codigoHTML += '<td>' + item.tipo_unidad + '</td>';
+                    codigoHTML += '<td>' + item.tipo_servicio + '</td>';
+                    codigoHTML += '<td>' + item.modelo + '</td>';
+                    codigoHTML += '<td>' + item.num_serie + '</td>';
+                    codigoHTML += '<td>' + item.anio + '</td>';
+                    codigoHTML += '<td>' + item.num_placas + '</td>';
+                    codigoHTML += '<td>' + item.tarjeta_circ + '</td>';
+                    codigoHTML += '<td>';
+                    codigoHTML += item.capacidad + ' ';
+                    switch (item.capacidad_unidad) {
+                        case 'K':
+                            codigoHTML += 'kilogramos';
+                            break;
+                        case 'L':
+                            codigoHTML += 'litros';
+                            break;
+                        case 'P':
+                            codigoHTML += 'personas';
+                            break;
+                        default:
+                            break;
+                    }
+                    codigoHTML += '</td>';
+                    codigoHTML += '<td class="text-center">';
+                    codigoHTML += '<i style="cursor: pointer;" onclick="setElementoEliminar(' + item.vehiculo_id + ',\'' + item.cliente + '\',\'' + item.num_serie + '\',\'' + item.num_placas + '\',' + item.activo + ')" class="fa fa-2xl ';
+                    if (item.activo) {
+                        codigoHTML += 'text-success fa-toggle-on';
+                    } else {
+                        codigoHTML += 'text-danger fa-toggle-off';
+                    }
+                    codigoHTML += '" data-toggle="modal" data-target=".bd-example-modal-sm"><i/>';
+                    codigoHTML += '</td>';
+                    codigoHTML += '<td class="table-icon-cell text-center">';
+                    codigoHTML += '<a href="javascript:;" onclick="modModificar(' + item.vehiculo_id + ');">';
+                    codigoHTML += '<button type="button" class="btn btn-inline btn-outline-cyan" data-toggle="tooltip" title="Modificar">';
+                    codigoHTML += '<i class="fa fa-edit"></i>';
+                    codigoHTML += '</button>';
+                    codigoHTML += '</a>';
+                    codigoHTML += '</td>';
+                    codigoHTML += '</tr>';
+                    $('#tbl tbody').append(codigoHTML);
+                });
+            },
+            complete: function (jqXHR, textStatus) {
+                $('#tbl').DataTable({
+                    ordering: false, searching: true, info: true, paging: true, language: { 'url': 'assets/extra-libs/DataTables/Spanish.html' },
+                    initComplete: function () {
+                        $(this.api().table().container()).find('input').parent().wrap('<form>').parent().attr('autocomplete', 'off');
+                    }
+                });
+            }
+        });
+    }
+
+    var elementoEliminar = null;
+    function setElementoEliminar(id, cliente, num_serie, num_placas, activo) {
+        elementoEliminar = id;
+        var valorNuevo;
+        var strBoton;
+        var codigoHTML = '<strong>¿Está seguro que desea ';
+        if (activo) {
+            valorNuevo = 0;
+            strBoton = "Desactivar";
+            codigoHTML += 'des';
+        } else {
+            valorNuevo = 1;
+            strBoton = "Activar";
+        }
+        codigoHTML += `activar este Vehículo?</strong><br /><input id="lblNuevoVal" type="hidden" value="${valorNuevo}" /><br /><strong>Cliente: </strong><label>${cliente}</label><br /><strong>Número de serie: </strong><label>${num_serie}</label><br /><strong>Número de placas: </strong><label>${num_placas}</label>`;
+        $("#modalEliminar .modal-body").html(codigoHTML);
+        $("#btnDesactivar").html(strBoton);
+        $('#modalEliminar').modal('show');
+    }
+
+    $('#btnDesactivar').click(function () {
+        //Construcción del json
+        var activo = parseInt($("#lblNuevoVal").val());
+        var jsonDesactivar = {
+            "vehiculo_id": elementoEliminar,
+            "activo": activo
+        };
+        //Aquí se hace el envío al API para desactivar al cliente
+        $.ajax({
+            url: "http://localhost/Herkace_Shared/Web/api/app_ws/Vehiculos/desactivar",
+            method: "PUT",
+            data: jsonDesactivar,
+            dataType: "json",
+            success: function (response) {
+                if (response.cambio) {
+                    var str = activo == 0 ? 'des' : '';
+                    Swal.fire({
+                        title: `El Vehículo ha sido ${str}activado correctamente`,
+                        icon: 'success'
+                    });
+                    tabla();
+                } else {
+                    Swal.fire({ title: `Ocurrió un error al ${str}activar el Vehículo. Intente de nuevo más tarde.`, icon: 'error' });
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                Swal.fire({ title: `Ocurrió un error al ${str}activar el Vehículo. Intente de nuevo más tarde.`, icon: 'error' });
+            }
+        });
+    });
+    $("#btnExcel").click(function () {
+        $('#modalCargando').modal('show');
+        var request = new XMLHttpRequest(), file, fileURL;
+        request.open("POST", 'http://localhost/Herkace_Shared/Web/api/app_ws/Vehiculos/excel');
+        request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        request.responseType = "arraybuffer";
+        request.send();
+        request.onreadystatechange = function () {
+            if (request.readyState === 4 && request.status === 200) {
+                $('#modalCargando').modal('hide');
+                const a = document.createElement('a');
+                document.body.appendChild(a);
+                const blob = new Blob([request.response], {
+                    type: 'octet/stream'
+                });
+                const url = window.URL.createObjectURL(blob);
+                a.href = url;
+                a.download = "Vehiculos.xlsx";
+                a.click();
+                window.URL.revokeObjectURL(url);
+            }
+        };
+    });
+
+    function modModificar(idusuario) {
+        $('[data-toggle="tooltip"]').tooltip('hide');
+        $("#container").empty();
+        $("#container").load("Catalogos/Vehiculos/modificar.html", function () {
+            cargarDatos(idusuario);
+        });
+    };
+</script>

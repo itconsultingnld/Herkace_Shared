@@ -1,0 +1,651 @@
+<!-- ============================================================== -->
+<!-- breadcrumb -->
+<!-- ============================================================== -->
+<div class="page-breadcrumb">
+    <div class="row">
+        <div class="col-12 d-flex no-block align-items-center">
+            <h4 class="page-title">Prefactura: </h4>
+            <div class="ml-auto text-right">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item active">
+                            <a href="javascript:;" onclick="modDashboard();">Dashboard</a>
+                        </li>
+                        <li class="breadcrumb-item active">
+                            <a href="javascript:;" onclick="modPrefacturas();">Prefacturas</a>
+                        </li>
+                        <li class="breadcrumb-item active">Agregar verificaciones</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .form-group {
+        margin-bottom: 0px;
+    }
+
+    .form-control-label {
+        margin-bottom: 16px;
+    }
+
+    .select2-selection__rendered {
+        line-height: 31px !important;
+    }
+
+    .select2-container .select2-selection--single {
+        height: 35px !important;
+    }
+
+    .select2-selection__arrow {
+        height: 34px !important;
+    }
+
+    [class^='select2'] {
+        border-radius: 0px !important;
+    }
+
+    #modalAgregarCliente .form-control-label {
+        margin-top: 8px;
+    }
+
+    #modalAgregarVehiculo .form-control-label {
+        margin-bottom: 12px;
+    }
+
+    @media(max-width: 768px) {
+
+        /* #txtACondiciones,
+        #cboVendedor {
+            width: 100%;
+        } */
+        #txtACondiciones {
+            width: 100%;
+        }
+
+        /* .labelx {
+            text-align: center !important;
+        } */
+    }
+
+    /* @media(max-width: 574px) {
+
+        #txtACondiciones,
+        #cboVendedor {
+            width: 100%;
+        }
+
+        .labelx {
+            text-align: center !important;
+        }
+    }
+
+    @media(max-width: 425px) {
+
+        #txtACondiciones,
+        #cboVendedor {
+            width: 100%;
+        }
+
+        .labelx {
+            text-align: center !important;
+        }
+    } */
+
+    input[type=checkbox] {
+        cursor: pointer;
+        /* Double-sized Checkboxes */
+        -ms-transform: scale(2);
+        /* IE */
+        -moz-transform: scale(2);
+        /* FF */
+        -webkit-transform: scale(2);
+        /* Safari and Chrome */
+        -o-transform: scale(2);
+        /* Opera */
+        transform: scale(2);
+        padding: 10px;
+    }
+</style>
+<!-- ============================================================== -->
+<!-- End breadcrumb -->
+<!-- ============================================================== -->
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12"><br></div>
+        <div class="row col-lg-12 cuadroInsertar">
+            <div class="col-lg-12">
+            </div>
+            <div class="col-lg-12">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="form-group align-items-center row">
+                            <label for="cboFacturador"
+                                class="col-lg-2 form-control-label text-center text-lg-right labelx">Facturador:</label>
+                            <div class="col-lg-10">
+                                <p class="form-control-static">
+                                    <select class="form-control" id="cboFacturador"></select>
+                                <div class="invalid-feedback" id="cboFacturadorValid"></div>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="form-group align-items-center row">
+                            <label for="txtCondiciones"
+                                class="col-lg-2 form-control-label text-center text-lg-right labelx">Condiciones:</label>
+                            <div class="col-lg-10">
+                                <p class="form-control-static">
+                                    <textarea name="txtCondiciones" id="txtACondiciones" cols="85" rows="5"
+                                        oninput="inputMayus(this);"></textarea>
+                                <div class="invalid-feedback" id="txtCondicionesValid"></div>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="form-group align-items-center row">
+                            <label for="cboVendedor"
+                                class="col-lg-2 form-control-label text-center text-lg-right labelx">Vendedor:</label>
+                            <div class="col-lg-10">
+                                <p class="form-control-static">
+                                    <select class="form-control" id="cboVendedor"></select>
+                                <div class="invalid-feedback" id="cboVendedorValid"></div>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 text-center">
+                        <button id="btnGuardarDatosPrefactura" type="button" class="btn btn-inline btn-success">
+                            Guardar cambios
+                        </button>
+                    </div>
+                    <div class="col-lg-12">
+                        <hr />
+                    </div>
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="agregar-tab" data-toggle="tab" href="#AgregarVerif"
+                                role="tab" aria-controls="agregar" aria-selected="true">
+                                Agregar verificaciones
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="editar-tab" data-toggle="tab" href="#EditarVerif" role="tab"
+                                aria-controls="editar" aria-selected="false">
+                                Editar verificación
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="tab-content ml-2" id="myTabContent" style="padding-top: 16px;">
+                        <div class="tab-pane fade show active" id="AgregarVerif" role="tabpanel"
+                            aria-labelledby="agregar-tab">
+                            <div class="table-responsive">
+                                <table id="tblVerificacionesAgregar"
+                                    class="table table-bordered table-hover table-light">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th class="align-middle text-center"><b>Acciones</b></th>
+                                            <th class="align-middle text-center"><b>Número orden</b></th>
+                                            <th class="align-middle text-center"><b>Folio</b></th>
+                                            <th class="align-middle text-center"><b>Empresa</b></th>
+                                            <th class="align-middle text-center"><b>Tipo verificación</b></th>
+                                            <th class="align-middle text-center"><b>Fecha</b></th>
+                                            <th class="align-middle text-center"><b>Número serie</b></th>
+                                            <th class="align-middle text-center"><b>Placas</b></th>
+                                            <th class="align-middle text-center"><b>Marca</b></th>
+                                            <th class="align-middle text-center"><b>Modelo</b></th>
+                                            <th class="align-middle text-center"><b>Tarjeta Circulación</b></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                            <div class="text-center">
+                                <button id="btnAgregarToPrefactura" type="button"
+                                    class="btn btn-inline btn-success mt-3">
+                                    Agregar a prefactura
+                                </button>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="EditarVerif" role="tabpanel" aria-labelledby="editar-tab">
+                            <div class="table-responsive">
+                                <table id="tblVerificacionesEditar"
+                                    class="table table-bordered table-hover table-light">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th class="align-middle text-center"><b>Acciones</b></th>
+                                            <th class="align-middle text-center"><b>Número orden</b></th>
+                                            <th class="align-middle text-center"><b>Folio</b></th>
+                                            <th class="align-middle text-center"><b>Empresa</b></th>
+                                            <th class="align-middle text-center"><b>Tipo verificación</b></th>
+                                            <th class="align-middle text-center"><b>Fecha</b></th>
+                                            <th class="align-middle text-center"><b>Número serie</b></th>
+                                            <th class="align-middle text-center"><b>Placas</b></th>
+                                            <th class="align-middle text-center"><b>Marca</b></th>
+                                            <th class="align-middle text-center"><b>Modelo</b></th>
+                                            <th class="align-middle text-center"><b>Tarjeta Circulación</b></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--#region MODAL ELIMINAR -->
+            <div id="modalEliminar" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog"
+                aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="modal-close" data-dismiss="modal" aria-label="Close">
+                                <i class="fa fa-times"></i>
+                            </button>
+                            <h4 class="modal-title" id="myModalLabel">Confirmación</h4>
+                        </div>
+                        <div class="modal-body">
+                            <strong>¿Está seguro que desea eliminar el elemento?</strong>
+                            <br />
+                            No podrá deshacer esta acción.
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-inline btn-default"
+                                data-dismiss="modal">Cancelar</button>
+                            <button id="btnEliminar" type="button" class="btn btn-inline btn-danger"
+                                data-dismiss="modal">Eliminar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--#endregion -->
+            <div id="modalPregunta" class="modal bd-example-modal-sm" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog"
+                aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="myModalLabel">Confirmación</h4>
+                        </div>
+                        <div class="modal-body">
+                            <strong>Al eliminar la última verificación, esta prefactura se desactivará. </strong>
+                            <br />
+                            Escriba la razón por la que se desactivará esta prefactura.
+                            <textarea name="txtRazonesCancel" id="txtRazonesCancel" style="width: 100%;" rows="5"
+                                maxlength="300"></textarea>
+                            <div class="invalid-feedback" id="txtRazonesCancel  Valid"></div>
+                        </div>
+                        <div class="modal-footer">
+                            <button id="btnDesactivarPrefactura" type="button" class="btn btn-inline btn-danger"
+                                data-dismiss="modal" disabled>Enviar y Desactivar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var Cliente_id_fact;
+    var vendedor;
+    var Num_Prefactura, Prefactura_id;
+    function mostrarNumPrefactura(prefactura_id, num_prefactura, cliente_id, condiciones, vendedor_) {
+        $(".page-title").html("Prefactura " + num_prefactura);
+        Prefactura_id = prefactura_id;
+        Num_Prefactura = num_prefactura;
+        Cliente_id_fact = cliente_id;
+        vendedor = vendedor_;
+        $('#txtACondiciones').val(condiciones);
+    }
+
+    $(document).ready(function () {
+        getUsuarios();
+        getClientes();
+        tabla_verif();
+        // Redimensiona el contenedor de los tabs
+        // De otra forma, la tabla se sale a la derecha del tab
+        var conf = document.querySelectorAll('.container-fluid')[0];
+        var width = conf.offsetWidth;
+        $('#myTabContent').css('width', `${width - 66}px`);
+        document.getElementById('txtRazonesCancel').oninput = function () {
+            inputMayus($('#txtRazonesCancel')[0]);
+            let value = $('#txtRazonesCancel').val();
+            if (value.length == 0) {
+                $('#txtRazonesCancel').addClass('is-invalid');
+                $("#txtRazonesCancelValidValid").addClass('mostrar');
+                $('#btnDesactivarPrefactura').prop('disabled', true);
+            } else {
+                $('#txtRazonesCancel').removeClass('is-invalid');
+                $("#txtRazonesCancelValid").removeClass('mostrar');
+                $('#btnDesactivarPrefactura').prop('disabled', false);
+            }
+        }
+    });
+
+    $('#btnGuardarDatosPrefactura').click(function () {
+        $('#btnGuardarDatosPrefactura').prop('disabled', true);
+        var datos = {
+            "prefactura_id": Prefactura_id,
+            "cliente_facturacion_id": $('#cboFacturador').val(),
+            "condiciones": $('#txtACondiciones').val(),
+            "usuario_id_vendedor": $('#cboVendedor').val()
+        }
+        $.ajax({
+            type: "PUT",
+            url: 'http://localhost/Herkace_Shared/Web/api/app_ws/Prefacturas/modificar',
+            data: datos,
+            dataType: 'json',
+            success: function (response) {
+                if (response.registrado) {
+                    Swal.fire({
+                        title: 'Cambios registrados correctamente',
+                        icon: 'success'
+                    });
+                } else {
+                    Swal.fire({
+                        title: response.mensaje,
+                        icon: 'error'
+                    });
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                Swal.fire({
+                    title: 'Ocurrió un error al actualizar los datos. Intente de nuevo más tarde.',
+                    icon: 'error'
+                });
+            },
+            complete: function (jqXHR, textStatus) {
+                $('#btnGuardarDatosPrefactura').prop('disabled', false);
+            }
+        });
+    });
+
+    function getUsuarios() {
+        let usuario = localStorage.getItem('AA');
+        let id_usuario = localStorage.getItem('AE');
+        $.ajax({
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            url: 'http://localhost/Herkace_Shared/Web/api/app_ws/Usuarios/listado',
+            dataType: 'json',
+            success: function (data) {
+                $.each(data, function (key, item) {
+                    if (item.activo) {
+                        var codigoHTML = `<option value=${item.usuario_id}>${item.nombre + ' ' + item.ape_pat + ' ' + item.ape_mat}</option>`;
+                        $('#cboVendedor').append(codigoHTML);
+                    }
+                });
+                $('#cboVendedor').select2({ width: '100%' });
+                if (vendedor == 0) {
+                    $('#cboVendedor').val(id_usuario).change();
+                } else {
+                    $('#cboVendedor').val(vendedor).change();
+                }
+            }
+        });
+    }
+
+    function getClientes() {
+        if ($('#cboCliente').hasClass("select2-hidden-accessible")) {
+            $("#cboCliente").select2('destroy');
+            $("#cboCliente").empty();
+        }
+        $.ajax({
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            url: 'http://localhost/Herkace_Shared/Web/api/app_ws/ClientesFacturacion/listado',
+            async: false,
+            dataType: 'json',
+            success: function (data) {
+                if ($('#cboFacturador').html() == "") {
+                    $('#cboFacturador').append('<option value="0">Seleccione un cliente</option>');
+                    $.each(data, function (key, item) {
+                        var codigoHTML = `<option value=${item.cliente_facturacion_id}>${item.razon_social}</option>`;
+                        $('#cboFacturador').append(codigoHTML);
+                    });
+                    $('#cboFacturador').select2({ width: '100%' });
+                    $('#cboFacturador').val(Cliente_id_fact.toString()).change();
+                }
+            }
+        });
+    }
+
+    function tabla_verif() {
+        if ($.fn.dataTable.isDataTable('#tblVerificacionesEditar')) {
+            $('#tblVerificacionesEditar').DataTable().destroy();
+        }
+        $('#tblVerificacionesEditar tbody').empty();
+        var columnas = [
+            {
+                "render": function (data, type, row, meta) {
+                    var codigoHTML = `<a href="javascript:;" onclick="eliminar(${row.verificacion_id},'${row.folio}');">`;
+                    codigoHTML += '<button type="button" class="btn btn-inline btn-outline-danger" data-toggle="tooltip" title="Eliminar">';
+                    codigoHTML += '<i class="fa fa-times"></i>';
+                    codigoHTML += '</button>';
+                    codigoHTML += '</a>';
+                    return codigoHTML;
+                }
+            },
+            { "data": "orden" },
+            { "data": "folio" },
+            { "data": "cliente" },
+            { "data": "tipo_verificacion" },
+            { "data": "fecha" },
+            { "data": "num_serie" },
+            { "data": "num_placas" },
+            { "data": "marca" },
+            { "data": "modelo" },
+            { "data": "tarjeta_circ" }
+        ];
+        var tableE = $('#tblVerificacionesEditar').DataTable({
+            ordering: false, searching: true, info: true, paging: true,
+            language: { 'url': 'assets/extra-libs/DataTables/Spanish.html' },
+            serverSide: false,
+            ajax: {
+                url: `http://localhost/Herkace_Shared/Web/api/app_ws/Verificaciones/listado_vw_prefactura_por_prefactura_id/${Prefactura_id}`,
+                type: 'GET',
+                dataSrc: "",
+                async: false
+            },
+            columns: columnas,
+            initComplete: function () {
+                $(this.api().table().container()).find('input').parent().wrap('<form>').parent().attr('autocomplete', 'off');
+            }
+        });
+        tableE.on('draw', function () {
+            $('#tblVerificacionesEditar tbody tr').each(function () {
+                $(this).children('td').each(function (i, e) {
+                    if (i == 0) {
+                        $(this).addClass('text-center');
+                    }
+                });
+            });
+        });
+        if ($.fn.dataTable.isDataTable('#tblVerificacionesAgregar')) {
+            $('#tblVerificacionesAgregar').DataTable().destroy();
+        }
+        columnas[0] = {
+            "render": function (data, type, row, meta) {
+                var codigoHTML = `<td class="text-center"><input type="checkbox" class="form-control chk-verif" id="chk${row.verificacion_id}" /></td>`;
+                return codigoHTML;
+            }
+        };
+        var tableA = $('#tblVerificacionesAgregar').DataTable({
+            ordering: false, searching: true, info: true, paging: true,
+            language: { 'url': 'assets/extra-libs/DataTables/Spanish.html' },
+            serverSide: false,
+            ajax: {
+                url: 'http://localhost/Herkace_Shared/Web/api/app_ws/Verificaciones/listado_vw_prefactura_agregar_to',
+                type: 'GET',
+                dataSrc: "",
+                async: false
+            },
+            columns: columnas,
+            initComplete: function () {
+                $(this.api().table().container()).find('input[type=search]').parent().wrap('<form>').parent().attr('autocomplete', 'off');
+            }
+        });
+        tableA.on('draw', function () {
+            $('#tblVerificacionesAgregar tbody tr').each(function () {
+                $(this).children('td').each(function (i, e) {
+                    if (i == 0) {
+                        $(this).addClass('text-center');
+                    }
+                });
+            });
+            // Cada que se haga un check, el id se almacena en un arreglo
+            // Esto permite que se tenga un mejor control de las verificaciones elegidas,
+            // aun cuando la tabla este filtrada o paginada
+            $('.chk-verif').off('change').on('change', function () {
+                var id = $(this)[0].id;
+                id = id.replace('chk', '');
+                if ($(this).is(':checked')) {
+                    verifs_to_prefactura.push(id);
+                } else {
+                    const index = verifs_to_prefactura.indexOf(id);
+                    if (index > -1) { // only splice array when item is found
+                        verifs_to_prefactura.splice(index, 1); // 2nd parameter means remove one item only
+                    }
+                }
+                console.log(verifs_to_prefactura);
+            });
+        });
+    }
+
+    function eliminar(verificacion_id, folio) {
+        Swal.fire({
+            html: `¿Está seguro que desea eliminar la verificación con folio <strong>${folio}</strong> de la prefactura <strong>${Num_Prefactura}</strong>?`, icon: 'warning', showCancelButton: true, confirmButtonColor: "#d73d32", cancelButtonText: 'Cancelar', confirmButtonText: 'Eliminar', reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+
+                var jsonDatos = {
+                    "prefactura_id": 0,
+                    "verificaciones": [verificacion_id]
+                };
+                let table = $('#tblVerificacionesEditar').DataTable();
+                let table_length = table.data().count();
+                //Aquí se debe mandar a llamar el API enviandole el json
+                $.ajax({
+                    url: "http://localhost/Herkace_Shared/Web/api/app_ws/Verificaciones/asignar_prefactura",
+                    method: "PUT",
+                    data: jsonDatos,
+                    dataType: "json",
+                    success: function (response) {
+                        if (response.registrado) {
+                            if (table_length == 1) {
+                                $('#modalPregunta').modal('show');
+                            } else {
+                                Swal.fire({
+                                    title: 'La verificación ha sido eliminada correctamente de la prefactura',
+                                    icon: 'success'
+                                });
+                                tabla_verif();
+                            }
+                        } else {
+                            Swal.fire({
+                                title: response.mensaje,
+                                icon: 'error'
+                            });
+                        }
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        Swal.fire({
+                            title: 'Ocurrió un error al actualizar el elemento. Intente de nuevo más tarde.',
+                            icon: 'error'
+                        });
+                    }
+                });
+            }
+        });
+    }
+
+    $('#btnDesactivarPrefactura').click(function () {
+        let razones = $('#txtRazonesCancel').val();
+        let json_razones = {
+            "razones": razones,
+            "prefactura_id": Prefactura_id
+        }
+        $.ajax({
+            url: "http://localhost/Herkace_Shared/Web/api/app_ws/Prefacturas/razones_cancelacion",
+            method: "PUT",
+            data: json_razones,
+            dataType: "json",
+            success: function (response) {
+                if (response.registrado) {
+                    $('#modalPregunta').modal('hide');
+                    Swal.fire({
+                        title: response.mensaje,
+                        icon: 'success'
+                    });
+                    modPrefacturas();
+                } else {
+                    Swal.fire({
+                        title: response.mensaje,
+                        icon: 'error'
+                    });
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                Swal.fire({
+                    title: 'Ocurrió un error al actualizar los elemento. Intente de nuevo más tarde.',
+                    icon: 'error'
+                });
+            }
+        });
+    })
+
+    var verifs_to_prefactura = [];
+
+    $('#btnAgregarToPrefactura').click(function () {
+        if (verifs_to_prefactura.length == 0) {
+            Swal.fire({
+                title: 'Debe seleccionar al menos una verificación para agregarla a la prefactura',
+                icon: 'warning'
+            });
+            return;
+        }
+        $('#btnAgregarToPrefactura').attr('disabled', true);
+        Swal.fire({
+            title: `¿Seguro que desea agregar las verificaciones seleccionadas a la prefactura ${Num_Prefactura}?`, icon: 'question', showCancelButton: true, confirmButtonColor: "#53a93f", cancelButtonText: 'Cancelar', confirmButtonText: 'Confirmar', reverseButtons: true, cancelButtonColor: "#d73d32"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                //Se construye el json con los datos obtenidos
+                var jsonDatos = {
+                    "prefactura_id": Prefactura_id,
+                    "verificaciones": verifs_to_prefactura
+                };
+                //Aquí se debe mandar a llamar el API enviandole el json
+                $.ajax({
+                    url: "http://localhost/Herkace_Shared/Web/api/app_ws/Verificaciones/asignar_prefactura",
+                    method: "PUT",
+                    data: jsonDatos,
+                    dataType: "json",
+                    success: function (response) {
+                        if (response.registrado) {
+                            verifs_to_prefactura = [];
+                            Swal.fire({
+                                title: 'Las verificaciones han sido agregadas correctamente a la prefactura',
+                                icon: 'success'
+                            });
+                            tabla_verif();
+                        } else {
+                            Swal.fire({
+                                title: response.mensaje,
+                                icon: 'error'
+                            });
+                        }
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        Swal.fire({
+                            title: 'Ocurrió un error al actualizar los elementoe. Intente de nuevo más tarde.',
+                            icon: 'error'
+                        });
+                    }
+                });
+            }
+            $('#btnAgregarToPrefactura').attr('disabled', false);
+        });
+    });
+
+</script>

@@ -1,0 +1,203 @@
+<!-- ============================================================== -->
+<!-- breadcrumb -->
+<!-- ============================================================== -->
+<style>
+    a {
+        text-decoration: none !important;
+        color: #233f77;
+    }
+
+    .card {
+        background-color: #ccc;
+    }
+
+    .card-body {
+        padding-bottom: 0px;
+    }
+
+    .btn-outline {
+        margin-bottom: 0px !important;
+        margin-right: 0px !important;
+    }
+</style>
+<div class="page-breadcrumb">
+    <div class="row">
+        <div class="col-12 d-flex no-block align-items-center">
+            <h4 class="page-title">Verificaciones</h4>
+            <div class="ml-auto text-right">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item active">
+                            <a href="javascript:;" onclick="modDashboard();">Dashboard</a>
+                        </li>
+                        <li class="breadcrumb-item active">Verificaciones</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- End breadcrumb -->
+<!-- ============================================================== -->
+<!-- ============================================================== -->
+<!-- Container -->
+<!-- ============================================================== -->
+<div class="container-fluid">
+    <div class="row">
+        <!-- <a href="javascript:;" onclick="modVerificacionesAgregar();">
+            <button type="button" class="btn-square-icon">
+                <i class="fa fa-plus"></i>
+                Agregar verificación
+            </button>
+        </a> -->
+        <button type="button" class="btn btn-success btn-square-icon" id="btnExcel">
+            <i class="fa fa-file-excel"></i> XLSX
+        </button>
+        <div class="table-responsive">
+            <table id="tbl" class="table table-bordered table-hover table-light">
+                <thead class="thead-light">
+                    <tr>
+                        <th class="align-middle"><b>Acciones</b></th>
+                        <th class="align-middle"><b>Tipo de verificación</b></th>
+                        <th class="align-middle"><b>Cliente</b></th>
+                        <th class="align-middle"><b>Número de orden</b></th>
+                        <th class="align-middle"><b>Número de serie</b></th>
+                        <th class="align-middle"><b>Número de placas</b></th>
+                        <th class="align-middle"><b>Folio</b></th>
+                        <th class="align-middle"><b>Fecha</b></th>
+                        <th class="align-middle"><b>Estatus</b></th>
+                        <th class="align-middle"><b>Estatus de la unidad</b></th>
+                        <th class="align-middle"><b>Técnico</b></th>
+                        <th class="align-middle"><b>Kilometraje</b></th>
+                        <th class="align-middle"><b>Período</b></th>
+                        <th class="align-middle"><b>Hora inicio</b></th>
+                        <th class="align-middle"><b>Hora fin</b></th>
+                        <th class="align-middle"><b>Tarifa</b></th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- End Container -->
+<!-- ============================================================== -->
+<!--This page JavaScript -->
+
+<script>
+    $(document).ready(function () {
+        $('body').tooltip({ selector: '[data-toggle=tooltip]', trigger: 'hover' });
+        $("table thead tr th").addClass("text-center");
+    });
+    function tabla() {
+        $('#modalCargando').modal('show');
+        if ($.fn.dataTable.isDataTable('#tbl')) {
+            $('#tbl').DataTable().destroy();
+        }
+        $('#tbl tbody').empty();
+        var columnas = [
+            {
+                "render": function (data, type, row, meta) {
+                    var codigoHTML = '';
+                    if (!row.orden_cerrada) {
+                        codigoHTML += `<button onclick="modModificar(${row.verificacion_id},'${row.orden}');" type="button" class="btn btn-inline btn-outline-cyan" data-toggle="tooltip" title="Modificar">`;
+                        codigoHTML += '<i class="fa fa-edit"></i>';
+                        codigoHTML += '</button>';
+                    }
+                    codigoHTML += '<a href="javascript:;" onclick="pdf_gah(' + row.verificacion_id + ');">';
+                    codigoHTML += '<button type="button" class="btn btn-inline btn-outline-info" data-toggle="tooltip" title="Formato Gestores Ambientales Herkace">';
+                    codigoHTML += '<i class="fa fa-file-pdf"></i>';
+                    codigoHTML += '</button>';
+                    codigoHTML += '</a>';
+                    if (row.estatus == 'APROBADO') {
+                        codigoHTML += `<button onclick="pdf_certificado(${row.verificacion_id});" type="button" class="btn btn-inline btn-outline-warning" data-toggle="tooltip" title="Certificado">`;
+                        codigoHTML += '<i class="fa fa-file-pdf"></i>';
+                        codigoHTML += '</button>';
+                    }
+                    return codigoHTML;
+                }
+            },
+            { "data": "tipo_verificacion" },
+            { "data": "cliente" },
+            { "data": "orden" },
+            { "data": "num_serie" },
+            { "data": "num_placas" },
+            { "data": "folio" },
+            { "data": "fecha" },
+            { "data": "estatus" },
+            { "data": "estatus_unidad" },
+            { "data": "tecnico" },
+            {
+                "render": function (data, type, row, meta) {
+                    return formatNumber(row.kilometraje);
+                }
+            },
+            { "data": "periodo" },
+            { "data": "hora_inicio" },
+            { "data": "hora_final" },
+            { "data": "subservicio" }
+        ];
+        var table = $('#tbl').DataTable({
+            ordering: true, searching: true, info: true, paging: true,
+            language: { 'url': 'assets/extra-libs/DataTables/Spanish.html' },
+            serverSide: false,
+            ajax: {
+                url: 'http://localhost/Herkace_Shared/Web/api/app_ws/Verificaciones/listado_vw',
+                type: 'GET',
+                dataSrc: ""
+            },
+            columns: columnas,
+            "columnDefs": [{
+                "targets": 0,
+                "orderable": false
+            }],
+            order: [[3, 'desc']],
+            initComplete: function () {
+                $(this.api().table().container()).find('input').parent().wrap('<form>').parent().attr('autocomplete', 'off');
+                $('#modalCargando').modal('hide');
+            }
+        });
+        table.on('draw', function () {
+            $("#tbl tbody tr").each(function () {
+                $(this).children("td").each(function (i, e) {
+                    if (i == 0) {
+                        $(this).addClass("text-center");
+                    }
+                });
+            });
+        });
+    }
+    $("#btnExcel").click(function () {
+        $('#modalCargando').modal('show');
+        var request = new XMLHttpRequest(), file, fileURL;
+        request.open("POST", 'http://localhost/Herkace_Shared/Web/api/app_ws/Verificaciones/excel');
+        request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        request.responseType = "arraybuffer";
+        request.send();
+        request.onreadystatechange = function () {
+            if (request.readyState === 4 && request.status === 200) {
+                $('#modalCargando').modal('hide');
+                const a = document.createElement('a');
+                document.body.appendChild(a);
+                const blob = new Blob([request.response], {
+                    type: 'octet/stream'
+                });
+                const url = window.URL.createObjectURL(blob);
+                a.href = url;
+                a.download = "Verificaciones.xlsx";
+                a.click();
+                window.URL.revokeObjectURL(url);
+            }
+        };
+    });
+    function modModificar(idusuario, orden) {
+        $('[data-toggle="tooltip"]').tooltip('hide');
+        $("#container").empty();
+        $('#modalCargando').modal('show');
+        $("#container").load("Verificaciones/modificar.html", function () {
+            cargarDatos(idusuario, orden);
+        });
+    };
+</script>

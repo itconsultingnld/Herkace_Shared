@@ -1,0 +1,503 @@
+<style>
+    .card {
+        background-color: #ccc;
+    }
+
+    .card-body {
+        padding-bottom: 0px;
+    }
+
+    .input-group-append {
+        cursor: pointer;
+    }
+
+    .select2-selection__rendered {
+        line-height: 31px !important;
+    }
+
+    .select2-container .select2-selection--single {
+        height: 35px !important;
+    }
+
+    .select2-selection__arrow {
+        height: 34px !important;
+    }
+
+    [class^='select2'] {
+        border-radius: 0px !important;
+    }
+</style>
+<!-- ============================================================== -->
+<!-- breadcrumb -->
+<!-- ============================================================== -->
+<div class="page-breadcrumb">
+    <div class="row">
+        <div class="col-12 d-flex no-block align-items-center">
+            <h4 class="page-title">Reportes verificaciones</h4>
+            <div class="ml-auto text-right">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="javascript:;" onclick="modDashboard();">Dashboard</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <a href="#">Reportes</a>
+                        </li>
+                        <li class="breadcrumb-item active">Reportes verificaciones</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- End breadcrumb -->
+<!-- ============================================================== -->
+<!-- ============================================================== -->
+<!-- Container -->
+<!-- ============================================================== -->
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12 col-lg-6 col-xl-4 mb-3 mt-3 row">
+            <label class="col-12 text-center"><b>Rango de fechas</b></label>
+            <div class="col-6">
+                <label>Desde</label>
+                <div class="input-group">
+                    <input type="date" class="form-control" id="dtmFechaInicial" placeholder="FechaInicial">
+                    <div class="input-group-append">
+                        <span class="input-group-text" id="btnLimpiarFechaInicial">
+                            <i class="fa fa-times"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <label>Hasta</label>
+                <div class="input-group">
+                    <input type="date" class="form-control" id="dtmFechaFinal" placeholder="FechaFinal">
+                    <div class="input-group-append">
+                        <span class="input-group-text" id="btnLimpiarFechaFinal">
+                            <i class="fa fa-times"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 col-lg-6 col-xl-4 mb-3 mt-3 row">
+            <label class="col-12 text-center"><b>Rango de folios</b></label>
+            <div class="col-6">
+                <label>Desde</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" id="txtFolioInicial" placeholder="Folio inicial">
+                    <div class="input-group-append">
+                        <span class="input-group-text" id="btnLimpiarFolioInicial">
+                            <i class="fa fa-times"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <label>Hasta</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" id="txtFolioFinal" placeholder="Folio final">
+                    <div class="input-group-append">
+                        <span class="input-group-text" id="btnLimpiarFolioFinal">
+                            <i class="fa fa-times"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mb-3 mt-3 row">
+            <div class="col-12">
+                <label>Tipo de verificación</label>
+                <div class="input-group">
+                    <select class="form-control" id="cboTipoVerificacion"></select>
+                    <div class="input-group-append">
+                        <span class="input-group-text" id="btnLimpiarTipoVerificacion">
+                            <i class="fa fa-times"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mb-3 mt-3 row">
+            <div class="col-12">
+                <label>Tipo de unidad</label>
+                <div class="input-group">
+                    <select class="form-control" id="cboTipoUnidadVerificacion"></select>
+                    <div class="input-group-append">
+                        <span class="input-group-text" id="btnLimpiarTipoUnidadVerificacion">
+                            <i class="fa fa-times"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mb-3 mt-3 row">
+            <div class="col-12">
+                <label>Número de orden</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" id="txtNumOrden" placeholder="Número de orden">
+                    <div class="input-group-append">
+                        <span class="input-group-text" id="btnLimpiarNumOrden">
+                            <i class="fa fa-times"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mt-4">
+            <button id="btnLimpiar" type="button" class="btn btn-secondary btn-lg btn-block">
+                Limpiar
+            </button>
+        </div>
+        <div class="col-md-3 mt-4">
+            <button id="btnGenerar" type="button" class="btn btn-primary btn-lg btn-block" onclick="tabla();">
+                Buscar
+            </button>
+        </div>
+        <div class="col-md-6 mt-4">
+            <button type="button" class="btn btn-success btn-lg btn-block" onclick="$('#modalReporteAnual').modal('show');">
+                <i class="fa fa-file-excel"></i> Generar reporte Anual
+            </button>
+        </div>
+        <div class="col-md-6 mt-4">
+            <button type="button" class="btn btn-success btn-lg btn-block" onclick="excelSIAF();">
+                <i class="fa fa-file-excel"></i> Generar reporte SIAF
+            </button>
+        </div>
+        <div class="d-none d-md-block col-md-3"></div>
+        <div class="col-md-6 mt-4">
+            <button type="button" class="btn btn-success btn-lg btn-block" onclick="excel();">
+                <i class="fa fa-file-excel"></i> Generar reporte
+            </button>
+        </div>
+        <div class="col-12">
+            <hr />
+        </div>
+        <div class="col-sm-12 table-responsive">
+            <table id="tbl" class="table table-bordered table-hover table-light">
+                <thead class="thead-light">
+                    <tr>
+                        <th class="text-center"><b>N° orden</b></th>
+                        <th class="text-center"><b>Verificación</b></th>
+                        <th class="text-center"><b>Fecha</b></th>
+                        <th class="text-center"><b>Certificado</b></th>
+                        <th class="text-center"><b>Fecha anterior</b></th>
+                        <th class="text-center"><b>Certificado anterior</b></th>
+                        <th class="text-center"><b>Cliente</b></th>
+                        <th class="text-center"><b>Tipo de vehículo</b></th>
+                        <th class="text-center"><b>Número serie</b></th>
+                        <th class="text-center"><b>Placas</b></th>
+                        <th class="text-center"><b>Técnico</b></th>
+                        <th class="text-center"><b>Acciones</b></th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+    <!-- #region Modal Reporte anual -->
+    <div id="modalReporteAnual" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="modal-close" data-dismiss="modal" aria-label="Close">
+                        <i class="fa fa-times"></i>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Reporte anual</h4>
+                </div>
+                <div class="modal-body">
+                    <strong>Seleccione el año</strong>
+                    <br />
+                    <br />
+                    <select id="cboAnio"></select>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-inline btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button onclick="excelAnual();" type="button" class="btn btn-inline btn-success"
+                        data-dismiss="modal">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- #endregion -->
+</div>
+<!-- ============================================================== -->
+<!-- End Container -->
+<!-- ============================================================== -->
+<!--This page JavaScript -->
+<script>
+    var tipos_verificaciones = [];
+    $(document).ready(function () {
+        $('body').tooltip({ selector: '[data-toggle=tooltip]', trigger: 'hover' });
+        var anio_iterador = 2024;
+        var anio_actual = new Date().getFullYear();
+        while (anio_iterador <= anio_actual) {
+            $('#cboAnio').append(`<option value="${anio_iterador}">${anio_iterador}</option>`);
+            anio_iterador++;
+        }
+        $.ajax({
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            url: 'http://localhost/Herkace_Shared/Web/api/app_ws/TiposVerificaciones/listado',
+            async: false,
+            dataType: 'json',
+            success: function (data) {
+                tipos_verificaciones = data;
+            }
+        });
+        $.ajax({
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            url: 'http://localhost/Herkace_Shared/Web/api/app_ws/TiposUnidadesVerificaciones/listado',
+            async: false,
+            dataType: 'json',
+            success: function (data) {
+                $('#cboTipoUnidadVerificacion').append('<option value="0">Seleccione un tipo de unidad</option>');
+                $.each(data, function (key, item) {
+                    var codigoHTML = `<option value=${item.tipo_unidad_verificacion_id}>${item.nombre}</option>`;
+                    $('#cboTipoUnidadVerificacion').append(codigoHTML);
+                });
+                $('#cboTipoUnidadVerificacion').select2({ minimumResultsForSearch: -1 });
+            }
+        });
+        poblarTiposVerificaciones();
+        tabla();
+    });
+    function poblarTiposVerificaciones() {
+        if ($('#cboTipoVerificacion').hasClass("select2-hidden-accessible")) {
+            $("#cboTipoVerificacion").select2('destroy');
+            $("#cboTipoVerificacion").empty();
+        }
+        var tipo_unidad_verificacion_id = parseInt($('#cboTipoUnidadVerificacion').val());
+        if ([0, 1, 3].includes(tipo_unidad_verificacion_id)) {
+            $('#cboTipoVerificacion').append('<option value="0">Seleccione un tipo de verificación</option>');
+        }
+        $.each(tipos_verificaciones, function (key, item) {
+            var agregar = false;
+            var tipo_verificacion_id = item.tipo_verificacion_id;
+            if (tipo_verificacion_id == 2) {
+                agregar = true;
+            } else if (tipo_verificacion_id == 4 && [0, 1, 3].includes(tipo_unidad_verificacion_id)) {
+                agregar = true;
+            }
+            if (agregar) {
+                var codigoHTML = `<option value=${item.tipo_verificacion_id}>${item.nombre}</option>`;
+                $('#cboTipoVerificacion').append(codigoHTML);
+            }
+        });
+        $('#cboTipoVerificacion').select2({});
+    }
+    $("#cboTipoUnidadVerificacion").change(function () {
+        poblarTiposVerificaciones();
+    });
+    function getFiltros() {
+        var tipo_verificacion;
+        if ($("#cboTipoVerificacion").val() == 0) {
+            tipo_verificacion = '';
+        } else {
+            tipo_verificacion = $('#cboTipoVerificacion option:selected').text();
+        }
+        var tipo_unidad_verificacion;
+        if ($("#cboTipoUnidadVerificacion").val() == 0) {
+            tipo_unidad_verificacion = '';
+        } else {
+            tipo_unidad_verificacion = $('#cboTipoUnidadVerificacion option:selected').text();
+        }
+        var filtros = {
+            "fecha_inicial": $('#dtmFechaInicial').val(),
+            "fecha_final": $('#dtmFechaFinal').val(),
+            "folio_inicial": $('#txtFolioInicial').val(),
+            "folio_final": $('#txtFolioFinal').val(),
+            "tipo_verificacion": tipo_verificacion,
+            "tipo_unidad_verificacion": tipo_unidad_verificacion,
+            "numero_orden": $('#txtNumOrden').val()
+        };
+        return filtros;
+    }
+    function tabla() {
+        $('#modalCargando').modal('show');
+        if ($.fn.dataTable.isDataTable('#tbl')) {
+            $('#tbl').DataTable().destroy();
+        }
+        $('#tbl tbody').empty();
+        var columnas = [
+            { "data": "orden" },
+            { "data": "tipo_verificacion" },
+            { "data": "fecha" },
+            { "data": "folio" },
+            { "data": "fecha_ant" },
+            { "data": "folio_ant" },
+            { "data": "cliente" },
+            { "data": "tipo_unidad_verificacion" },
+            { "data": "num_serie" },
+            { "data": "num_placas" },
+            { "data": "tecnico" },
+            {
+                "render": function (data, type, row, meta) {
+                    var codigoHTML = '';
+                    codigoHTML += `<button onclick="pdf_gah(${row.verificacion_id});" type="button" class="btn btn-inline btn-outline-info" data-toggle="tooltip" title="PDF">`;
+                    codigoHTML += '<i class="fa fa-file-pdf"></i>';
+                    codigoHTML += '</button>';
+                    if (row.estatus == 'APROBADO') {
+                        codigoHTML += `<button onclick="pdf_certificado(${row.verificacion_id});" type="button" class="btn btn-inline btn-outline-warning" data-toggle="tooltip" title="Certificado">`;
+                        codigoHTML += '<i class="fa fa-file-pdf"></i>';
+                        codigoHTML += '</button>';
+                    }
+                    if (!row.orden_cerrada) {
+                        codigoHTML += `<button onclick="modModificar(${row.verificacion_id},'${row.orden}');" type="button" class="btn btn-inline btn-outline-cyan" data-toggle="tooltip" title="Visualizar">`;
+                        codigoHTML += '<i class="fa fa-eye"></i>';
+                        codigoHTML += '</button>';
+                    }
+                    return codigoHTML;
+                }
+            }
+        ];
+        var table = $('#tbl').DataTable({
+            ordering: true, searching: true, info: true, paging: true,
+            language: { 'url': 'assets/extra-libs/DataTables/Spanish.html' },
+            serverSide: false,
+            ajax: {
+                url: 'http://localhost/Herkace_Shared/Web/api/app_ws/Verificaciones/listado_vw_filtrado',
+                type: 'POST',
+                data: getFiltros(),
+                dataSrc: ""
+            },
+            columns: columnas,
+            "columnDefs": [{
+                "targets": 11,
+                "orderable": false
+            }],
+            order: [[0, 'asc'], [3, 'asc'], [2, 'asc']],
+            initComplete: function () {
+                $(this.api().table().container()).find('input').parent().wrap('<form>').parent().attr('autocomplete', 'off');
+                $('#modalCargando').modal('hide');
+            }
+        });
+        table.on('draw', function () {
+            $("#tbl tbody tr").each(function () {
+                $(this).children("td").each(function (i, e) {
+                    if (i == 3 || i == 11) {
+                        $(this).addClass("text-center");
+                    }
+                });
+            });
+        });
+    }
+    function excel() {
+        $('#modalCargando').modal('show');
+        var request = new XMLHttpRequest(), file, fileURL;
+        request.open("POST", 'http://localhost/Herkace_Shared/Web/api/app_ws/Reportes/excel_reportes_verificaciones');
+        request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        request.responseType = "arraybuffer";
+        request.send(JSON.stringify(getFiltros()));
+        request.onreadystatechange = function () {
+            if (request.readyState === 4 && request.status === 200) {
+                $('#modalCargando').modal('hide');
+                const a = document.createElement('a');
+                document.body.appendChild(a);
+                const blob = new Blob([request.response], {
+                    type: 'octet/stream'
+                });
+                const url = window.URL.createObjectURL(blob);
+                a.href = url;
+                a.download = "Reporte_ordenes_verificaciones.xlsx";
+                a.click();
+                window.URL.revokeObjectURL(url);
+            }
+        };
+    }
+
+    function excelAnual() {
+        $('#modalCargando').modal('show');
+        var filtros = {
+            anio: $('#cboAnio').val()
+        };
+        var request = new XMLHttpRequest(), file, fileURL;
+        request.open("POST", 'http://localhost/Herkace_Shared/Web/api/app_ws/Reportes/excel_reporte_anual');
+        request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        request.responseType = "arraybuffer";
+        request.send(JSON.stringify(filtros));
+        request.onreadystatechange = function () {
+            if (request.readyState === 4 && request.status === 200) {
+                $('#modalCargando').modal('hide');
+                const a = document.createElement('a');
+                document.body.appendChild(a);
+                const blob = new Blob([request.response], {
+                    type: 'octet/stream'
+                });
+                const url = window.URL.createObjectURL(blob);
+                a.href = url;
+                a.download = 'ANUAL.xlsx';
+                a.click();
+                window.URL.revokeObjectURL(url);
+            }
+        };
+    }
+    function excelSIAF() {
+        $('#modalCargando').modal('show');
+        var request = new XMLHttpRequest(), file, fileURL;
+        request.open("POST", 'http://localhost/Herkace_Shared/Web/api/app_ws/Reportes/excel_reportes_siaf');
+        request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        request.responseType = "arraybuffer";
+        request.send(JSON.stringify(getFiltros()));
+        request.onreadystatechange = function () {
+            if (request.readyState === 4 && request.status === 200) {
+                $('#modalCargando').modal('hide');
+                const a = document.createElement('a');
+                document.body.appendChild(a);
+                const blob = new Blob([request.response], {
+                    type: 'octet/stream'
+                });
+                const url = window.URL.createObjectURL(blob);
+                a.href = url;
+                a.download = "Reporte_SIAF.xlsx";
+                a.click();
+                window.URL.revokeObjectURL(url);
+            }
+        };
+    }
+
+    $("#btnLimpiarFechaInicial").click(function () {
+        $("#dtmFechaInicial").val("").focus();
+    });
+    $("#btnLimpiarFechaFinal").click(function () {
+        $("#dtmFechaFinal").val("").focus();
+    });
+    $("#btnLimpiarFolioInicial").click(function () {
+        $("#txtFolioInicial").val("").focus();
+    });
+    $("#btnLimpiarFolioFinal").click(function () {
+        $("#txtFolioFinal").val("").focus();
+    });
+    $("#btnLimpiarTipoVerificacion").click(function () {
+        $('#cboTipoVerificacion option:eq(0)').prop('selected', true).change();
+    });
+    $("#btnLimpiarTipoUnidadVerificacion").click(function () {
+        $("#cboTipoUnidadVerificacion").val("0").change();
+    });
+    $("#btnLimpiarNumOrden").click(function () {
+        $("#txtNumOrden").val("").focus();
+    });
+    $("#btnLimpiar").click(function () {
+        $("#dtmFechaInicial").val("");
+        $("#dtmFechaFinal").val("");
+        $("#txtFolioInicial").val("");
+        $("#txtFolioFinal").val("");
+        $('#cboTipoVerificacion option:eq(0)').prop('selected', true).change();
+        $("#cboTipoUnidadVerificacion").val("0").change();
+        $("#txtNumOrden").val("").focus();
+        tabla();
+    });
+    function modModificar(verificacion_id, orden) {
+        $('[data-toggle="tooltip"]').tooltip('hide');
+        $("#container").empty();
+        $('#modalCargando').modal('show');
+        $("#container").load("Verificaciones/modificar.html", function () {
+            cargarDatos(verificacion_id, orden);
+        });
+    };
+</script>

@@ -1,0 +1,247 @@
+<!-- ============================================================== -->
+<!-- breadcrumb -->
+<!-- ============================================================== -->
+<div class="page-breadcrumb">
+    <div class="row">
+        <div class="col-12 d-flex no-block align-items-center">
+            <h4 class="page-title">Clientes</h4>
+            <div class="ml-auto text-right">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item active">
+                            <a href="javascript:;" onclick="modDashboard();">Dashboard</a>
+                        </li>
+                        <li class="breadcrumb-item active"><a href="javascript:;"
+                                onclick="modCatalogos();">Catálogos</a></li>
+                        <li class="breadcrumb-item active">Clientes</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- End breadcrumb -->
+<!-- ============================================================== -->
+<!-- ============================================================== -->
+<!-- Container -->
+<!-- ============================================================== -->
+<div class="container-fluid">
+    <div class="row">
+        <!-- TIPOS MOVIMIENTOS -->
+        <a href="javascript:;" onclick="modInsertarClientes();">
+            <button type="button" class="btn-square-icon">
+                <i class="fa fa-plus"></i>
+                Agregar cliente
+            </button>
+        </a>
+        <button type="button" class="btn btn-success btn-square-icon" id="btnExcel"
+            style="color: #fff; background-color: #28b779; border-color: #28b779;">
+            <i class="fa fa-file-excel"></i> XLSX
+        </button>
+        <div class="table-responsive">
+            <table id="table-edit" class="table table-bordered table-hover table-light">
+                <thead class="thead-light text-center">
+                    <tr>
+                        <th><b>N°</b></th>
+                        <th><b>Tipo de cliente</b></th>
+                        <th><b>Nombre del cliente</b></th>
+                        <th><b>RFC</b></th>
+                        <th><b>CURP</b></th>
+                        <th><b>Domicilio</b></th>
+                        <th><b>Activo</b></th>
+                        <th><b>Acciones</b></th>
+                    </tr>
+                </thead>
+                <tbody id="table-edit-body">
+            </table>
+        </div>
+        <!-- <%--MODAL PARA eliminar clientes--%> -->
+        <div id="modalEliminar" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog"
+            aria-labelledby="mySmallModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="modal-close" data-dismiss="modal" aria-label="Close">
+                            <i class="fa fa-times"></i>
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">Confirmación</h4>
+                    </div>
+                    <div class="modal-body">
+                        <strong>¿Está seguro que desea eliminar el cliente?</strong><br><br><strong>Nombre del cliente:
+                        </strong><label id="lblCliente"></label><br><strong>RFC:
+                        </strong><label id="lblRFC"></label><br><br>No podrá deshacer esta acción.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-inline btn-default" data-dismiss="modal">Cancelar</button>
+                        <button id="btnDesactivarCliente" type="button" class="btn btn-inline btn-danger"
+                            data-dismiss="modal">Eliminar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- FIN TIPOS MOVIMIENTOS -->
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- End Container -->
+<!-- ============================================================== -->
+<!--This page JavaScript -->
+
+<script>
+    $(document).ready(function () {
+        $('body').tooltip({ selector: '[data-toggle=tooltip]', trigger: 'hover' });
+    })
+
+    function tablaClientes() {
+        if ($.fn.dataTable.isDataTable('#table-edit')) {
+            $('#table-edit').DataTable().destroy();
+        }
+        $.ajax({
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            url: 'http://localhost/Herkace_Shared/Web/api/app_ws/Clientes/listado_vw',
+            dataType: 'json',
+            success: function (data) {
+                $('#table-edit-body').empty();
+                data.forEach(cliente => {
+                    var tableBody = document.getElementById('table-edit-body');
+
+                    var codigoHTML = '';
+                    codigoHTML += '<tr>';
+                    codigoHTML += '<td >' + cliente.numero_cliente + '</td>';
+                    codigoHTML += '<td >' + convertChrToStr(cliente.tipo_cliente)+ '</td>';
+                    codigoHTML += '<td >' + cliente.nombre + '</td>';
+                    codigoHTML += '<td >' + cliente.rfc + '</td>';
+                    codigoHTML += '<td>' + cliente.curp + '</td>';
+                    codigoHTML += '<td>' + cliente.calle + " " + cliente.numero + ", " + cliente.colonia + "<br />" + cliente.municipio + ", " + cliente.estado + "<br />" + cliente.codigo_postal + '</td>';
+                    codigoHTML += '<td class="text-center">';
+                    codigoHTML += '<i style="cursor: pointer;" onclick="setElementoEliminar(' + cliente.cliente_id + ',\'' + cliente.nombre + '\',' + cliente.activo + ',\'' + cliente.rfc + '\')" class="fa fa-2xl ';
+                    if (cliente.activo) {
+                        codigoHTML += 'text-success fa-toggle-on';
+                    } else {
+                        codigoHTML += 'text-danger fa-toggle-off';
+                    }
+                    codigoHTML += '" data-toggle="modal" data-target=".bd-example-modal-sm"><i/>';
+                    codigoHTML += '<td class="table-icon-cell text-center">';
+                    codigoHTML += '<a href="javascript:;" onclick="modModificarClientes(' + cliente.cliente_id + ');">';
+                    codigoHTML += '<button type="button" class="btn btn-inline btn-outline-cyan" data-toggle="tooltip" title="Modificar">';
+                    codigoHTML += '<i class="fa fa-edit"></i>';
+                    codigoHTML += '</button>';
+                    codigoHTML += '</a>';
+                    codigoHTML += '</td>';
+                    codigoHTML += '</tr>';
+
+                    tableBody.innerHTML += codigoHTML;
+                });
+            },
+            complete: function (jqXHR, textStatus) {
+                $('#table-edit').DataTable({
+                    ordering: false, searching: true, info: true, paging: true, language: { 'url': 'assets/extra-libs/DataTables/Spanish.html' },
+                    initComplete: function () {
+                        $(this.api().table().container()).find('input').parent().wrap('<form>').parent().attr('autocomplete', 'off');
+                    }
+                });
+            }
+        });
+    }
+
+    var ClienteAEliminar = null;
+    function setClienteAEliminar(id, nombreCliente, rfc) {
+        ClienteAEliminar = id;
+        $('#lblCliente').html(nombreCliente);
+        $('#lblRFC').html(rfc);
+    }
+
+    function setElementoEliminar(id, nombre, activo, rfc) {
+        ClienteAEliminar = id;
+        var valorNuevo;
+        var strBoton;
+        var codigoHTML = '<strong>¿Está seguro que desea ';
+        if (activo) {
+            valorNuevo = 0;
+            strBoton = "Desactivar";
+            codigoHTML += 'des';
+        } else {
+            valorNuevo = 1;
+            strBoton = "Activar";
+        }
+        codigoHTML += `activar este cliente?</strong><br /><input id="lblNuevoVal" type="hidden" value="${valorNuevo}" /><br /><strong>Nombre: </strong><label>${nombre}</label><br /><strong>RFC: </strong><label>${rfc}</label>`;
+        $("#modalEliminar .modal-body").html(codigoHTML);
+        $("#btnDesactivarCliente").html(strBoton);
+        $('#modalEliminar').modal('show');
+    }
+
+    //Ligamos el evento clic del botón de desactivar (del modal) para desactiva el cliente
+    $('#btnDesactivarCliente').click(function () {
+        var activo = parseInt($("#lblNuevoVal").val());
+        //Construcción del json
+        var jsonDesactivarCliente = `{"cliente_id":"${ClienteAEliminar}","activo":"${activo}"}`;
+        //Aquí se hace el envío al API para desactivar al cliente
+        $.ajax({
+            url: "http://localhost/Herkace_Shared/Web/api/app_ws/Clientes/cliente_desactivar",
+            method: "PUT",
+            data: JSON.parse(jsonDesactivarCliente),
+            dataType: "json",
+            success: function (response) {
+                if (response.cambio) {
+                    var str = activo == 0 ? 'des' : '';
+                    Swal.fire({
+                        title: `El cliente ha sido ${str}activado correctamente`,
+                        icon: 'success'
+                    });
+                    tablaClientes();
+                } else {
+                    Swal.fire({ title: `Ocurrió un error al ${str}activar el cliente. Intente de nuevo más tarde.`, icon: 'error' });
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                Swal.fire({ title: `Ocurrió un error al ${str}activar el cliente. Intente de nuevo más tarde.`, icon: 'error' });
+            }
+        });
+
+    });
+
+    $("#btnExcel").click(function () {
+        $('#modalCargando').modal('show');
+
+        var request = new XMLHttpRequest(), file, fileURL;
+        request.open("POST", 'http://localhost/Herkace_Shared/Web/api/app_ws/Clientes/excel');
+        request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        request.responseType = "arraybuffer";
+        request.send();
+        request.onreadystatechange = function () {
+            if (request.readyState === 4 && request.status === 200) {
+                $('#modalCargando').modal('hide');
+                const a = document.createElement('a');
+                document.body.appendChild(a);
+                const blob = new Blob([request.response], {
+                    type: 'octet/stream'
+                });
+                const url = window.URL.createObjectURL(blob);
+                a.href = url;
+                a.download = "Clientes.xlsx";
+                a.click();
+                window.URL.revokeObjectURL(url);
+            }
+        };
+    });
+
+    function convertChrToStr(chr) {
+        const strTC = chr.split(',').map(tc => tc == 'E' ? 'EMPRESA' : tc == 'G' ? 'GESTOR' : tc == 'F' ? 'FACTURADOR' : '');
+        return strTC.join(', ');
+    }
+
+    // modCliente
+    function modModificarClientes(ClienteID) {
+        $('[data-toggle="tooltip"]').tooltip('hide');
+        $("#container").empty();
+        $("a").removeClass("selected");
+        $("#ModificarClientes").addClass("selected");
+        $("#container").load("Catalogos/Clientes/ModificarClientes.html", function () {
+            cargarDatosClientes(ClienteID);
+        });
+    };
+
+
+</script>

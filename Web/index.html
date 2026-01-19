@@ -1,0 +1,1560 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Authorization"
+        content="key=AAAAY0H7eDo:APA91bGQyeKof_NEwUZIeeSKiiUsJX4OmRMrBuVc7DRB1HJ_c4VbdGiLfO0_POL9YuJkqXuE9PvTRzYQdy0x7jWxvVolmLaZ8HwLnv_serV-pDeOMTTujT0kGHz3iuB1C9ZxKB3adOQc" />
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Favicon icon -->
+    <!--<link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon.png">-->
+    <link rel="apple-touch-icon" sizes="57x57" href="assets/images/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="assets/images/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="assets/images/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="assets/images/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="assets/images/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="assets/images/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="assets/images/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="assets/images/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/images/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="assets/images/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="assets/images/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon-16x16.png">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
+
+
+
+
+    <title>Administrador de Contenido | Herkace</title>
+    <!-- Custom CSS -->
+    <link href="assets/libs/flot/css/float-chart.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="css/style.min.css" rel="stylesheet">
+    <link href="dist/css/style.min.css" rel="stylesheet">
+    <link href="css/style_keex.css" rel="stylesheet">
+    <!-- Full Calendar -->
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/@fullcalendar/core@4.3.1/main.min.css">
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/@fullcalendar/daygrid@4.3.0/main.min.css">
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/@fullcalendar/list@4.3.0/main.min.css">
+    <link href="assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.css" rel="stylesheet">
+    <link href="assets/lightGallery/css/lightgallery.css" rel="stylesheet">
+    <!-- CSS provenientes de paginas individuales -->
+    <link rel="stylesheet" type="text/css"
+        href="assets/libs/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
+    <link rel="stylesheet" type="text/css" href="assets/libs/quill/dist/quill.snow.css">
+    <link rel="stylesheet" type="text/css" href="assets/libs/magnific-popup/dist/magnific-popup.css">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script>
+        // document.cookie = 'Set-Cookie=HttpOnly;Secure;SameSite=Strict';
+    </script>
+</head>
+
+<body>
+    <!-- ============================================================== -->
+    <!-- Preloader   -->
+    <!-- ============================================================== -->
+    <div class="preloader">
+        <div class="lds-ripple">
+            <div class="lds-pos"></div>
+            <div class="lds-pos"></div>
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- Cargando   -->
+    <!-- ============================================================== -->
+    <style>
+        #icon-camion {
+            position: relative;
+            animation-name: example;
+            animation-duration: 3s;
+            animation-iteration-count: infinite;
+        }
+
+        @keyframes example {
+            from {
+                left: 0px;
+            }
+
+            to {
+                left: 675px;
+            }
+        }
+
+        .ocultar {
+            display: none;
+        }
+
+        @media (min-width: 768px) {
+            footer {
+                margin-left: 65px;
+            }
+        }
+
+        .swal-height {
+            height: 420px;
+        }
+    </style>
+    <div id="modalCargando" class="modal bd-example-modal-lg" tabindex="-1" role="dialog"
+        aria-labelledby="mySmallModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <i class="fa fa-shipping-fast fa-5x" id="icon-camion"></i>
+                    <br />
+                    <h1 class="text-center">CARGANDO...</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- Modal Verificacion Modificar                                   -->
+    <!-- ============================================================== -->
+    <div id="modalVerificacionModificar" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
+        aria-labelledby="mySmallModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="modal-close" data-dismiss="modal" aria-label="Close">
+                        <i class="fa fa-times"></i>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Modificar verificación</h4>
+                </div>
+                <div class="modal-body row">
+                    <div class="col-12 text-center" id="divCargandoVerificacionModal">
+                        <i class="fa fa-shipping-fast fa-5x"></i>
+                        <br />
+                        <h1>CARGANDO...</h1>
+                    </div>
+                    <div class="col-lg-6 row mt-3">
+                        <div class="col-lg-12">
+                            <div class="form-group align-items-center row">
+                                <label for="cboServicioModal"
+                                    class="col-lg-4 form-control-label text-center text-lg-right lbl-mb-16">
+                                    Servicio:
+                                </label>
+                                <div class="col-lg-8">
+                                    <p class="form-control-static">
+                                        <select class="form-control" id="cboServicioModal"></select>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-group align-items-center row">
+                                <label for="cboSubservicioModal"
+                                    class="col-lg-4 form-control-label text-center text-lg-right lbl-mb-16">
+                                    Tarifa:
+                                </label>
+                                <div class="col-lg-8">
+                                    <p class="form-control-static">
+                                        <select class="form-control" id="cboSubservicioModal"></select>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-group align-items-center row">
+                                <label for="txtPrecioModal"
+                                    class="col-lg-4 form-control-label text-center text-lg-right lbl-mb-0">
+                                    Precio:
+                                </label>
+                                <div class="col-sm-8 input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text"><i class="fa fa-dollar-sign"></i></div>
+                                    </div>
+                                    <input type="text" class="form-control" id="txtPrecioModal" disabled />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 mt-3">
+                            <div class="form-group align-items-center row">
+                                <label for="cboTipoVerificacionModal"
+                                    class="col-lg-4 form-control-label text-center text-lg-right">
+                                    Tipo verificación:
+                                </label>
+                                <div class="col-lg-8">
+                                    <p class="form-control-static">
+                                        <select class="form-control" id="cboTipoVerificacionModal" disabled></select>
+                                    <div class="invalid-feedback" id="cboTipoVerificacionModalValid"></div>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-group align-items-center row">
+                                <label for="cboCertificadoModal"
+                                    class="col-lg-4 form-control-label text-center text-lg-right">
+                                    Certificado:
+                                </label>
+                                <div class="col-lg-8">
+                                    <label style="margin-left: 8px;"><b id="lblFolioOriginalModal"></b></label>
+                                    <div class="form-check form-check-inline"
+                                        style="margin-left: 8px; margin-right: 0px;">
+                                        <input class="form-check-input" type="checkbox"
+                                            id="chkCambioDeCertificadoModal">
+                                        <label class="form-check-label" for="chkCambioDeCertificadoModal">Cambio de
+                                            Certificado</label>
+                                    </div>
+                                    <p class="form-control-static">
+                                        <select class="form-control" id="cboCertificadoModal" disabled></select>
+                                    <div class="invalid-feedback" id="cboCertificadoModalValid">
+                                        Debe seleccionar un nuevo certificado
+                                    </div>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 mb-2">
+                            <div class="form-group align-items-center row">
+                                <label for="cboClienteModal"
+                                    class="col-lg-4 form-control-label text-center text-lg-right">
+                                    Cliente:
+                                </label>
+                                <div class="col-lg-8 row">
+                                    <p class="form-control-static">
+                                    <div class="input-group">
+                                        <div class="input-group-append col-sm-2">
+                                            <button class=" btn btn-info" id="btnRfsClienteModal">
+                                                <i class="fa fa-rotate"></i>
+                                            </button>
+                                        </div>
+                                        <div class="col-sm-10">
+                                            <select class="form-control" id="cboClienteModal"></select>
+                                        </div>
+                                    </div>
+                                    <div class="invalid-feedback" id="cboClienteModalValid">
+                                        Debe seleccionar un cliente
+                                    </div>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 mb-2">
+                            <div class="form-group align-items-center row">
+                                <label for="cboVehiculoModal"
+                                    class="col-lg-4 form-control-label text-center text-lg-right">
+                                    Vehículo:
+                                </label>
+                                <div class="col-lg-8 row">
+                                    <p class="form-control-static">
+                                    <div class="input-group">
+                                        <div class="input-group-append col-sm-2">
+                                            <button class=" btn btn-info" id="btnRfsVehiculoModal">
+                                                <i class="fa fa-rotate"></i>
+                                            </button>
+                                        </div>
+                                        <div class="col-sm-10">
+                                            <select class="form-control" id="cboVehiculoModal"></select>
+                                        </div>
+                                    </div>
+                                    <div class="invalid-feedback" id="cboVehiculoModalValid">
+                                        Debe seleccionar un vehículo
+                                    </div>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-group align-items-center row">
+                                <label for="cboEstatusModal"
+                                    class="col-lg-4 form-control-label text-center text-lg-right">
+                                    Estatus:
+                                </label>
+                                <div class="col-lg-8">
+                                    <p class="form-control-static">
+                                        <select class="form-control" id="cboEstatusModal"></select>
+                                    <div class="invalid-feedback" id="cboEstatusModalValid"></div>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 row">
+                            <div class="col-lg-4"></div>
+                            <div class="col-lg-8 form-check">
+                                <input class="form-check-input" type="checkbox" value="1" id="chkImprimeNomModal">
+                                <label class="form-check-label" for="chkImprimeNomModal">
+                                    Se imprime Nom-EM-167
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 row">
+                        <div class="col-lg-12 mt-3">
+                            <div class="form-group align-items-center row">
+                                <label for="lblOrdenModal" class="col-lg-4 form-control-label text-center text-lg-right"
+                                    style="margin-bottom: 8px;">
+                                    Órden:
+                                </label>
+                                <div class="col-lg-8">
+                                    <label><b id="lblOrdenModal"></b></label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-group align-items-center row">
+                                <label for="txtFechaAnteriorModal"
+                                    class="col-lg-4 form-control-label text-center text-lg-right">
+                                    Fecha anterior:
+                                </label>
+                                <div class="col-lg-8 mb-3 row">
+                                    <input type="date" class="form-control validar-modal col-sm-6 col-lg-9" name="fecha"
+                                        id="txtFechaAnteriorModal" style="margin-left: 10px;" required />
+                                    <div class="invalid-feedback col-sm-12" id="txtFechaAnteriorModalValid">
+                                        El dato ingresado no es válido
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-group align-items-center row">
+                                <label for="txtCertificadoAnteriorModal"
+                                    class="col-lg-4 form-control-label text-center text-lg-right">
+                                    Certificado anterior:
+                                </label>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control validar-modal"
+                                        id="txtCertificadoAnteriorModal" placeholder="Certificado anterior"
+                                        minlength="1" maxlength="30" required />
+                                    <div class="invalid-feedback" id="txtCertificadoAnteriorModalValid"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-group align-items-center row">
+                                <label for="cboTipoUnidadVerificacionModal"
+                                    class="col-lg-4 form-control-label text-center text-lg-right">
+                                    Tipo unidad:
+                                </label>
+                                <div class="col-lg-8">
+                                    <p class="form-control-static">
+                                        <select class="form-control" id="cboTipoUnidadVerificacionModal"></select>
+                                    <div class="invalid-feedback" id="cboTipoUnidadVerificacionModalValid"></div>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-group align-items-center row">
+                                <label for="cboTecnicoModal"
+                                    class="col-lg-4 form-control-label text-center text-lg-right">
+                                    Nombre del técnico:
+                                </label>
+                                <div class="col-lg-8">
+                                    <p class="form-control-static">
+                                        <select class="form-control" id="cboTecnicoModal"></select>
+                                    <div class="invalid-feedback" id="cboTecnicoModalValid"></div>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-group align-items-center row">
+                                <label for="txtKilometrajeModal"
+                                    class="col-lg-4 form-control-label text-center text-lg-right">
+                                    Kilometraje:
+                                </label>
+                                <div class="col-lg-8">
+                                    <input type="number" class="form-control validar-modal" id="txtKilometrajeModal"
+                                        placeholder="Kilometraje" min="1" max="999999999" required />
+                                    <div class="invalid-feedback" id="txtKilometrajeModalValid">
+                                        El dato ingresado no es válido
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-group align-items-center row" style="margin-bottom: 8px;">
+                                <label for="txtCapacidadModal"
+                                    class="col-lg-4 form-control-label text-center text-lg-right"
+                                    style="margin-bottom: 0px;">
+                                    Se presentó:
+                                </label>
+                                <div class="col-lg-8">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="radEstatusModal"
+                                            id="radEstatusModalC" value="1" checked>
+                                        <label class="form-check-label" for="radEstatusModalC">Cargado</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="radEstatusModal"
+                                            id="radEstatusModalV" value="0">
+                                        <label class="form-check-label" for="radEstatusModalV">Vacío</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-group align-items-center row">
+                                <label for="txtFechaModal"
+                                    class="col-lg-4 form-control-label text-center text-lg-right">
+                                    Fecha:
+                                </label>
+                                <div class="col-lg-8 row">
+                                    <input type="date" class="form-control validar-modal col-sm-6" name="fecha"
+                                        id="txtFechaModal" placeholder="" required />
+                                    <div class="invalid-feedback" id="txtFechaModalValid">
+                                        El dato ingresado no es válido
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-group align-items-center row">
+                                <label for="cboTipoUnidad"
+                                    class="col-lg-4 form-control-label text-center text-lg-right">
+                                    Hora:
+                                </label>
+                                <div class="col-lg-8 row">
+                                    <p class="col-sm-6 form-control-static text-center" style="margin-bottom: 0px;">
+                                        Inicial
+                                        <input type="time" class="form-control validar-modal" id="txtHoraInicioModal"
+                                            placeholder="" required />
+                                    </p>
+                                    <p class="col-sm-6 form-control-static text-center" style="margin-bottom: 0px;">
+                                        Final
+                                        <input type="time" class="form-control validar-modal" id="txtHoraFinalModal"
+                                            placeholder="" required />
+                                    </p>
+                                    <div class="col-sm-12 invalid-feedback" id="txtHoraModalValid">
+                                        El dato ingresado no es válido
+                                    </div>
+                                    <div class="col-sm-12 invalid-feedback" id="txtHoraModalValidMayor">
+                                        La hora inicial debe ser mayor a la hora final
+                                    </div>
+                                    <div class="col-sm-12 invalid-feedback" id="txtHoraModalValidDif8">
+                                        No se permite un tiempo de verificación mayor a 8 horas
+                                    </div>
+                                    <div class="col-sm-12 invalid-feedback" id="txtHoraModalValidRango">
+                                        No se permite ingresar una hora entre la 1:00 a.m. y las 5:59 a.m.
+                                    </div>
+                                    <div class="col-sm-12 invalid-feedback" id="txtHoraModalValidIguales">
+                                        La hora inicial y final deben ser diferentes
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-group align-items-center row">
+                                <label for="txtCapacidad" class="col-lg-4 form-control-label text-center text-lg-right">
+                                    Período:
+                                </label>
+                                <div class="col-lg-8">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="radPeriodoModal"
+                                            id="radPeriodoModal1" value="1" checked>
+                                        <label class="form-check-label" for="radPeriodoModal1">1</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="radPeriodoModal"
+                                            id="radPeriodoModal2" value="2">
+                                        <label class="form-check-label" for="radPeriodoModal2">2</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-inline btn-danger" data-dismiss="modal">
+                        Cancelar
+                    </button>
+                    <button id="btnModificarModal" type="button" class="btn btn-inline btn-success">
+                        Modificar
+                    </button>
+                    <button id="btnPdfGahModal" type="button" class="btn btn-inline btn-info">
+                        Formato Gestores Ambientales Herkace
+                    </button>
+                    <i id="iconoSpinner" class="fa fa-spinner fa-pulse fa-2x ocultar"></i>
+                    <button id="btnPdfCertificadoModal" type="button" class="btn btn-inline btn-warning">
+                        Certificado
+                    </button>
+                    <i id="iconoSpinnerCertificado" class="fa fa-spinner fa-pulse fa-2x ocultar"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- Fin Modal Verificacion Modificar                               -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Main wrapper   -->
+    <!-- ============================================================== -->
+    <div id="main-wrapper" data-sidebartype="mini-sidebar" class="mini-sidebar">
+        <!-- ============================================================== -->
+        <!-- Topbar header   -->
+        <!-- ============================================================== -->
+        <header class="topbar" data-navbarbg="skin5" style="background-color: #245159;">
+            <nav class="navbar top-navbar navbar-expand-md navbar-dark" style="background-color: #306a76;">
+                <div class="navbar-header" data-logobg="skin5">
+                    <!-- This is for the sidebar toggle which is visible on mobile only -->
+                    <a class="nav-toggler waves-effect waves-light d-block d-md-none" href="javascript:void(0)"><i
+                            class="ti-menu ti-close"></i></a>
+                    <!-- ============================================================== -->
+                    <!-- Logo -->
+                    <!-- ============================================================== -->
+                    <a class="navbar-brand" href="index" style="background-color: rgb(255, 255, 255);">
+                        <!-- Logo icon -->
+                        <b class="logo-icon p-l-10">
+                            <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
+                            <!-- Dark Logo icon -->
+
+                            <!-- <img src="../qsacs/img/avatar-1-256.png" class="light-logo"
+                                style="width: 45px; height: 45px;" alt=""> -->
+
+                            <!-- <img src="assets/images/keex_simple.png" alt="homepage" class="light-logo" id="redimension"
+                                width="40px" height="40px" /> -->
+
+
+                        </b>
+                        <!--End Logo icon -->
+                        <!-- Logo text -->
+                        <span class="logo-text">
+                            <!-- dark Logo text -->
+                            <!-- <img src="assets/images/keex_no_padding.png" alt="homepage" class="light-logo" width="105px"
+                                height="35px" /> -->
+
+                        </span>
+                        <!-- Logo icon -->
+                        <!-- <b class="logo-icon"> -->
+                        <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
+                        <!-- Dark Logo icon -->
+                        <!-- <img src="assets/images/logo-text.png" alt="homepage" class="light-logo" /> -->
+
+                        <!-- </b> -->
+                        <!--End Logo icon -->
+                    </a>
+                    <!-- ============================================================== -->
+                    <!-- End Logo -->
+                    <!-- ============================================================== -->
+                    <!-- ============================================================== -->
+                    <!-- Toggle which is visible on mobile only -->
+                    <!-- ============================================================== -->
+                    <a class="topbartoggler d-block d-md-none waves-effect waves-light" href="javascript:void(0)"
+                        data-toggle="collapse" data-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><i
+                            class="ti-more"></i></a>
+                </div>
+                <!-- ============================================================== -->
+                <!-- End Logo -->
+                <!-- ============================================================== -->
+                <div class="navbar-collapse collapse" id="navbarSupportedContent" data-navbarbg="skin5">
+                    <!-- ============================================================== -->
+                    <!-- toggle and nav items -->
+                    <!-- ============================================================== -->
+                    <ul class="navbar-nav float-left mr-auto">
+                        <li class="nav-item d-none d-md-block"><a
+                                class="nav-link sidebartoggler waves-effect waves-light" href="javascript:void(0)"
+                                data-sidebartype="mini-sidebar"><i class="mdi mdi-menu font-24"></i></a></li>
+                        <!-- ============================================================== -->
+                        <!-- create new -->
+                        <!-- ============================================================== -->
+                        <!-- <li class="nav-item">
+                            <a class="nav-link dropdown-toggle" href="javascript:;">
+                                <span id="UserName" class="d-none d-md-block"> Agregar Nueva Publicación</span>
+                            </a>
+                        </li> -->
+
+                    </ul>
+                    <!-- ============================================================== -->
+                    <!-- Right side toggle and nav items -->
+                    <!-- ============================================================== -->
+                    <ul class="navbar-nav float-right">
+                        <!-- ============================================================== -->
+                        <!-- Comment -->
+                        <!-- ============================================================== -->
+                        <!-- <li class="nav-item dropdown" id="barraNuevaNotif">
+                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false"> <i class="mdi mdi-bell font-24"></i>
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="javascript:;" onclick="modNewNotificaciones();">Enviar
+                                    Notificación</a>
+                                 -->
+                        <!-- <a class="dropdown-item"href="javascript:;">Accion 2</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="javascript:;">Accion 3</a> -->
+                        <!-- 
+                            </div>
+                        </li> -->
+                        <!-- ============================================================== -->
+                        <!-- End Comment -->
+                        <!-- ============================================================== -->
+
+                        <!-- ============================================================== -->
+                        <!-- User profile and search -->
+                        <!-- ============================================================== -->
+                        <li class="nav-item dropdown    ">
+                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" href=""
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img
+                                    src="assets/images/users/1.jpg" alt="user" class="rounded-circle" width="31"></a>
+                            <div class="dropdown-menu dropdown-menu-right user-dd animated">
+                                <!-- <a class="dropdown-item" href="javascript:void(0)"><i class="ti-user m-r-5 m-l-5"></i>
+                                Mi perfil</a>
+                          
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="javascript:void(0)"><i
+                                    class="ti-settings m-r-5 m-l-5"></i> Configuración de cuenta</a>
+                            <div class="dropdown-divider"></div> -->
+                                <a class="dropdown-item" href="account/login.html"><i
+                                        class="fa fa-power-off text-rojo m-r-5 m-l-5"></i>
+                                    Cerrar sesión</a>
+                            </div>
+                        </li>
+                        <!-- ============================================================== -->
+                        <!-- User profile and search -->
+                        <!-- ============================================================== -->
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <!-- ============================================================== -->
+        <!-- End Topbar header -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        <aside class="left-sidebar" data-sidebarbg="skin5">
+            <!-- Imagen de sesión -->
+
+            <!-- Sidebar scroll-->
+            <div id="menucont" class="scroll-sidebar" style="background-color: #306a76;"></div>
+            <!-- <div id="menucont" > -->
+            <!-- Sidebar navigation-->
+        </aside>
+        <!-- ============================================================== -->
+        <!-- End Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+
+        <!-- ============================================================== -->
+        <!-- Page container  -->
+        <!-- ============================================================== -->
+        <div id="container" class="page-wrapper"></div>
+        <!-- ============================================================== -->
+        <!-- End Page container  -->
+        <!-- ============================================================== -->
+
+        <!-- <div id="notis"></div> -->
+        <!-- ============================================================== -->
+        <!-- footer -->
+        <!-- ============================================================== -->
+        <footer class="footer text-center" style="color: #306a76; background-color: #eeeeee;">
+            © 2024
+            <br />
+            <a href="http://www.munyaltek.mx" target="_blank">
+                <img src="assets/images/logo_munyaltek.png" height="60px">
+            </a>
+        </footer>
+        <!-- ============================================================== -->
+        <!-- End footer -->
+        <!-- ============================================================== -->
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Wrapper -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- All Jquery -->
+    <!-- ============================================================== 
+               ../assets/libs/jquery/dist/jquery.min.js  -->
+    <script src="assets/libs/jquery/dist/jquery-3.4.1.min.js"></script>
+    <script src="assets/libs/jquery/dist/jquery.cookie.js"></script>
+    <!-- Bootstrap tether Core JavaScript -->
+    <script src="assets/libs/popper.js/dist/umd/popper.min.js"></script>
+    <script src="assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
+    <script src="assets/extra-libs/sparkline/sparkline.js"></script>
+    <!--Wave Effects -->
+    <script src="js/waves.js"></script>
+    <!--Menu sidebar -->
+    <script src="js/sidebarmenu.js"></script>
+    <!--Custom JavaScript -->
+    <script src="js/custom.min.js"></script>
+    <!--This page JavaScript -->
+    <!-- <link href="css/sweetalert/sweetalert.css" rel="stylesheet" />
+    <script src="js/sweetalert.min.js"></script> -->
+    <!-- <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-messaging.js"></script> -->
+    <!-- For an optimal experience using Cloud Messaging, also add the Firebase SDK for Analytics. -->
+    <!-- <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-analytics.js"></script> -->
+    <script src="js/notificaciones.js"></script>
+    <script src="js/json/json2.js"></script>
+    <script src="js/jwt-decode.js"></script>
+    <script src="js/keex.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/highcharts-more.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <!-- Full Calendar -->
+    <!-- <script src="https://www.gstatic.com/charts/loader.js"></script> -->
+    <script src="js/gstatic_charts.js"></script>
+    <script src="assets/extra-libs/DataTables/datatables.min.js"></script>
+    <link href="assets/extra-libs/select2/select2.min.css" rel="stylesheet" />
+    <script src="assets/extra-libs/select2/select2.min.js"></script>
+    <script src="assets/extra-libs/select2/es.js"></script>
+    <script src="js/sweetaler2.min.js"></script>
+    <script src="assets/lightGallery/js/lightgallery.min.js"></script>
+    <!-- JS provenientes de paginas individuales -->
+    <script src="assets/libs/inputmask/dist/min/jquery.inputmask.bundle.min.js"></script>
+    <script src="assets/libs/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+    <script src="assets/libs/magnific-popup/dist/jquery.magnific-popup.min.js"></script>
+    <script src="assets/libs/magnific-popup/meg.init.js"></script>
+    <script src="assets/libs/quill/dist/quill.js"></script>
+    <script src="js/strings.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $.fn.select2.defaults.set('language', 'es');
+            history.pushState(null, null, document.URL);
+            window.addEventListener('popstate', function () {
+                history.pushState(null, null, document.URL);
+            });
+
+            var miCookie = $.cookie("APSesion");
+            var tokenSesion = $.cookie("tokenSesion");
+            if (tokenSesion == undefined) {
+                location.href = "account/login.html";
+                sessionStorage.clear();
+                document.cookie = "APSesion=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                document.cookie = "tokenM=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                document.cookie = "tokenSesion=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            } else {
+                var miSesion = (miCookie === 'true');
+                var decoded = jwt_decode(tokenSesion);
+                console.log(decoded);
+
+                if (localStorage.getItem("AF") != "Autentificado") {
+                    location.href = "account/login.html";
+                    sessionStorage.clear();
+                    document.cookie = "APSesion=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                    document.cookie = "tokenM=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                    document.cookie = "tokenSesion=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                } else {
+                    $('#Email').html(localStorage.getItem("AB"));
+                    $('#UserName2').html(localStorage.getItem("AA"));
+                    $('#UserName').html("Bienvenido: " + localStorage.getItem("AA"));
+                    sidebarNar(localStorage.getItem("rol_id"));
+                    modDashboard();
+                }
+            }
+            /* MODAL VERIFICACION MODIFICAR */
+            var anio = new Date().getFullYear();
+            $('input[name=fecha]').prop('min', '2019-01-01');
+            $('input[name=fecha]').prop('max', `${anio + 1}-12-31`);
+            $("input.validar-modal").each(function () {
+                var id = this.id;
+                if (id == 'txtCertificadoAnteriorModal') {
+                    this.oninput = function () {
+                        inputNumeros(this);
+                        validarFormularioModal();
+                    };
+                    const minLength = parseInt($(this).attr("minlength"));
+                    $("#" + id + "Valid").html(`El campo debe contener al menos ${minLength} caracter.`);
+                } else {
+                    this.oninput = function () {
+                        validarFormularioModal();
+                    };
+                }
+            });
+            $('#txtKilometrajeModal').keypress(function (key) {
+                if (key.charCode === 101 || key.charCode === 69 || key.charCode === 46) {
+                    return false; // Evita agregar "e" o "."
+                }
+                if (this.value.length == 9) {
+                    return false;
+                }
+            });
+        });
+
+        function sidebarNar(id) {
+            console.log("ROL: " + id);
+            $("#menucont").empty();
+            switch (id) {
+                case "1":
+                case "2":
+                    $("#menucont").load("menu/sidebar00.html", function () { });
+                    break;
+                default:
+                    $("#menucont").empty();
+                    break;
+            }
+        };
+        /* MODAL VERIFICACION MODIFICAR */
+        $('#modalVerificacionModificar').on('shown.bs.modal', function (e) {
+            cargarDatosModal();
+        });
+        function modalVerificacionModificar(verificacion_id, orden, pdf_certificado) {
+            verificacion_id_modal = verificacion_id;
+            if (orden == '-') {
+                $('#lblOrdenModal').html('SIN ASIGNAR');
+            } else {
+                $('#lblOrdenModal').html(orden);
+            }
+            if (!pdf_certificado) {
+                $('#btnPdfCertificadoModal').addClass('ocultar');
+            }
+            $('#modalVerificacionModificar').modal('show');
+        }
+        $('#btnRfsClienteModal').click(function () {
+            getClientesModal(0);
+        });
+        $('#btnRfsVehiculoModal').click(function () {
+            getVehiculosModal(0, true);
+        });
+        var vehiculosListaParcial = [];
+        var indiceVehiculosClientes = 0;
+
+        $('#cboTipoVerificacionModal').change(function () {
+            var tipo_verificacion = $('#cboTipoVerificacionModal').val();
+            var txt = $('#txtCertificadoAnteriorModal')[0];
+            if (tipo_verificacion == '2') {
+                txt.oninput = function () {
+                    inputLetrasNumeros(txt);
+                    validarFormulario();
+                };
+            } else {
+                inputNumeros(txt);
+                txt.oninput = function () {
+                    inputNumeros(txt);
+                    validarFormularioModal();
+                };
+            }
+            certificadosModal(tipo_verificacion);
+            validarFormularioModal();
+        });
+        $('#chkCambioDeCertificadoModal').change(function () {
+            // $('#cboTipoVerificacionModal').attr('disabled', !this.checked);
+            $('#cboCertificadoModal').attr('disabled', !this.checked);
+            validarFormularioModal();
+        });
+        function certificadosModal(tipo_verificacion_id) {
+            if ($('#cboCertificadoModal').hasClass("select2-hidden-accessible")) {
+                $("#cboCertificadoModal").select2('destroy');
+                $("#cboCertificadoModal").empty();
+            }
+            var datos_tipos = {
+                "tipo_verificacion_id": tipo_verificacion_id,
+                "tipo_unidad": $('#cboTipoUnidadVerificacionModal').val()
+            }
+            $.ajax({
+                type: "POST",
+                url: 'http://localhost/Herkace_Shared/Web/api/app_ws/Folios/listado_paquete_actual',
+                data: datos_tipos,
+                dataType: 'json',
+                success: function (data) {
+                    $.each(data, function (key, item) {
+                        var codigoHTML = `<option value=${item.folio_id}>${item.folio}</option>`;
+                        $('#cboCertificadoModal').append(codigoHTML);
+                    });
+                    $('#cboCertificadoModal').select2({});
+                }
+            });
+        }
+
+        $('#cboTipoUnidadVerificacionModal').change(function () {
+            var tipo_verificacion = $('#cboTipoVerificacionModal').val();
+            if (tipo_verificacion == "2") {
+                certificadosModal(tipo_verificacion);
+            }
+        });
+        var vehiculosListaModal = [];
+        var clientesListaModal = [];
+
+        function getClientesModal(id) {
+            if ($('#cboClienteModal').hasClass("select2-hidden-accessible")) {
+                $("#cboClienteModal").select2('destroy');
+                $("#cboClienteModal").empty();
+            }
+            $.ajax({
+                type: "GET",
+                contentType: "application/json; charset=utf-8",
+                url: 'http://localhost/Herkace_Shared/Web/api/app_ws/Clientes/clientes?tipo=E',
+                async: false,
+                dataType: 'json',
+                success: function (data) {
+                    $('#cboClienteModal').append('<option value="0">Seleccione un cliente</option>');
+                    $.each(data, function (key, item) {
+                        var codigoHTML = `<option value=${item.cliente_id}>${item.nombre}</option>`;
+                        $('#cboClienteModal').append(codigoHTML);
+                        clientesLista.push(item);
+                    });
+                    $('#cboClienteModal').select2({});
+                    $('#cboClienteModal').val(id.toString()).change();
+                }
+            });
+        }
+
+        function getVehiculosModal(id, cargaInicial = false) {
+            if ($('#cboVehiculoModal').hasClass("select2-hidden-accessible")) {
+                $("#cboVehiculoModal").select2('destroy');
+            }
+            $("#cboVehiculoModal").empty();
+            vehiculosListaModal = [];
+            vehiculosListaParcial = [];
+            $.ajax({
+                type: "GET",
+                contentType: "application/json; charset=utf-8",
+                url: 'http://localhost/Herkace_Shared/Web/api/app_ws/Vehiculos/listado',
+                async: false,
+                dataType: 'json',
+                success: function (data) {
+                    $('#cboVehiculoModal').append('<option value="0">Seleccione un vehículo</option>');
+                    $.each(data, function (key, item) {
+                        if (item.cliente_id == parseInt($('#cboClienteModal').val()) || cargaInicial) {
+                            var codigoHTML = `<option value=${item.vehiculo_id}>${item.num_placas} - ${item.num_serie}</option>`;
+                            $('#cboVehiculoModal').append(codigoHTML);
+                            vehiculosListaParcial.push(item);
+                        }
+                        vehiculosListaModal.push(item);
+                    });
+                    $('#cboVehiculoModal').select2({});
+                    $('#cboVehiculoModal').val(id.toString()).change();
+                }
+            });
+        }
+        var bandera = false;
+        var vehiculo_changed = false;
+        var puede_validar;
+        function getCatalogosModal() {
+            puede_validar = false;
+            getVehiculosModal(0, true);
+            getClientesModal(0);
+            $('#cboClienteModal').change(function () {
+                if (vehiculo_changed) {
+                    vehiculo_changed = false;
+                } else {
+                    indiceVehiculosClientes = 0;
+                }
+                if ($('#cboVehiculoModal').hasClass("select2-hidden-accessible")) {
+                    $("#cboVehiculoModal").select2('destroy');
+                    $("#cboVehiculoModal").empty();
+                }
+                vehiculosListaParcial = [];
+                $('#cboVehiculoModal').append('<option value="0">Seleccione un vehículo</option>');
+                var cliente_id = parseInt($('#cboClienteModal').val());
+                $.each(vehiculosLista, function (key, item) {
+                    if (cliente_id == 0 || item.cliente_id == cliente_id) {
+                        var codigoHTML = `<option value=${item.vehiculo_id}>${item.num_placas} - ${item.num_serie}</option>`;
+                        $('#cboVehiculoModal').append(codigoHTML);
+                        vehiculosListaParcial.push(item);
+                    }
+                });
+                $("#cboVehiculoModal").select2({});
+                bandera = true;
+                $('#cboVehiculoModal').val(indiceVehiculosClientes).change();
+                bandera = false;
+                validarFormularioModal();
+            });
+            $('#cboVehiculoModal').change(function () {
+                if (bandera == false) {
+                    vehiculo_changed = true;
+                    var cliente_id = parseInt($('#cboClienteModal').val());
+                    var vehiculo_id = parseInt($(this).val());
+                    indiceVehiculosClientes = vehiculo_id;
+                    if (vehiculo_id != 0) {
+                        var indice = $(this).prop('selectedIndex');
+                        var ItemMenoUno = vehiculosListaParcial[indice - 1];
+                        var indiceVehiculos = ItemMenoUno.cliente_id;
+                        if (indiceVehiculos != cliente_id) {
+                            $('#cboClienteModal').val(indiceVehiculos).change();
+                        } else {
+                            vehiculo_changed = false;
+                        }
+                        if ($(this).val() != vehiculo_id) {
+                            $(this).val(vehiculo_id).change();
+                        }
+                    }
+                    validarFormularioModal();
+                }
+            });
+            puede_validar = true;
+
+            $.ajax({
+                type: "GET",
+                contentType: "application/json; charset=utf-8",
+                url: 'http://localhost/Herkace_Shared/Web/api/app_ws/TiposVerificaciones/listado',
+                async: false,
+                dataType: 'json',
+                success: function (data) {
+                    $.each(data, function (key, item) {
+                        var codigoHTML = `<option value=${item.tipo_verificacion_id}>${item.nombre}</option>`;
+                        $('#cboTipoVerificacionModal').append(codigoHTML);
+                    });
+                }
+            });
+            $.ajax({
+                type: "GET",
+                contentType: "application/json; charset=utf-8",
+                url: 'http://localhost/Herkace_Shared/Web/api/app_ws/Estatus/listado',
+                async: false,
+                dataType: 'json',
+                success: function (data) {
+                    $.each(data, function (key, item) {
+                        var codigoHTML = `<option value=${item.estatus_id}>${item.nombre}</option>`;
+                        $('#cboEstatusModal').append(codigoHTML);
+                    });
+                }
+            });
+            $.ajax({
+                type: "GET",
+                contentType: "application/json; charset=utf-8",
+                url: 'http://localhost/Herkace_Shared/Web/api/app_ws/TiposUnidadesVerificaciones/listado?activo=1',
+                async: false,
+                dataType: 'json',
+                success: function (data) {
+                    $.each(data, function (key, item) {
+                        if (item.activo) {
+                            var codigoHTML = `<option value=${item.tipo_unidad_verificacion_id}>${item.nombre}</option>`;
+                            $('#cboTipoUnidadVerificacionModal').append(codigoHTML);
+                        }
+                    });
+                }
+            });
+            $.ajax({
+                type: "GET",
+                contentType: "application/json; charset=utf-8",
+                url: 'http://localhost/Herkace_Shared/Web/api/app_ws/Tecnicos/tecnicos?activo=1',
+                async: false,
+                dataType: 'json',
+                success: function (data) {
+                    $.each(data, function (key, item) {
+                        if (item.activo) {
+                            var codigoHTML = `<option value=${item.tecnico_id}>${item.nombre} ${item.ape_pat} ${item.ape_mat}</option>`;
+                            $('#cboTecnicoModal').append(codigoHTML);
+                        }
+                    });
+                    $('#cboTecnicoModal').select2({ width: '100%' });
+                }
+            });
+            $.ajax({
+                type: "GET",
+                contentType: "application/json; charset=utf-8",
+                url: 'http://localhost/Herkace_Shared/Web/api/app_ws/Precios/listado_con_servicios',
+                async: false,
+                dataType: 'json',
+                success: function (data) {
+                    servicios = data;
+                    $.each(data, function (key, item) {
+                        var codigoHTML = `<option value=${item.servicio_id}>${item.nombre}</option>`;
+                        $('#cboServicioModal').append(codigoHTML);
+                        if ($('#cboSubservicioModal').html() == '') {
+                            $.each(item.precios, function (subkey, subitem) {
+                                var subHTML = `<option value=${subitem.precio_id}>${subitem.nombre} - $${subitem.precio}</option>`;
+                                $('#cboSubservicioModal').append(subHTML);
+                                if ($('#txtPrecio').val() == '') {
+                                    $('#txtPrecio').val(subitem.precio);
+                                }
+                            });
+                            $('#cboSubservicioModal').select2({});
+                        }
+                    });
+                }
+            });
+        }
+
+        var servicios = [];
+
+        $('#cboServicioModal').change(function () {
+            if ($('#cboSubservicioModal').hasClass("select2-hidden-accessible")) {
+                $("#cboSubservicioModal").select2('destroy');
+                $("#cboSubservicioModal").empty();
+            }
+            $('#txtPrecioModal').val('');
+            var servicio_id = $(this).val();
+            $.each(servicios, function (key, item) {
+                if (item.servicio_id == servicio_id) {
+                    $.each(item.precios, function (subkey, subitem) {
+                        var subHTML = `<option value=${subitem.precio_id}>${subitem.nombre}</option>`;
+                        $('#cboSubservicioModal').append(subHTML);
+                        if ($('#txtPrecioModal').val() == '') {
+                            $('#txtPrecioModal').val(subitem.precio);
+                        }
+                    });
+                    $('#cboSubservicioModal').select2({});
+                    return false;
+                }
+            });
+        });
+
+        $('#cboSubservicioModal').change(function () {
+            var servicio_id = $('#cboServicioModal').val();
+            var subservicio_id = $('#cboSubservicioModal').val();
+            $.each(servicios, function (key, item) {
+                if (item.servicio_id == servicio_id) {
+                    $.each(item.precios, function (subkey, subitem) {
+                        if (subitem.precio_id == subservicio_id) {
+                            $('#txtPrecioModal').val(subitem.precio);
+                            return false;
+                        }
+                    });
+                    return false;
+                }
+            });
+        });
+
+        function validarFormularioModal() {
+            if (!puede_validar_modal) {
+                return;
+            }
+            var error = false;
+            $("input.validar-modal").each(function () {
+                const minLength = parseInt($(this).attr("minlength"));
+                var value = $(this).val();
+                var id = this.id;
+                var valido;
+                if (id == 'txtKilometrajeModal') {
+                    var cap = parseInt(value);
+                    valido = !(isNaN(cap) || cap == 0);
+                } else if (id == 'txtFechaModal' || id == 'txtFechaAnteriorModal') {
+                    valido = value != "";
+                } else if (id == 'txtCertificadoAnteriorModal') {
+                    valido = value.trim().length >= minLength;
+                } else if (id == 'txtHoraInicioModal' || id == 'txtHoraFinalModal') {
+                    valido = true;
+                }
+                if (valido) {
+                    $(this).removeClass('is-invalid');
+                    $("#" + id + "Valid").removeClass('mostrar');
+                } else {
+                    $(this).addClass('is-invalid');
+                    $("#" + id + "Valid").addClass('mostrar');
+                    error = true;
+                }
+            });
+            $('#txtHoraModalValid').removeClass('mostrar');
+            $('#txtHoraModalValidMayor').removeClass('mostrar');
+            $('#txtHoraModalValidDif8').removeClass('mostrar');
+            $('#txtHoraModalValidRango').removeClass('mostrar');
+            $('#txtHoraModalValidIguales').removeClass('mostrar');
+            if ($('#txtHoraInicioModal').val() == "" || $('#txtHoraFinalModal').val() == "") {
+                $('#txtHoraInicioModal').addClass('is-invalid');
+                $('#txtHoraFinalModal').addClass('is-invalid');
+                $('#txtHoraValidModal').addClass('mostrar');
+                error = true;
+            } else {
+                var horaInicio = $('#txtHoraInicioModal').val();
+                var horaFinal = $('#txtHoraFinalModal').val();
+                if (compararHoras(horaInicio, horaFinal) > 1) {
+                    $('#txtHoraInicioModal').addClass('is-invalid');
+                    $('#txtHoraFinalModal').addClass('is-invalid');
+                    $('#txtHoraModalValidMayor').addClass('mostrar');
+                    error = true;
+                } else {
+                    var startTime = Date.parse('2024-01-01 ' + horaInicio);
+                    var endTime = Date.parse('2024-01-01 ' + horaFinal);
+                    var duration = (endTime - startTime) / 1000 / 60 / 60;
+                    if (duration > 8) {
+                        $('#txtHoraInicioModal').addClass('is-invalid');
+                        $('#txtHoraFinalModal').addClass('is-invalid');
+                        $('#txtHoraModalValidDif8').addClass('mostrar');
+                        error = true;
+                    } else {
+                        if (horaInicio == horaFinal) {
+                            $('#txtHoraInicioModal').addClass('is-invalid');
+                            $('#txtHoraFinalModal').addClass('is-invalid');
+                            $('#txtHoraModalValidIguales').addClass('mostrar');
+                            error = true;
+                        } else {
+                            if (horaEnRango(horaInicio)) {
+                                $('#txtHoraInicioModal').addClass('is-invalid');
+                                $('#txtHoraModalValidRango').addClass('mostrar');
+                                error = true;
+                            }
+                            if (horaEnRango(horaFinal)) {
+                                $('#txtHoraFinalModal').addClass('is-invalid');
+                                $('#txtHoraModalValidRango').addClass('mostrar');
+                                error = true;
+                            }
+                            if (!error) {
+                                $('#txtHoraInicioModal').removeClass('is-invalid');
+                                $('#txtHoraFinalModal').removeClass('is-invalid');
+                            }
+                        }
+                    }
+                }
+            }
+            var cliente_id = parseInt($('#cboClienteModal').val());
+            if (cliente_id == 0) {
+                $('#cboClienteModal + span').addClass('is-invalid');
+                $('#cboClienteModalValid').addClass('mostrar');
+                error = true;
+            } else {
+                $('#cboClienteModal + span').removeClass('is-invalid');
+                $('#cboClienteModalValid').removeClass('mostrar');
+            }
+            var vehiculo_id = parseInt($('#cboVehiculoModal').val());
+            if (vehiculo_id == 0) {
+                $('#cboVehiculoModal + span').addClass('is-invalid');
+                $('#cboVehiculoModalValid').addClass('mostrar');
+                error = true;
+            } else {
+                $('#cboVehiculoModal + span').removeClass('is-invalid');
+                $('#cboVehiculoModalValid').removeClass('mostrar');
+            }
+            $("#btnModificarModal").attr("disabled", error);
+        }
+        var verificacion_id_modal;
+        var puede_validar_modal;
+        function cargarDatosModal() {
+            puede_validar_modal = false;
+            getCatalogosModal();
+            $.ajax({
+                url: "http://localhost/Herkace_Shared/Web/api/app_ws/Verificaciones/obtener_por_id/" + verificacion_id_modal,
+                async: false,
+                method: "GET",
+                success: function (item) {
+                    $('#cboTipoVerificacionModal').val(item.tipo_verificacion_id).change();
+                    $("#lblFolioOriginalModal").html(item.folio);
+                    $('#cboClienteModal').val(item.cliente_id).change();
+                    $('#cboVehiculoModal').val(item.vehiculo_id).change();
+                    $('#cboEstatusModal').val(item.estatus_id).change();
+                    $('input[name=radEstatusModal][value=' + item.estatus_unidad + ']').attr('checked', 'checked');
+                    $('#cboTipoUnidadVerificacionModal').val(item.tipo_unidad_verificacion_id).change();
+                    $('#cboTecnicoModal').val(item.tecnico_id).change();
+                    $('#txtKilometrajeModal').val(item.kilometraje);
+                    $('#txtFechaModal').val(item.fecha);
+                    $('#txtFechaAnteriorModal').val(item.fecha_ant);
+                    $('#txtCertificadoAnteriorModal').val(item.folio_ant);
+                    $('#txtHoraInicioModal').val(item.hora_inicio);
+                    $('#txtHoraFinalModal').val(item.hora_final);
+                    $('input[name=radPeriodoModal][value=' + item.periodo + ']').attr('checked', 'checked');
+                    var encontrado = false;
+                    $.each(servicios, function (key, ser) {
+                        $.each(ser.precios, function (subkey, subser) {
+                            if (subser.precio_id == item.precio_id) {
+                                $('#cboServicioModal').val(ser.servicio_id).change();
+                                $('#cboSubservicioModal').val(subser.precio_id).change();
+                                encontrado = true;
+                            }
+                            if (encontrado) {
+                                return false;
+                            }
+                        });
+                        if (encontrado) {
+                            return false;
+                        }
+                    });
+                    $('#cboServicioModal').prop('disabled', true);
+                    $('#cboSubservicioModal').prop('disabled', true);
+                    $('#cboClienteModal').prop('disabled', true);
+                    $('#btnRfsClienteModal').prop('disabled', true);
+                    $('#cboVehiculoModal').prop('disabled', true);
+                    $('#btnRfsVehiculoModal').prop('disabled', true);
+                    $('#cboTipoUnidadVerificacionModal').prop('disabled', true);
+                    if (item.tipo_verificacion_id == 0 || item.folio == '' || item.fecha == '0000-00-00' || item.folio_ant == '' || item.fecha_ant == '0000-00-00' || item.estatus_id == 0 || item.estatus_unidad == 0 || item.tecnico_id == 0 || item.kilometraje == '' || item.periodo == 0 || item.hora_inicio == '00:00:00' || item.hora_final == '00:00:00') {
+                        $('#btnPdfGahModal').prop('disabled', true);
+                        $('#btnPdfCertificadoModal').prop('disabled', true);
+                    } else {
+                        $('#btnPdfGahModal').prop('disabled', false);
+                        $('#btnPdfCertificadoModal').prop('disabled', false);
+                    }
+                },
+                complete: function (jqXHR, textStatus) {
+                    $('#divCargandoVerificacionModal').hide();
+                    puede_validar_modal = true;
+                }
+            });
+        }
+        $('#btnModificarModal').click(function () {
+            var chk = $('#chkCambioDeCertificadoModal')[0];
+            $("#btnModificarModal").attr("disabled", true);
+            var imprime_nom = $("#chkImprimeNomModal").is(':checked') ? 1 : 0;
+            //Se construye el json con los datos obtenidos
+            var jsonDatos = {
+                "verificacion_id": verificacion_id_modal,
+                "tipo_verificacion_id": $('#cboTipoVerificacionModal').val(),
+                "tipo_unidad_verificacion_id": $('#cboTipoUnidadVerificacionModal').val(),
+                "cambio_folio": chk.checked,
+                "folio_id": $('#cboCertificadoModal').val(),
+                "num_folio": $('#cboCertificadoModal option:selected').text(),
+                "cliente_id": $('#cboClienteModal').val(),
+                "vehiculo_id": $('#cboVehiculoModal').val(),
+                "fecha": $('#txtFechaModal').val(),
+                "fecha_ant": $('#txtFechaAnteriorModal').val(),
+                "folio_ant": $('#txtCertificadoAnteriorModal').val(),
+                "estatus_id": $('#cboEstatusModal').val(),
+                "estatus_unidad": $('input[name=radEstatusModal]:checked').val(),
+                "tecnico_id": $('#cboTecnicoModal').val(),
+                "kilometraje": $('#txtKilometrajeModal').val(),
+                "periodo": $('input[name=radPeriodoModal]:checked').val(),
+                "hora_inicio": $('#txtHoraInicioModal').val(),
+                "hora_final": $('#txtHoraFinalModal').val(),
+                "imprime_nom": imprime_nom,
+                "precio_id": $('#cboSubservicioModal').val(),
+                "precio": $('#txtPrecio').val(),
+            };
+            //Aquí se debe mandar a llamar el API enviandole el json
+            $.ajax({
+                url: "http://localhost/Herkace_Shared/Web/api/app_ws/Verificaciones/modificar",
+                method: "PUT",
+                data: jsonDatos,
+                dataType: "json",
+                success: function (response) {
+                    if (response.registrado) {
+                        Swal.fire({
+                            title: 'Actualizado correctamente',
+                            icon: 'success'
+                        });
+                        $('#modalVerificacionModificar').modal('hide');
+                        tablaVerificacionesAnteriores();
+                    } else {
+                        Swal.fire({
+                            html: true,
+                            title: response.mensaje,
+                            icon: 'error'
+                        });
+                        $("#btnModificar").attr("disabled", true);
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    Swal.fire({
+                        title: 'Ocurrió un error al actualizar el elemento. Intente de nuevo más tarde.',
+                        icon: 'error'
+                    });
+                }
+            });
+        });
+        $('#modalVerificacionModificar').on('hidden.bs.modal', function (e) {
+            $("input.validar-modal").each(function () {
+                $(this).val('');
+                $(this).removeClass('is-invalid');
+                $("#" + this.id + "Valid").removeClass('mostrar');
+            });
+            $('#txtHoraInicioModal').removeClass('is-invalid');
+            $('#txtHoraFinalModal').removeClass('is-invalid');
+            $('#txtHoraModalValid').removeClass('mostrar');
+            $('#txtHoraModalValidMayor').removeClass('mostrar');
+            $('#txtHoraModalValidDif8').removeClass('mostrar');
+            $('#txtHoraModalValidRango').removeClass('mostrar');
+            $('#txtHoraModalValidIguales').removeClass('mostrar');
+            $('#cboClienteModal + span').removeClass('is-invalid');
+            $('#cboClienteModalValid').removeClass('mostrar');
+
+            $("#cboSubservicioModal").select2('destroy');
+            $("#cboClienteModal").select2('destroy');
+            $("#cboVehiculoModal").select2('destroy');
+            $("#cboTecnicoModal").select2('destroy');
+
+            $("#cboServicioModal").empty();
+            $("#cboSubservicioModal").empty();
+            $("#cboClienteModal").empty();
+            $("#cboTipoVerificacionModal").empty();
+            $("#cboEstatusModal").empty();
+            $("#cboVehiculoModal").empty();
+            $("#cboTipoUnidadVerificacionModal").empty();
+            $("#cboTecnicoModal").empty();
+
+            $('#chkCambioDeCertificadoModal').prop('checked', false);
+            $('#cboTipoVerificacionModal').prop('disabled', true);
+            $('#cboCertificadoModal').prop('disabled', true);
+
+            $('#divCargandoVerificacionModal').show();
+
+            $("#btnModificarModal").attr("disabled", false);
+
+            $('#btnPdfCertificadoModal').removeClass('ocultar');
+        });
+        $('#btnPdfGahModal').click(function () {
+            $('#iconoSpinner').removeClass('ocultar');
+            var Enviar = {
+                "verificacion_id": verificacion_id_modal
+            }
+            var request = new XMLHttpRequest(), file, fileURL;
+            request.open("POST", 'http://localhost/Herkace_Shared/Web/api/app_ws/Verificaciones/pdf_gah');
+            request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+            request.responseType = "arraybuffer";
+            request.send(JSON.stringify(Enviar));
+            request.onreadystatechange = function () {
+                if (request.readyState === 4 && request.status === 200) {
+                    $('#iconoSpinner').addClass('ocultar');
+                    Swal.fire({
+                        title: 'Archivo abierto en una nueva pestaña',
+                        text: 'Si no es así, revise la configuración de las pantallas emergentes (pop-up) de su navegador.',
+                        icon: 'info',
+                        confirmButtonText: 'ACEPTAR'
+                    });
+                    file = new Blob([request.response], { type: 'application/pdf' });
+                    if (window.navigator && window.navigator.msSaveOrOpenBlob) { // IE
+                        window.navigator.msSaveOrOpenBlob(file);
+                    } else {
+                        fileURL = URL.createObjectURL(file);
+                        window.open(fileURL);
+
+                    }
+                }
+            };
+        });
+        $('#btnPdfCertificadoModal').click(function () {
+            $('#iconoSpinnerCertificado').removeClass('ocultar');
+            var Enviar = {
+                "verificacion_id": verificacion_id_modal
+            }
+            var request = new XMLHttpRequest(), file, fileURL;
+            request.open("POST", 'http://localhost/Herkace_Shared/Web/api/app_ws/Verificaciones/pdf_certificado');
+            request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+            request.responseType = "arraybuffer";
+            request.send(JSON.stringify(Enviar));
+            request.onreadystatechange = function () {
+                if (request.readyState === 4 && request.status === 200) {
+                    $('#iconoSpinnerCertificado').addClass('ocultar');
+                    Swal.fire({
+                        title: 'Archivo abierto en una nueva pestaña',
+                        text: 'Si no es así, revise la configuración de las pantallas emergentes (pop-up) de su navegador.',
+                        icon: 'info',
+                        confirmButtonText: 'ACEPTAR'
+                    });
+                    file = new Blob([request.response], { type: 'application/pdf' });
+                    if (window.navigator && window.navigator.msSaveOrOpenBlob) { // IE
+                        window.navigator.msSaveOrOpenBlob(file);
+                    } else {
+                        fileURL = URL.createObjectURL(file);
+                        window.open(fileURL);
+
+                    }
+                }
+            };
+        });
+
+        /* MODS */
+
+        function modBlank() {
+            $("#container").empty();
+            $("li").removeClass("selected");
+            $("#container").load("pages/blank.html", function () { });
+        };
+        function modDashboard() {
+            $("#container").empty();
+            $("li").removeClass("selected");
+            $("#dashboard").addClass("selected");
+            $("#container").load("dashboard.html", function () { });
+        };
+        function modCatalogos() {
+            $('#modalCargando').modal('show');
+            $("#container").empty();
+            $("li").removeClass("selected");
+            $("#catalogos").addClass("selected");
+            $("#container").load("Catalogos/Catalogos.html", function () { });
+        };
+
+        function modUsuarios() {
+            $("#container").empty();
+            $("li").removeClass("selected");
+            $("#usuarios").addClass("selected");
+            $("#container").load("Configuracion/Usuarios.html", function () { });
+        };
+
+        function modFoliosAsignados() {
+            $("#container").empty();
+            $("li").removeClass("selected");
+            $("#foliosAsignados").addClass("selected");
+            $("#container").load("Configuracion/FoliosAsignados.html", function () { });
+        };
+        function modClientes() {
+            $("#container").empty();
+            $("#container").load("Catalogos/Clientes/Clientes.html", function () {
+                tablaClientes();
+            });
+        };
+        function modVehiculosAgregar() {
+            $("#container").empty();
+            $("#container").load("Catalogos/Vehiculos/agregar.html", function () {
+            });
+        };
+        function modVehiculos() {
+            $("#container").empty();
+            $("#container").load("Catalogos/Vehiculos/listado.html", function () {
+                tabla();
+            });
+        };
+        function modVerificacionesAgregar() {
+            $("#container").empty();
+            $("#container").load("Verificaciones/agregar.html", function () {
+                Obtener_orden_id(0, "", "");
+            });
+        };
+        function modVerificaciones() {
+            $("#container").empty();
+            $("#container").load("Verificaciones/listado.html", function () {
+                tabla();
+            });
+        };
+        function modAgregarVerifAOrden(id, num_orden) {
+            $('[data-toggle="tooltip"]').tooltip('hide');
+            $("#container").empty();
+            $("#container").load("Verificaciones/agregar.html", function () {
+                Obtener_orden_id(id, num_orden);
+            });
+        };
+        function modEditarOrden(id, num_orden, cliente_id, condiciones, vendedor) {
+            $('[data-toggle="tooltip"]').tooltip('hide');
+            $("#container").empty();
+            $("#container").load("Ordenes/editar.html", function () {
+                mostrarNumOrden(id, num_orden, cliente_id, condiciones, vendedor);
+            });
+        };
+
+        function modAgregar_Buscar_Verificaciones(id, num_orden, cliente_id, condiciones, vendedor) {
+            $('[data-toggle="tooltip"]').tooltip('hide');
+            $("#container").empty();
+            $("#container").load("Ordenes/agregar_servicios_ordenes.html", function () {
+                mostrarNumOrden(id, num_orden, cliente_id, condiciones, vendedor);
+            });
+        };
+
+        function modInsertarClientes() {
+            $("#container").empty();
+            $("a").removeClass("selected");
+            $("#InsertarClientes").addClass("selected");
+            $("#container").load("Catalogos/Clientes/InsertarClientes.html", function () {
+            });
+        };
+        function modReportes() {
+            $("#container").empty();
+            $("#container").load("Reportes/reportes.html", function () {
+            });
+        };
+        function modReportesNumeroOrdenes() {
+            $("#container").empty();
+            $("a").removeClass("selected");
+            $("#reportesNumeroOrdenes").addClass("selected");
+            $("#container").load("Reportes/numero_ordenes.html", function () {
+            });
+        };
+        function modReportesVerificaciones() {
+            $("#container").empty();
+            $("a").removeClass("selected");
+            $("#reportesVerificaciones").addClass("selected");
+            $("#container").load("Reportes/verificaciones.html", function () {
+            });
+        };
+        function modPrefacturas() {
+            $("#container").empty();
+            $("#container").load("Prefacturas/listado.html", function () {
+            });
+        };
+        function modClientesFac() {
+            $("#container").empty();
+            $("a").removeClass("selected");
+            $("#clientes").addClass("selected");
+            $("#container").load("Catalogos/ClientesFacturacion/listado.html", function () {
+                tablaClientes();
+            });
+        };
+
+    </script>
+</body>
+
+</html>

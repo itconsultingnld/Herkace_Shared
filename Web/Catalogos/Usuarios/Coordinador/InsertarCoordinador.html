@@ -1,0 +1,273 @@
+<!-- ============================================================== -->
+<!-- breadcrumb -->
+<!-- ============================================================== -->
+<div class="page-breadcrumb">
+    <div class="row">
+        <div class="col-12 d-flex no-block align-items-center">
+            <h4 class="page-title">Agregar coordinador</h4>
+            <div class="ml-auto text-right">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item active">
+                            <a href="javascript:;" onclick="modDashboard();">Dashboard</a>
+                        </li>
+                        <li class="breadcrumb-item active"><a href="javascript:;"
+                                onclick="modCatalogos();">Catálogos</a></li>
+                        <li class="breadcrumb-item active"><a href="javascript:;"
+                                onclick="modCoordinadores();">Coordinadores</a></li>
+                        <li class="breadcrumb-item active">Agregar</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- End breadcrumb -->
+<!-- ============================================================== -->
+<!-- ============================================================== -->
+<!-- Container -->
+<!-- ============================================================== -->
+<div class="container-fluid">
+    <div class="row">
+        <!-- TIPOS MOVIMIENTOS -->
+        <!-- <a href="javascript:;" onclick="modClientes();">
+            <button type="button" class="btn-square-icon">
+                <i class="fa fa-reply-all"></i>
+                Volver
+            </button>
+        </a> -->
+        <div class="col-sm-12"><br></div>
+        <div class="row col-sm-12 cuadroInsertar">
+            <hr />
+            <div class="col-sm-12">
+                <hr />
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group row">
+                    <label for="txtDescripcionTipoMovimiento" class="col-sm-2 form-control-label">*Nombre(s):</label>
+                    <div class="col-sm-10">
+                        <p class="form-control-static">
+                            <input type="text" class="form-control validar" id="txtNombre" placeholder="Nombre(s)"
+                                minlength="3" maxlength="50" required />
+                        <div class="invalid-feedback" id="txtNombreValid"></div>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group row">
+                    <label for="txtDescripcionTipoMovimiento" class="col-sm-2 form-control-label">*Apellido
+                        paterno:</label>
+                    <div class="col-sm-10">
+                        <p class="form-control-static">
+                            <input type="text" class="form-control validar" id="txtApePat"
+                                placeholder="Apellido paterno" minlength="2" maxlength="50" required />
+                        <div class="invalid-feedback" id="txtApePatValid"></div>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group row">
+                    <label for="txtDescripcionTipoMovimiento" class="col-sm-2 form-control-label">Apellido
+                        materno:</label>
+                    <div class="col-sm-10">
+                        <p class="form-control-static">
+                            <input type="text" class="form-control validar" id="txtApeMat"
+                                placeholder="Apellido materno" minlength="2" maxlength="50" required />
+                        <div class="invalid-feedback" id="txtApeMatValid"></div>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group row">
+                    <label for="txtDescripcionTipoMovimiento" class="col-sm-2 form-control-label">*Correo
+                        electrónico:</label>
+                    <div class="col-sm-10">
+                        <p class="form-control-static">
+                            <input type="text" class="form-control validar" id="txtCorreo"
+                                placeholder="Correo electrónico" minlength="6" maxlength="50" required />
+                        </p>
+                        <div class="invalid-feedback" id="txtCorreoValid">
+                            El correo no es válido
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group row">
+                    <label for="txtDescripcionTipoMovimiento" class="col-sm-2 form-control-label">*Usuario:</label>
+                    <div class="col-sm-10">
+                        <p class="form-control-static">
+                            <input type="text" class="form-control validar" id="txtUsuario" placeholder="Usuario"
+                                minlength="5" maxlength="30" required />
+                        <div class="invalid-feedback" id="txtUsuarioValid"></div>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group row">
+                    <label for="txtDescripcionTipoMovimiento" class="col-sm-2 form-control-label">*Contraseña:</label>
+                    <div class="col-sm-5 input-group">
+                        <input type="password" class="form-control validar" id="txtContrasena" placeholder="Contraseña"
+                            minlength="8" required />
+                        <div class="input-group-append">
+                            <div class="input-group-text" id="divClaveAcceso">
+                                <i class="fa fa-eye"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <button class="btn btn-inline btn-cyan mt-2 ml-2"
+                                onclick="generarContraseña()">Generar</button>
+                        </div>
+                        <div class="col-sm-2"></div>
+                        <div class="col-sm-10 mt-3">
+                            <div class="invalid-feedback" id="txtContrasenaValid">
+                                La contraseña debe contener al menos 8 caracteres, una letra mayúscula, una minúscula,
+                                un número y un carácter especial.
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <button href="javascript:;" onclick="modCoordinadores();" type="button"
+                    class="btn btn-inline btn-danger">Cancelar</button>
+                <button id="btnRegistrar" type="button" class="btn btn-inline btn-success" disabled>Guardar</button>
+            </div>
+        </div>
+        <!-- FIN TIPOS MOVIMIENTOS -->
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- End Container -->
+<!-- ============================================================== -->
+<!--This page JavaScript -->
+<script>
+    $(document).ready(function () {
+        $("input.validar").each(function () {
+            if (this.id == 'txtNombre') {
+                this.oninput = function () {
+                    inputMayus(this);
+                    onlyLetras(this);
+                    validarFormulario();
+                };
+            } else if (this.id == 'txtApePat' || this.id == 'txtApeMat') {
+                this.oninput = function () {
+                    inputMayus(this);
+                    onlyLetras(this);
+                    validarFormulario();
+                };
+            } else if (this.id == 'txtCorreo') {
+                this.oninput = function () {
+                    inputMinus(this);
+                    validarFormulario();
+                }
+            } else if (this.id == 'txtUsuario') {
+                this.oninput = function () {
+                    validarUsuario(this);
+                    validarFormulario();
+                }
+            } else {
+                this.oninput = function () {
+                    inputSinEspacios(this);
+                    validarFormulario();
+                };
+            }
+            if (this.id != 'txtCorreo') {
+                const minLength = parseInt($(this).attr("minlength"));
+                $("#" + this.id + "Valid").html(`El campo debe contener al menos ${minLength} caracteres.`);
+            }
+        });
+    });
+
+    function generarContraseña() {
+        const caracteres = 'ABCDEFGHJKLMNOPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz0123456789';
+        let contraseña = '';
+        for (let i = 0; i < 8; i++) {
+            const indice = Math.floor(Math.random() * caracteres.length);
+            contraseña += caracteres.charAt(indice);
+        }
+        $('#txtContrasena').val(contraseña);
+        validarFormulario();
+    }
+    function validarFormulario() {
+        var error = false;
+        $("input.validar").each(function () {
+            const minLength = parseInt($(this).attr("minlength"));
+            var value = $(this).val();
+            var id = this.id;
+            var valido;
+            if (id == 'txtApeMat') {
+                valido = value.length >= minLength || value.length == 0;
+            } else if (id == 'txtCorreo') {
+                valido = validateEmail(value);
+            } else {
+                valido = value.length >= minLength;
+            }
+            if (valido) {
+                $(this).removeClass('is-invalid');
+                $("#" + this.id + "Valid").removeClass('mostrar');
+            } else {
+                $(this).addClass('is-invalid');
+                $("#" + this.id + "Valid").addClass('mostrar');
+                error = true;
+            }
+        });
+        $("#btnRegistrar").attr("disabled", error);
+    }
+
+    $("#divClaveAcceso").click(function () {
+        $('#txtContrasena').attr('type', $("i", this).hasClass("fa-eye") ? 'text' : 'password');
+        $("i", this).toggleClass("fa-eye");
+        $("i", this).toggleClass("fa-eye-slash");
+    });
+
+    var DatosCoordinador = [];
+    $('#btnRegistrar').click(function () {
+        DatosCoordinador['Nombre'] = document.getElementById('txtNombre').value;
+        DatosCoordinador['ApePat'] = document.getElementById('txtApePat').value;
+        DatosCoordinador['ApeMat'] = document.getElementById('txtApeMat').value;
+        DatosCoordinador['Correo'] = document.getElementById('txtCorreo').value;
+        DatosCoordinador['Usuario'] = document.getElementById('txtUsuario').value;
+        DatosCoordinador['Password'] = document.getElementById('txtContrasena').value;
+        if (DatosCoordinador['ApePat'].trim() == '' && DatosCoordinador['ApeMat'].trim() == '') {
+            Swal.fire({ html: true, title: 'Error', text: 'Es obligatorio ingresar el apellido paterno', icon: 'error' });
+            return;
+        }
+        if (DatosCoordinador['Nombre'].trim() == '' || DatosCoordinador['Correo'].trim() == '' || DatosCoordinador['Usuario'].trim() == '') {
+            Swal.fire({ html: true, title: 'Error', text: 'Todos los campos son obligatorios', icon: 'error' });
+            return;
+        }
+        $("#btnRegistrar").attr("disabled", true);
+        //Se construye el json con los datos obtenidos
+        var jsonDatosCoordinador = `{"nombre":"${DatosCoordinador['Nombre']}", "ape_pat":"${DatosCoordinador['ApePat']}", "ape_mat":"${DatosCoordinador['ApeMat']}", "correo":"${DatosCoordinador['Correo']}", "username":"${DatosCoordinador['Usuario']}", "password":"${DatosCoordinador['Password']}"}`;
+
+
+        //Aquí se debe mandar a llamar el API enviandole el json "jsonDatosCoordinador"
+        var request = new XMLHttpRequest()
+
+        request.open('POST', 'http://localhost/Herkace_Shared/Web/api/app_ws/Coordinadores/InsertarCoordinador', true);
+        request.setRequestHeader('Content-type', 'application/json; charset=utf-8');//Se establece que el body será de tipo json con caracterización UTF8
+        request.send(jsonDatosCoordinador);
+        request.onload = function () {
+            // Begin accessing JSON data here
+            var res = JSON.parse(this.response);
+
+            if (res.mensaje == 'Se inserto el registro') {
+                Swal.fire({ title: 'Registrado correctamente', icon: 'success' });
+                modCoordinadores();
+            }
+            else {
+                Swal.fire({ title: 'Error', text: res.mensaje, icon: 'error' });
+                $("#btnRegistrar").attr("disabled", false);
+            }
+        };
+
+    });
+
+</script>

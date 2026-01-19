@@ -1,0 +1,506 @@
+<!-- ============================================================== -->
+<!-- Bread crumb and right sidebar toggle -->
+<!-- ============================================================== -->
+<div class="page-breadcrumb" style="color: #306a76;">
+    <div class="row">
+        <div class="col-12 d-flex no-block align-items-center">
+            <h4 class="page-title">Dashboard</h4>
+            <div class="ml-auto text-right">
+                <nav aria-label="breadcrumb" style="color: #306a76;">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item active"> <a style="color: #306a76;" href="javascript:;"
+                                onclick="modDashboard();">Dashboard</a></li>
+                        <!-- <li class="breadcrumb-item active" aria-current="page">Library</li> -->
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- End Bread crumb and right sidebar toggle -->
+<!-- ============================================================== -->
+<style>
+    .fc-list-item-time {
+        display: none;
+    }
+
+    #divLp h4 {
+        margin: 0px;
+    }
+
+    .tbl-data td {
+        padding: 8px
+    }
+
+    .circle {
+        width: 32px;
+        height: 32px;
+        line-height: 30px;
+        border-radius: 50%;
+        color: #fff;
+        text-align: center;
+        background: #0f0;
+        border: 2px solid #000;
+    }
+
+    .disp-in-line {
+        display: inline;
+    }
+
+    label.btn {
+        margin-top: 0px !important;
+    }
+
+    #vehiculos,
+    #clientes,
+    #verificaciones {
+        cursor: pointer !important;
+    }
+
+    .swal2-cancel,
+    .swal2-confirm {
+        margin: 10px !important;
+    }
+
+    .select2-container--open {
+        z-index: 99999999999999;
+    }
+
+    /* #tbl_wrapper .row {
+        display: block;
+    }
+
+    .dataTables_length,
+    .dataTables_filter {
+        text-align: center !important;
+    } */
+
+    /* .col-sm-12 .col-md-5 {
+        display: block;
+        margin: 0px !important;
+        padding: 0px !important;
+        text-align: center !important;
+    } */
+</style>
+<!-- ============================================================== -->
+<!-- Container fluid  -->
+<!-- ============================================================== -->
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-4 mt-3">
+            <div id="vehiculos" href="javascript:;" onclick="modVehiculosAgregar();" class="card-hover ">
+                <div class="box bg-success text-center">
+                    <b>
+                        <h1 class="font-light text-white" id="divVehiculos"></h1>
+                    </b>
+                    <h6 class="text-white">Vehículos</h6>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mt-3">
+            <div id="clientes" href="javascript:;" onclick="modInsertarClientes();" class="card-hover ">
+                <div class="box bg-primary text-center">
+                    <b>
+                        <h1 class="font-light text-white" id="divClientes"></h1>
+                    </b>
+                    <h6 class="text-white">Clientes</h6>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mt-3">
+            <div class="card-hover ">
+                <div id="verificaciones" onclick="modVerificaciones();" class="box bg-warning text-center">
+                    <b>
+                        <h1 class="font-light text-white" id="divVerificaciones"></h1>
+                    </b>
+                    <h6 class="text-white">Verificaciones</h6>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="row" style="margin-top: 10px;">
+        <div class="col-lg-12">
+            <div class="row d-flex justify-content-center text-center">
+                <header class="box-typical-header panel-heading ui-sortable-handle">
+                    <h3 class="panel-title">ÓRDENES</h3>
+                    <button type="button" class="btn btn-success" id="btnGenerarNumOrden">
+                        <i class="fa fa-file-plus"></i> Generar<br />orden
+                    </button>
+                </header>
+            </div>
+            <br />
+            <div class="table-responsive">
+                <table id="tbl" class="table table-bordered table-hover table-light datatable1">
+                    <thead class="thead-light text-center">
+                        <tr>
+                            <th><b>N° orden</b></th>
+                            <th><b>Cliente</b></th>
+                            <th><b>Fecha</b></th>
+                            <th><b>Acciones</b></th>
+                        </tr>
+                    </thead>
+                    <tbody id="bodyArribosRecientes" class="clickable">
+                        <tr>
+                            <td><button type="button" class="btn btn-inline btn-outline-success" data-toggle="tooltip"
+                                    title="Modificar"><i class="fa fa-plus"></i></button><button type="button"
+                                    class="btn btn-inline btn-outline-cyan" data-toggle="tooltip" title="Modificar"><i
+                                        class="fa fa-eye"></i></button> </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- <div class="col-lg-9">
+            <div class="d-flex justify-content-center">
+                <header class="box-typical-header panel-heading ui-sortable-handle">
+                    <h3 class="panel-title">ORDEN 231215</h3>
+                </header>
+            </div>
+            <br />
+            <div class="table-responsive">
+                <table id="table-sm" class="table table-bordered table-hover table-light">
+                    <thead class="thead-light text-center">
+                        <tr>
+                            <th><b>Folio certificado</b></th>
+                            <th><b>Tipo verificación</b></th>
+                            <th><b>Cliente</b></th>
+                            <th><b>Placas</b></th>
+                            <th><b>Tarjeta circ</b></th>
+                        </tr>
+                    </thead>
+                    <tbody id="bodyArribosRecientes" class="clickable">
+                    </tbody>
+                </table>
+            </div>
+        </div> -->
+        <!-- MODAL MOSTRAR ORDEN -->
+        <div id="modalMostrarOrden" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
+            aria-labelledby="mySmallModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="modal-close" data-dismiss="modal" aria-label="Close">
+                            <i class="fa fa-times"></i>
+                        </button>
+                        <h3 class="modal-title" id="myModalLabelOrden">Orden</h3>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-sm-4 text-center">
+                                <h4>Cliente a facturar</h4>
+                                <h6 id="lblClienteFacturar"></h6>
+                            </div>
+                            <div class="col-sm-4 text-center">
+                                <h4>Observaciones</h4>
+                                <h6 id="lblCondiciones"></h6>
+                            </div>
+                            <div class="col-sm-4 text-center">
+                                <h4>Vendedor</h4>
+                                <h6 id="lblVendedor"></h6>
+                            </div>
+                        </div>
+                        <div class="table-responsive mt-3">
+                            <table id="tblVerifsOrden" class="table table-bordered table-hover table-light">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th class="align-middle text-center"><b>Cliente</b></th>
+                                        <th class="align-middle text-center"><b>Folio</b></th>
+                                        <th class="align-middle text-center"><b>Tipo de verificación</b></th>
+                                        <th class="align-middle text-center"><b>Fecha</b></th>
+                                        <th class="align-middle text-center"><b>Número de serie</b></th>
+                                        <th class="align-middle text-center"><b>Número de placas</b></th>
+                                        <th class="align-middle text-center"><b>Marca</b></th>
+                                        <th class="align-middle text-center"><b>Modelo</b></th>
+                                        <th class="align-middle text-center"><b>Tarjeta de circulación</b></th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-inline btn-danger" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- FIN MODAL MOSTRAR ORDEN -->
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- End Container fluid  -->
+<!-- ============================================================== -->
+<script>
+    function formatNumber(num) {
+        return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+    }
+
+    $(document).ready(function () {
+        $.ajax({
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            url: 'http://localhost/Herkace_Shared/Web/api/app_ws/Dashboard/vistadashboard',
+            dataType: 'json',
+            success: function (data) {
+                console.log(data);
+                $('#divVehiculos').html(0);
+                $('#divClientes').html(0);
+                $('#divVerificaciones').html(0);
+
+                $.each(data, function (key, item) {
+                    if (item.Datos == 'DatosClientes') {
+                        $('#divClientes').html(formatNumber(item.Cantidad));
+                    } else if (item.Datos == 'DatosVehiculos') {
+                        $('#divVehiculos').html(formatNumber(item.Cantidad));
+                    } else if (item.Datos == 'DatosVerificaciones') {
+                        $('#divVerificaciones').html(formatNumber(item.Cantidad));
+                    }
+                });
+            }
+        });
+        listado_ordenes();
+    });
+
+    function listado_ordenes() {
+        if ($.fn.dataTable.isDataTable('#tbl')) {
+            $('#tbl').DataTable().destroy();
+        }
+        $('#tbl tbody').empty();
+        $.ajax({
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            url: 'http://localhost/Herkace_Shared/Web/api/app_ws/Ordenes/listado_vw',
+            dataType: 'json',
+            success: function (data) {
+                $('#tbl tbody').empty();
+                $.each(data, function (key, item) {
+                    var cerrada = item.cerrada;
+                    var codigoHTML = '';
+                    codigoHTML += '<tr>';
+                    codigoHTML += '<td class="text-center">';
+                    codigoHTML += '<h3>' + item.num_orden + '</h3>';
+                    codigoHTML += '</td>';
+                    codigoHTML += '<td class="text-center">';
+                    codigoHTML += '<h5>' + item.nombre + '</h5>';
+                    codigoHTML += '</td>';
+                    codigoHTML += '<td class="text-center">';
+                    codigoHTML += '<h5>' + item.fecha + '</h5>';
+                    codigoHTML += '</td>';
+                    codigoHTML += '<td class="text-center">';
+                    if (!cerrada) {
+                        codigoHTML += `<a href="javascript:;" onclick="modAgregar_Buscar_Verificaciones(${item.orden_id},'${item.num_orden}',${item.cliente_id},'${item.condiciones}',${item.usuario_id_vendedor});">`;
+                        codigoHTML += '<button type="button" class="btn btn-inline btn-outline-success" data-toggle="tooltip" title="Añadir verificaciones">';
+                        codigoHTML += '<i class="fa fa-plus"></i>';
+                        codigoHTML += '</button>';
+                        codigoHTML += '</a>';
+                    }
+                    codigoHTML += `<a href="javascript:;" onclick="mostrarOrden(${item.orden_id}, ${item.num_orden}, '${item.nombre}','${item.condiciones}','${item.vendedor}');">`;
+                    codigoHTML += '<button type="button" class="btn btn-inline btn-outline-primary" data-toggle="tooltip" title="Ver orden">';
+                    codigoHTML += '<i class="fa fa-eye"></i>';
+                    codigoHTML += '</button>';
+                    codigoHTML += '</a>';
+                    if (!cerrada) {
+                        codigoHTML += `<button onclick="modEditarOrden(${item.orden_id},'${item.num_orden}',${item.cliente_id},'${item.condiciones}',${item.usuario_id_vendedor});" type="button" class="btn btn-inline btn-outline-cyan" data-toggle="tooltip" title="Editar orden">`;
+                        codigoHTML += '<i class="fa fa-pen-to-square"></i>';
+                        codigoHTML += '</button>';
+                    }
+                    codigoHTML += '<button type="button" data-toggle="tooltip" class="btn btn-inline btn-danger" title="';
+                    if (cerrada) {
+                        codigoHTML += 'Orden cerrada"><i class="fa fa-lock';
+                    } else {
+                        codigoHTML += `Cerrar orden" onclick="cerrarOrden(${item.orden_id},'${item.num_orden}');"><i class="fa fa-lock-open`;
+                    }
+                    codigoHTML += '"></i>';
+                    codigoHTML += '</button>';
+                    codigoHTML += '</td>';
+
+                    codigoHTML += '</tr>';
+                    $('#tbl tbody').append(codigoHTML);
+                })
+            },
+            complete: function (jqXHR, textStatus) {
+                $('#tbl').DataTable({
+                    ordering: true, searching: true, info: false, scrolling: false, paging: true, lengthMenu: [
+                        [5, 10, 15, 20],
+                        [5, 10, 15, 20]
+                    ], language: { 'url': 'assets/extra-libs/DataTables/Spanish.html' },
+                    "columnDefs": [{
+                        "targets": 3,
+                        "orderable": false
+                    }],
+                    order: [[0, 'desc']],
+                    initComplete: function () {
+                        $(this.api().table().container()).find('input').parent().wrap('<form>').parent().attr('autocomplete', 'off');
+                        // $('#tbl_wrapper .row div').removeClass('col-md-6');
+                        // $('#tbl_wrapper .row div').removeClass('col-md-5');
+                        // $('#tbl_wrapper .row div').removeClass('col-md-7');
+
+                        // $('#tbl_wrapper .row div').css('padding', '0px');
+                    }
+
+                });
+            }
+        });
+    }
+
+    $('#btnGenerarNumOrden').click(function () {
+        /*     var dropBoxClientes = "";
+            $.ajax({
+                type: "GET",
+                contentType: "application/json; charset=utf-8",
+                url: 'http://localhost/Herkace_Shared/Web/api/app_ws/Clientes/clientes',
+                dataType: 'json',
+                async: false,
+                success: function (data) {
+                    $.each(data, function (key, item) {
+                        dropBoxClientes += `<option value="${item.cliente_id}">${item.nombre}</option>`;
+                    })
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    console.log('no hay datos');
+                }
+            });
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: "btn btn-success",
+                    cancelButton: "btn btn-danger",
+                },
+                buttonsStyling: false
+            });
+            swalWithBootstrapButtons.fire({
+                title: 'Cliente a quien se le va a facturar', icon: 'info', html: `<div style="height:50px">
+            <select id="cboClientes" class="js-example-basic-single form-control" style="width: 100%;">${dropBoxClientes}</select></div>
+          `, showCancelButton: true, confirmButtonColor: "#DD6B55", cancelButtonText: 'Cancelar', confirmButtonText: 'Confirmar', reverseButtons: true, cancelButtonColor: "#FF6833", didOpen:()=>{$('#cboClientes').select2();}
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    var datos = {
+                        "cliente_id": $('#cboClientes').val(),
+                        "usuario_id": localStorage.getItem('AE')
+                    };
+                    var nombreCliente = $('#cboClientes option:selected').text();
+                    $.ajax({
+                        method: "POST",
+                        url: 'http://localhost/Herkace_Shared/Web/api/app_ws/Ordenes/generarNumOrden',
+                        dataType: 'json',
+                        data: datos,
+                        success: function (data) {
+                            modAgregarVerifAOrden(data.orden_id, data.num_orden, nombreCliente);
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            Swal.fire({ title: 'Error', text: 'No se pudo generar el N° de orden', icon: 'error' })
+                        }
+                    });
+                } else {
+                    console.log('No se genero el numero de orden...');
+                }
+            });
+    
+        */
+
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: "btn btn-success",
+                cancelButton: "btn btn-danger",
+            },
+            buttonsStyling: false
+        });
+        swalWithBootstrapButtons.fire({ title: 'AVISO', text: '¿Seguro que quieres generar un nuevo número de orden?', icon: 'info', showCancelButton: true, confirmButtonColor: "#DD6B55", cancelButtonText: 'Cancelar', confirmButtonText: 'Confirmar', reverseButtons: true, cancelButtonColor: "#FF6833" }).then((result) => {
+            if (result.isConfirmed) {
+                var datos = {
+                    "usuario_id": localStorage.getItem('AE')
+                };
+                $.ajax({
+                    type: "POST",
+                    url: 'http://localhost/Herkace_Shared/Web/api/app_ws/Ordenes/generarNumOrden',
+                    data: datos,
+                    dataType: 'json',
+                    success: function (data) {
+                        modAgregar_Buscar_Verificaciones(data.orden_id, data.num_orden, 0, '', 0);
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        Swal.fire({ title: 'Error', text: 'No se pudo generar el N° de orden', icon: 'error' })
+                    }
+                });
+            } else {
+                console.log('no se ha generado el numero de orden');
+            }
+        });
+
+    })
+
+    function mostrarOrden(orden_id, num_orden, cliente_fac, condiciones, vendedor) {
+        $("#myModalLabelOrden").html(`Orden ${num_orden}`);
+        $("#lblClienteFacturar").html(cliente_fac);
+        $("#lblCondiciones").html(condiciones);
+        $("#lblVendedor").html(vendedor);
+        if ($.fn.dataTable.isDataTable('#tblVerifsOrden')) {
+            $('#tblVerifsOrden').DataTable().destroy();
+        }
+        $('#tblVerifsOrden tbody').empty();
+        var columnas = [
+            { "data": "cliente" },
+            { "data": "folio" },
+            { "data": "tipo_verificacion" },
+            { "data": "fecha" },
+            { "data": "num_serie" },
+            { "data": "num_placas" },
+            { "data": "marca" },
+            { "data": "modelo" },
+            { "data": "tarjeta_circ" }
+        ];
+        var table = $('#tblVerifsOrden').DataTable({
+            ordering: false, searching: true, info: true, paging: true,
+            language: { 'url': 'assets/extra-libs/DataTables/Spanish.html' },
+            serverSide: false,
+            ajax: {
+                url: `http://localhost/Herkace_Shared/Web/api/app_ws/Verificaciones/listado_vw?orden_id=${orden_id}`,
+                type: 'GET',
+                dataSrc: ""
+            },
+            columns: columnas,
+            initComplete: function () {
+                $(this.api().table().container()).find('input').parent().wrap('<form>').parent().attr('autocomplete', 'off');
+                $("#modalMostrarOrden").modal('show');
+            }
+        });
+    }
+
+    function cerrarOrden(orden_id, num_orden) {
+        Swal.fire({
+            title: `¿Está seguro que desea cerrar la orden ${num_orden}?`,
+            text: 'Una vez cerrada la orden, no se podrá agregar o eliminar ninguna verificación y servicio. ¿Está seguro de proceder?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: "#FF0000",
+            cancelButtonText: 'CANCELAR',
+            confirmButtonText: 'CONFIRMAR',
+            reverseButtons: true,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                var datos = {
+                    "orden_id": orden_id
+                };
+                $.ajax({
+                    type: "PUT",
+                    url: 'http://localhost/Herkace_Shared/Web/api/app_ws/Ordenes/cerrar',
+                    data: datos,
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data.registrado) {
+                            Swal.fire({ title: data.mensaje, icon: 'success' });
+                            listado_ordenes();
+                        } else {
+                            Swal.fire({ title: data.mensaje, icon: 'error' });
+                        }
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        Swal.fire({ title: 'No se pudo realizar la operación', icon: 'error' });
+                    }
+                });
+            }
+        });
+    }
+
+</script>

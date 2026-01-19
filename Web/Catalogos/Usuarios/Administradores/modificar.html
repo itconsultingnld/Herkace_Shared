@@ -1,0 +1,257 @@
+<!-- ============================================================== -->
+<!-- breadcrumb -->
+<!-- ============================================================== -->
+<div class="page-breadcrumb">
+    <div class="row">
+        <div class="col-12 d-flex no-block align-items-center">
+            <h4 class="page-title">Modificar administrador</h4>
+            <div class="ml-auto text-right">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item active">
+                            <a href="javascript:;" onclick="modDashboard();">Dashboard</a>
+                        </li>
+                        <li class="breadcrumb-item active">
+                            <a href="javascript:;" onclick="modCatalogos();">Catálogos</a>
+                        </li>
+                        <li class="breadcrumb-item active">
+                            <a href="javascript:;" onclick="modAdministradores();">Administradores</a>
+                        </li>
+                        <li class="breadcrumb-item active">Modificar</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- End breadcrumb -->
+<!-- ============================================================== -->
+<!-- ============================================================== -->
+<!-- Container -->
+<!-- ============================================================== -->
+<div class="container-fluid">
+    <div class="row">
+        <!-- TIPOS MOVIMIENTOS -->
+        <div class="col-sm-12"><br></div>
+        <div class="row col-sm-12 cuadroInsertar">
+            <hr />
+            <div class="col-sm-12">
+                <hr />
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group row">
+                    <label for="txtNombre" class="col-sm-2 form-control-label">*Nombre(s):</label>
+                    <div class="col-sm-10">
+                        <p class="form-control-static">
+                            <input type="text" class="form-control validar" id="txtNombre" placeholder="Nombre(s)"
+                                minlength="3" maxlength="50" required />
+                        <div class="invalid-feedback" id="txtNombreValid"></div>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group row">
+                    <label for="txtApePat" class="col-sm-2 form-control-label">*Apellido paterno:</label>
+                    <div class="col-sm-10">
+                        <p class="form-control-static">
+                            <input type="text" class="form-control validar" id="txtApePat"
+                                placeholder="Apellido paterno" minlength="2" maxlength="50" required />
+                        <div class="invalid-feedback" id="txtApePatValid"></div>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group row">
+                    <label for="txtApeMat" class="col-sm-2 form-control-label">Apellido materno:</label>
+                    <div class="col-sm-10">
+                        <p class="form-control-static">
+                            <input type="text" class="form-control validar" id="txtApeMat"
+                                placeholder="Apellido materno" minlength="2" maxlength="50" required />
+                        <div class="invalid-feedback" id="txtApeMatValid"></div>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group row">
+                    <label for="txtCorreo" class="col-sm-2 form-control-label">*Correo electrónico:</label>
+                    <div class="col-sm-10">
+                        <p class="form-control-static">
+                            <input type="text" class="form-control validar" id="txtCorreo"
+                                placeholder="Correo electrónico" minlength="6" required />
+                        </p>
+                        <div class="invalid-feedback" id="txtCorreoValid">
+                            El correo no es válido
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group row">
+                    <label for="txtUsuario" class="col-sm-2 form-control-label">*Usuario:</label>
+                    <div class="col-sm-10">
+                        <p class="form-control-static">
+                            <input type="text" class="form-control validar" id="txtUsuario" placeholder="Usuario"
+                                minlength="5" maxlength="30" autocomplete="off" required />
+                        <div class="invalid-feedback" id="txtUsuarioValid"></div>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <button href="javascript:;" onclick="modAdministradores();" type="button"
+                    class="btn btn-inline btn-danger">Cancelar</button>
+                <button id="btnModificar" type="button" class="btn btn-inline btn-success">Modificar</button>
+            </div>
+        </div>
+        <!-- FIN TIPOS MOVIMIENTOS -->
+    </div>
+</div>
+</div>
+<!-- ============================================================== -->
+<!-- End Container -->
+<!-- ============================================================== -->
+<!--This page JavaScript -->
+
+<script>
+    $(document).ready(function () {
+        $("input.validar").each(function () {
+            if (this.id == 'txtNombre') {
+                this.oninput = function () {
+                    inputMayus(this);
+                    onlyLetras(this);
+                    validarFormulario();
+                };
+            } else if (this.id == 'txtApePat' || this.id == 'txtApeMat') {
+                this.oninput = function () {
+                    inputMayus(this);
+                    onlyLetras(this);
+                    validarFormulario();
+                };
+            } else if(this.id == 'txtCorreo'){
+                this.oninput = function(){
+                    inputMinus(this);
+                    validarFormulario();
+                }
+            } else if (this.id == 'txtUsuario') {
+                this.oninput = function () {
+                    validarUsuario(this);
+                    validarFormulario();
+                }
+            } else {
+                this.oninput = function () {
+                    inputSinEspacios(this);
+                    validarFormulario();
+                };
+            }
+            if (this.id != 'txtCorreo') {
+                const minLength = parseInt($(this).attr("minlength"));
+                $("#" + this.id + "Valid").html(`El campo debe contener al menos ${minLength} caracteres.`);
+            }
+        });
+    });
+    function validarFormulario() {
+        var error = false;
+        $("input.validar").each(function () {
+            const minLength = parseInt($(this).attr("minlength"));
+            var value = $(this).val();
+            var id = this.id;
+            var valido;
+            if(id == 'txtApeMat'){
+                valido = value.length >= minLength || value.length == 0;
+            } else if (id == 'txtCorreo') {
+                valido = validateEmail(value);
+            } else {
+                valido = value.length >= minLength;
+            }
+            if (valido) {
+                $(this).removeClass('is-invalid');
+                $("#" + this.id + "Valid").removeClass('mostrar');
+            } else {
+                $(this).addClass('is-invalid');
+                $("#" + this.id + "Valid").addClass('mostrar');
+                error = true;
+            }
+        });
+        $("#btnModificar").attr("disabled", error);
+    }
+    $("#divClaveAcceso").click(function () {
+        $('#txtContrasena').attr('type', $("i", this).hasClass("fa-eye") ? 'text' : 'password');
+        $("i", this).toggleClass("fa-eye");
+        $("i", this).toggleClass("fa-eye-slash");
+    });
+
+    var usuario_id;
+
+    function cargarDatos(idusuario) {
+        usuario_id = idusuario;
+        $.ajax({
+            url: "http://localhost/Herkace_Shared/Web/api/app_ws/Coordinadores/coordinador_por_id/" + idusuario,
+            method: "GET",
+            success: function (usuario) {
+                $('#txtNombre').val(usuario.nombre);
+                $('#txtApePat').val(usuario.ape_pat);
+                $('#txtApeMat').val(usuario.ape_mat);
+                $('#txtCorreo').val(usuario.correo);
+                $('#txtUsuario').val(usuario.username);
+            }
+        });
+    }
+
+    $('#btnModificar').click(function () {
+        $("#btnModificar").attr("disabled", true);
+        var Nombre = $('#txtNombre').val();
+        var ApePat = $('#txtApePat').val();
+        var ApeMat = $('#txtApeMat').val();
+        var Correo = $('#txtCorreo').val();
+        var Usuario = $('#txtUsuario').val();
+        if(ApePat.trim() == '' && ApeMat.trim() == ''){
+            Swal.fire({ html: true, title: 'Error', text: 'Es obligatorio ingresar un apellido', icon: 'error' });
+            return;
+        }
+        if (Nombre.trim() == '' || Correo.trim() == '' || Usuario.trim() == '') {
+            Swal.fire({ html: true, title: 'Error', text: 'Todos los campos son obligatorios', icon: 'error' });
+            return;
+        }
+        //Se construye el json con los datos obtenidos
+        var jsonDatos = {
+            "nombre": Nombre,
+            "ape_pat": ApePat,
+            "ape_mat": ApeMat,
+            "correo": Correo,
+            "username": Usuario
+        };
+        //Aquí se debe mandar a llamar el API enviandole el json
+        $.ajax({
+            url: "http://localhost/Herkace_Shared/Web/api/app_ws/Administradores/modificar/" + usuario_id,
+            method: "PUT",
+            data: jsonDatos,
+            dataType: "json",
+            success: function (response) {
+                if (response.mensaje == 'Se actualizo el registro') {
+                    Swal.fire({
+                        title: 'Actualizado correctamente',
+                        icon: 'success'
+                    });
+                    modAdministradores();
+                }
+                else Swal.fire({
+                    title: 'Error',
+                    text: response.mensaje,
+                    icon: 'error'
+                });
+                $("#btnModificar").attr("disabled", false);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                Swal.fire({
+                    title: 'Ocurrió un error al actualizar el usuario. Intente de nuevo más tarde.',
+                    icon: 'error'
+                });
+                $("#btnModificar").attr("disabled", false);
+            }
+        });
+    });
+</script>

@@ -1,0 +1,382 @@
+<!-- ============================================================== -->
+<!-- breadcrumb -->
+<!-- ============================================================== -->
+<style>
+    a {
+        text-decoration: none !important;
+        color: #233f77;
+    }
+
+    .card {
+        background-color: #ccc;
+    }
+
+    .card-body {
+        padding-bottom: 0px;
+    }
+</style>
+<div class="page-breadcrumb">
+    <div class="row">
+        <div class="col-12 d-flex no-block align-items-center">
+            <h4 class="page-title">Catálogos</h4>
+            <div class="ml-auto text-right">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item active">
+                            <a href="javascript:;" onclick="modDashboard();">Dashboard</a>
+                        </li>
+                        <li class="breadcrumb-item active">Catálogos</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- End breadcrumb -->
+<!-- ============================================================== -->
+<!-- ============================================================== -->
+<!-- Container -->
+<!-- ============================================================== -->
+<div class="container-fluid">
+    <div class="row">
+        <!-- CATALOGOS -->
+
+        <!-- Column -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body row">
+                    <div class="col-lg-6" id="divAdministradores">
+                        <div class="card card-hover">
+                            <div class="box bg-white border border-black text-center">
+                                <a href="javascript:;" onclick="modAdministradores();">
+                                    <h1 class="font-light text-black"><i class="fa fa-user-tie"></i></h1>
+                                    <h6 class="text-black"><br />Administradores</h6>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6" id="divCoordinadores">
+                        <div class="card card-hover ">
+                            <div class="box bg-white border border-black text-center">
+                                <a href="javascript:;" onclick="modCoordinadores();">
+                                    <h1 class="font-light text-black"><i class="fa fa-user-circle"></i></h1>
+                                    <h6 class="text-black"><br />Coordinadores</h6>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="card card-hover ">
+                            <div class="box bg-white border border-black text-center">
+                                <a href="javascript:;" onclick="modTecnicos();">
+                                    <h1 class="font-light text-black"><i class="fa fa-wrench"></i></h1>
+                                    <h6 class="text-black"><br />Técnicos</h6>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="card card-hover ">
+                            <div class="box bg-white border border-black text-center">
+                                <a href="javascript:;" onclick="modClientes();">
+                                    <h1 class="font-light text-black"><i class="fa fa-users"></i></h1>
+                                    <h6 class="text-black"><br />Clientes</h6>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body row">
+                    <div class="col-lg-12">
+                        <div class="card card-hover">
+                            <div class="box bg-white border border-black text-center">
+                                <a href="javascript:;" onclick="modClientesFac();">
+                                    <h1 class="font-light text-black"><i class="fa fa-users"></i></h1>
+                                    <h6 class="text-black">Clientes<br />(Facturación)</h6>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body row">
+                    <div class="col-lg-12" id="divConfiguracion">
+                        <div class="card card-hover">
+                            <div class="box bg-white border border-black text-center">
+                                <a href="javascript:;" onclick="modConfiguracion();">
+                                    <h1 class="font-light text-black"><i class="fa fa-gears"></i></h1>
+                                    <h6 class="text-black"><br />Configuración</h6>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body row">
+                    <div class="col-lg-6">
+                        <div class="card card-hover">
+                            <div class="box bg-white border border-black text-center">
+                                <a href="javascript:;" onclick="modFolios();">
+                                    <h1 class="font-light text-black"><i class="fa fa-clipboard"></i></h1>
+                                    <h6 class="text-black"><br />Folios</h6>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="card card-hover">
+                            <div class="box bg-white border border-black text-center">
+                                <a href="javascript:;" onclick="modVehiculos();">
+                                    <h1 class="font-light text-black"><i class="fa fa-truck-pickup"></i></h1>
+                                    <h6 class="text-black"><br />Vehículos</h6>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="card card-hover">
+                            <div class="box bg-white border border-black text-center">
+                                <a href="javascript:;" onclick="modMarcasVehiculos();">
+                                    <h1 class="font-light text-black"><i class="fa fa-registered"></i></h1>
+                                    <h6 class="text-black">Marcas de<br />vehículos</h6>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="card card-hover">
+                            <div class="box bg-white border border-black text-center">
+                                <a href="javascript:;" onclick="modTiposServicios();">
+                                    <h1 class="font-light text-black"><i class="fa fa-toolbox"></i></h1>
+                                    <h6 class="text-black">Tipos de<br />servicios</h6>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="card card-hover">
+                            <div class="box bg-white border border-black text-center">
+                                <a href="javascript:;" onclick="modTiposVehiculos();">
+                                    <h1 class="font-light text-black"><i class="fa fa-truck"></i></h1>
+                                    <h6 class="text-black">Tipos de<br />vehículos</h6>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="card card-hover">
+                            <div class="box bg-white border border-black text-center">
+                                <a href="javascript:;" onclick="modTiposUnidades();">
+                                    <h1 class="font-light text-black"><i class="fa fa-truck-moving"></i></h1>
+                                    <h6 class="text-black">Tipos de<br />unidades</h6>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="card card-hover">
+                            <div class="box bg-white border border-black text-center">
+                                <a href="javascript:;" onclick="modPrecios();">
+                                    <h1 class="font-light text-black"><i class="fa fa-money-bill"></i></h1>
+                                    <h6 class="text-black"><br />Precios</h6>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- FIN CATALOGOS-->
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- End Container -->
+<!-- ============================================================== -->
+<!--This page JavaScript -->
+
+<script>
+    $(document).ready(function () {
+        if (localStorage.getItem("rol_id") == "2") {
+            $("#divAdministradores").hide();
+            $("#divCoordinadores").hide();
+        }
+        $('#modalCargando').modal('hide');
+    });
+    function modTiposMovimientos() {
+        $("#container").empty();
+        $("a").removeClass("selected");
+        $("#tiposMovim").addClass("selected");
+        $("#container").load("Catalogos/TiposMovimientos/TiposMovimientos.html", function () {
+            tablaTiposMovimientos();
+        });
+    };
+
+    function modMarcasLlantas() {
+        $("#container").empty();
+        $("a").removeClass("selected");
+        $("#marcasLlantas").addClass("selected");
+        $("#container").load("Catalogos/MarcasLlantas/MarcasLlantas.html", function () {
+            tablaMarcasLlantas();
+        });
+    };
+
+    function modClientes() {
+        $("#container").empty();
+        $("a").removeClass("selected");
+        $("#clientes").addClass("selected");
+        $("#container").load("Catalogos/Clientes/Clientes.html", function () {
+            tablaClientes();
+        });
+    };
+
+    function modMarcasTracto() {
+        $("#container").empty();
+        $("a").removeClass("selected");
+        $("#marcasTracto").addClass("selected");
+        $("#container").load("Catalogos/MarcasTracto/MarcasTracto.html", function () {
+            tablaMarcasTracto();
+        });
+    };
+
+    function modMarcaSemi() {
+        $("#container").empty();
+        $("a").removeClass("selected");
+        $("#marcasSemi").addClass("selected");
+        $("#container").load("Catalogos/MarcasSemirremolque/MarcasSemirremolques.html", function () {
+            tablaMarcasSemi();
+        });
+    };
+
+    function modOperadores() {
+        $("#container").empty();
+        $("a").removeClass("selected");
+        $("#operadores").addClass("selected");
+        $("#container").load("Catalogos/Operadores/Operadores.html", function () {
+            tablaOperadores();
+        });
+    };
+
+    function modProveedores() {
+        $("#container").empty();
+        $("a").removeClass("selected");
+        $("#proveedores").addClass("selected");
+        $("#container").load("Catalogos/Proveedores/Proveedores.html", function () {
+            tablaProveedores();
+        });
+    };
+
+    function modTracto() {
+        $("#container").empty();
+        $("a").removeClass("selected");
+        $("#tractocamiones").addClass("selected");
+        $("#container").load("Catalogos/Tractocamiones/Tractocamiones.html", function () {
+            tablaTracto();
+        });
+    };
+
+    function modSemi() {
+        $("#container").empty();
+        $("a").removeClass("selected");
+        $("#semirremolques").addClass("selected");
+        $("#container").load("Catalogos/Semirremolques/Semirremolques.html", function () {
+            tablaSemi();
+        });
+    };
+
+    function modTiposSemi() {
+        $("#container").empty();
+        $("a").removeClass("selected");
+        $("#tipoSemi").addClass("selected");
+        $("#container").load("Catalogos/TipoSemirremolques/TipoSemirremolques.html", function () {
+            tablaTipoSemi();
+        });
+    };
+
+    function modCompaniaSemi() {
+        $("#container").empty();
+        $("a").removeClass("selected");
+        $("#companiaSemi").addClass("selected");
+        $("#container").load("Catalogos/CompaniaSemirremolques/CompaniaSemirremolques.html", function () {
+            tablaCompaniaSemi();
+        });
+    };
+
+    function modDispositivos() {
+        $("#container").empty();
+        $("li").removeClass("selected");
+        $("#dispositivos").addClass("selected");
+        $("#container").load("Configuracion/Dispositivos/Dispositivos.html", function () {
+            tablaDispositivos();
+        });
+    };
+    function modCoordinadores() {
+        $("#container").empty();
+        $("li").removeClass("selected");
+        $("#dispositivos").addClass("selected");
+        $("#container").load("Catalogos/Usuarios/Coordinador/Coordinador.html", function () {
+            tablaCoordinadores();
+        });
+    };
+    function modAdministradores() {
+        $("#container").empty();
+        $("#container").load("Catalogos/Usuarios/Administradores/listado.html", function () {
+            tabla();
+        });
+    };
+    function modMarcasVehiculos() {
+        $("#container").empty();
+        $("#container").load("Catalogos/MarcasVehiculos/listado.html", function () {
+            tabla();
+        });
+    };
+    function modTiposUnidades() {
+        $("#container").empty();
+        $("#container").load("Catalogos/TiposUnidades/listado.html", function () {
+            tabla();
+        });
+    };
+    function modTiposVehiculos() {
+        $("#container").empty();
+        $("#container").load("Catalogos/TiposVehiculos/listado.html", function () {
+            tabla();
+        });
+    };
+    function modTecnicos() {
+        $("#container").empty();
+        $("#container").load("Catalogos/Tecnicos/Tecnicos.html", function () {
+            tablaTecnicos();
+        });
+    };
+    function modFolios() {
+        $("#container").empty();
+        $("#container").load("Catalogos/Folios/listado.html", function () {
+            tabla();
+        });
+    };
+    function modTiposServicios() {
+        $("#container").empty();
+        $("#container").load("Catalogos/TiposServicios/listado.html", function () {
+            tabla();
+        });
+    };
+    function modPrecios() {
+        $("#container").empty();
+        $("#container").load("Catalogos/Precios/listado.html", function () {
+            tabla();
+        });
+    };
+    function modConfiguracion() {
+        $("#container").empty();
+        $("#container").load("Catalogos/Configuracion/listado.html", function () {
+            tabla();
+        });
+    };
+
+</script>

@@ -1,0 +1,392 @@
+<!-- ============================================================== -->
+<!-- breadcrumb -->
+<!-- ============================================================== -->
+<div class="page-breadcrumb">
+    <div class="row">
+        <div class="col-12 d-flex no-block align-items-center">
+            <h4 class="page-title">Administradores</h4>
+            <div class="ml-auto text-right">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item active">
+                            <a href="javascript:;" onclick="modDashboard();">Dashboard</a>
+                        </li>
+                        <li class="breadcrumb-item active">
+                            <a href="javascript:;" onclick="modCatalogos();">Catálogos</a>
+                        </li>
+                        <li class="breadcrumb-item active">Administradores</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    p {
+        margin-bottom: 0;
+    }
+</style>
+<!-- ============================================================== -->
+<!-- End breadcrumb -->
+<!-- ============================================================== -->
+<!-- ============================================================== -->
+<!-- Container -->
+<!-- ============================================================== -->
+<div class="container-fluid">
+    <div class="row">
+        <!-- TIPOS MOVIMIENTOS -->
+        <a href="javascript:;" onclick="modAgregar();">
+            <button type="button" class="btn-square-icon">
+                <i class="fa fa-plus"></i>
+                Agregar administrador
+            </button>
+        </a>
+        <button type="button" class="btn btn-success btn-square-icon" id="btnExcel">
+            <i class="fa fa-file-excel"></i> XLSX
+        </button>
+        <div class="table-responsive">
+            <table id="tbl" class="table table-bordered table-hover table-light">
+                <thead class="thead-light">
+                    <tr>
+                        <th><b>Nombre completo</b></th>
+                        <th><b>Correo</b></th>
+                        <th><b>Usuario</b></th>
+                        <th><b>Activo</b></th>
+                        <th><b>Acciones</b></th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <!-- MODAL PARA eliminar administrador -->
+        <div id="modalEliminar" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog"
+            aria-labelledby="mySmallModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="modal-close" data-dismiss="modal" aria-label="Close">
+                            <i class="fa fa-times"></i>
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">Confirmación</h4>
+                    </div>
+                    <div class="modal-body">
+                        <strong>¿Está seguro que desea eliminar el administrador?</strong><br>No podrá deshacer esta
+                        acción.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-inline btn-default" data-dismiss="modal">Cancelar</button>
+                        <button id="btnDesactivar" type="button" class="btn btn-inline btn-danger"
+                            data-dismiss="modal">Eliminar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="modalContrasenia" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog"
+            aria-labelledby="mySmallModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="modal-close" data-dismiss="modal" aria-label="Close">
+                            <i class="fa fa-times"></i>
+                        </button>
+                        <h4 class="modal-title">Cambio de contraseña</h4>
+                    </div>
+                    <div class="modal-body">
+                        <strong>Escriba la nueva contraseña para el usuario.</strong>
+                        <div class="form-group row">
+                            <label class="col-sm-12 form-control-label">Nueva contraseña:</label>
+                            <div class="col-sm-12">
+                                <p class="form-control-static">
+                                    <input type="password" class="form-control" id="txtContrasena1"
+                                        placeholder="********" required />
+                                </p>
+                                <div class="invalid-feedback" id="txtContrasena1Valid">
+                                    La contraseña debe contener al menos 8 caracteres, una letra mayúscula, una minúscula, un número y un carácter especial.
+                                </div>
+                                <div class="invalid-feedback" id="txtContrasena1ValidCoin">
+                                    Las contraseñas no coinciden
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-12 form-control-label">Confirmar contraseña:</label>
+                            <div class="col-sm-12">
+                                <p class="form-control-static">
+                                    <input type="password" class="form-control" id="txtContrasena2"
+                                        placeholder="********" required />
+                                </p>
+                                <div class="invalid-feedback" id="txtContrasena2ValidCoin">
+                                    Las contraseñas no coinciden
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-inline btn-secondary"
+                            data-dismiss="modal">Cancelar</button>
+                        <button id="btnCambiarContrasenia" type="button" class="btn btn-inline btn-default"
+                            data-dismiss="modal" disabled>Cambiar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- FIN TIPOS MOVIMIENTOS -->
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- End Container -->
+<!-- ============================================================== -->
+<!--This page JavaScript -->
+
+<script>
+    $(document).ready(function () {
+        $('body').tooltip({ selector: '[data-toggle=tooltip]', trigger: 'hover' });
+        $("table thead tr th").addClass("text-center");
+    });
+
+    function tabla() {
+        if ($.fn.dataTable.isDataTable('#tbl')) {
+            $('#tbl').DataTable().destroy();
+        }
+        $.ajax({
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            url: 'http://localhost/Herkace_Shared/Web/api/app_ws/Administradores/listado',
+            dataType: 'json',
+            success: function (data) {
+                $('#tbl tbody').empty();
+                $.each(data, function (key, item) {
+                    var codigoHTML = '';
+                    codigoHTML += '<tr>';
+                    codigoHTML += '<td>' + item.nombre + " " + item.ape_pat + " " + item.ape_mat + '</td>';
+                    codigoHTML += '<td>' + item.correo + '</td>';
+                    codigoHTML += '<td>' + item.username + '</td>';
+                    codigoHTML += '<td class="text-center">';
+                    codigoHTML += '<i style="cursor: pointer;" onclick="setElementoEliminar(' + item.usuario_id + ',\'' + item.nombre + " " + item.ape_pat + " " + item.ape_mat + '\',' + item.activo + ')" class="fa fa-2xl ';
+                    if (item.activo) {
+                        codigoHTML += 'text-success fa-toggle-on';
+                    } else {
+                        codigoHTML += 'text-danger fa-toggle-off';
+                    }
+                    codigoHTML += '" data-toggle="modal" data-target=".bd-example-modal-sm"><i/>';
+                    codigoHTML += '</td>';
+                    codigoHTML += '<td class="table-icon-cell">';
+                    codigoHTML += '<button onclick="setElementoCambiarPass(' + item.usuario_id + ')" type="button" class="btn btn-inline btn-outline-warning" data-toggle="tooltip" title="Cambiar contraseña">';
+                    codigoHTML += '<i class="fa fa-asterisk"></i>';
+                    codigoHTML += '</button>';
+                    codigoHTML += '<a href="javascript:;" onclick="modModificar(' + item.usuario_id + ');">';
+                    codigoHTML += '<button type="button" class="btn btn-inline btn-outline-cyan" data-toggle="tooltip" title="Modificar">';
+                    codigoHTML += '<i class="fa fa-edit"></i>';
+                    codigoHTML += '</button>';
+                    codigoHTML += '</a>';
+                    codigoHTML += '</td>';
+                    codigoHTML += '</tr>';
+                    $('#tbl tbody').append(codigoHTML);
+                });
+            },
+            complete: function (jqXHR, textStatus) {
+                $('#tbl').DataTable({
+                    ordering: false, searching: true, info: true, paging: true, language: { 'url': 'assets/extra-libs/DataTables/Spanish.html' },
+                    initComplete: function () {
+                        $(this.api().table().container()).find('input').parent().wrap('<form>').parent().attr('autocomplete', 'off');
+                    }
+                });
+            }
+        });
+    }
+
+    var elementoEliminar = null;
+    function setElementoCambiarPass(id) {
+        elementoEliminar = id;
+        $('#modalContrasenia').modal('show');
+    }
+    function setElementoEliminar(id, nombre, activo) {
+        elementoEliminar = id;
+        var valorNuevo;
+        var strBoton;
+        var codigoHTML = '<strong>¿Está seguro que desea ';
+        if (activo) {
+            valorNuevo = 0;
+            strBoton = "Desactivar";
+            codigoHTML += 'des';
+        } else {
+            valorNuevo = 1;
+            strBoton = "Activar";
+        }
+        codigoHTML += `activar este usuario?</strong><br /><input id="lblNuevoVal" type="hidden" value="${valorNuevo}" /><br /><strong>Nombre: </strong><label>${nombre}</label>`;
+        $("#modalEliminar .modal-body").html(codigoHTML);
+        $("#btnDesactivar").html(strBoton);
+        $('#modalEliminar').modal('show');
+    }
+
+    $('#btnDesactivar').click(function () {
+        //Construcción del json
+        var activo = parseInt($("#lblNuevoVal").val());
+        var jsonDesactivar = {
+            "usuario_id": elementoEliminar,
+            "activo": activo
+        };
+        //Aquí se hace el envío al API para desactivar al cliente
+        $.ajax({
+            url: "http://localhost/Herkace_Shared/Web/api/app_ws/Administradores/desactivar",
+            method: "PUT",
+            data: jsonDesactivar,
+            dataType: "json",
+            success: function (response) {
+                if (response.cambio) {
+                    var str = activo == 0 ? 'des' : '';
+                    Swal.fire({
+                        title: `El usuario ha sido ${str}activado correctamente`,
+                        icon: 'success'
+                    });
+                    tabla();
+                } else {
+                    Swal.fire({ title: `Ocurrió un error al ${str}activar el usuario. Intente de nuevo más tarde.`, icon: 'error' });
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                Swal.fire({ title: `Ocurrió un error al ${str}activar el usuario. Intente de nuevo más tarde.`, icon: 'error' });
+            }
+        });
+    });
+
+    var bolPassLen = false;
+    var bolPassCoin = false;
+    $("#txtContrasena1").blur(function () {
+        checkPass1();
+    });
+    $("#txtContrasena1").keyup(function () {
+        checkPass1();
+    });
+    $("#txtContrasena2").blur(function () {
+        checkPass2();
+    });
+    $("#txtContrasena2").keyup(function () {
+        checkPass2();
+    });
+    function pass1Len() {
+        var pass = $("#txtContrasena1").val();
+        return pass.length >= 8;
+    }
+    function passCoin() {
+        var pass1 = $("#txtContrasena1").val();
+        var pass2 = $("#txtContrasena2").val();
+        return pass1 == pass2;
+    }
+    function checkPass1() {
+        if (!pass1Len()) {
+            $("#txtContrasena1").addClass('is-invalid');
+            $("#txtContrasena1Valid").addClass('mostrar');
+            bolPassLen = false;
+            puedeCambiarPass();
+        } else {
+            $("#txtContrasena1").removeClass('is-invalid');
+            $("#txtContrasena1Valid").removeClass('mostrar');
+            bolPassLen = true;
+            checkPass2();
+        }
+    }
+    function checkPass2() {
+        if (!passCoin()) {
+            $("#txtContrasena1").addClass('is-invalid');
+            $("#txtContrasena1ValidCoin").addClass('mostrar');
+            $("#txtContrasena2").addClass('is-invalid');
+            $("#txtContrasena2ValidCoin").addClass('mostrar');
+            bolPassCoin = false;
+        } else {
+            if (pass1Len()) {
+                $("#txtContrasena1").removeClass('is-invalid');
+            }
+            $("#txtContrasena1ValidCoin").removeClass('mostrar');
+            $("#txtContrasena2").removeClass('is-invalid');
+            $("#txtContrasena2ValidCoin").removeClass('mostrar');
+            bolPassCoin = true;
+        }
+        puedeCambiarPass();
+    }
+    function puedeCambiarPass() {
+        if (bolPassLen && bolPassCoin) {
+            $("#btnCambiarContrasenia").prop('disabled', false);
+        } else {
+            $("#btnCambiarContrasenia").prop('disabled', true);
+        }
+    }
+    $('#modalContrasenia').on('hidden.bs.modal', function (e) {
+        $("#txtContrasena1").val('');
+        $("#txtContrasena1").removeClass('is-invalid');
+        $("#txtContrasena1Valid").removeClass('mostrar');
+        $("#txtContrasena1ValidCoin").removeClass('mostrar');
+        $("#txtContrasena2").val('');
+        $("#txtContrasena2").removeClass('is-invalid');
+        $("#txtContrasena2ValidCoin").removeClass('mostrar');
+        $("#btnCambiarContrasenia").prop('disabled', true);
+    });
+
+    $('#btnCambiarContrasenia').click(function () {
+        var pass1 = $('#txtContrasena1').val();
+        //Construcción del json
+        var jsonCambiarContrasenia = {
+            "coordinador_id": elementoEliminar,
+            "password": pass1
+        };
+        //Aquí se hace el envío al API para desactivar al cliente
+
+        $.ajax({
+            url: "http://localhost/Herkace_Shared/Web/api/app_ws/Coordinadores/coordinador_pass",
+            method: "PUT",
+            data: jsonCambiarContrasenia,
+            dataType: "json",
+            async: false,
+        }).then(function (result) {
+            if (result['mensaje'] == 'Actualizado correctamente') {
+                Swal.fire({ title: 'Actualizado correctamente', icon: 'success' });
+            }
+            else Swal.fire({ title: 'Error', text: 'Ocurrió un error al actualizar el elemento, intente de nuevo más tarde', icon: 'error' });
+        }).fail(function (err) {
+            console.log(err);
+        });
+
+    });
+
+    $("#btnExcel").click(function () {
+        $('#modalCargando').modal('show');
+        var request = new XMLHttpRequest(), file, fileURL;
+        request.open("POST", 'http://localhost/Herkace_Shared/Web/api/app_ws/Administradores/excel');
+        request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        request.responseType = "arraybuffer";
+        request.send();
+        request.onreadystatechange = function () {
+            if (request.readyState === 4 && request.status === 200) {
+                $('#modalCargando').modal('hide');
+                const a = document.createElement('a');
+                document.body.appendChild(a);
+                const blob = new Blob([request.response], {
+                    type: 'octet/stream'
+                });
+                const url = window.URL.createObjectURL(blob);
+                a.href = url;
+                a.download = "Administradores.xlsx";
+                a.click();
+                window.URL.revokeObjectURL(url);
+            }
+        };
+    });
+
+    // modCliente
+    function modAgregar() {
+        $("#container").empty();
+        $("#container").load("Catalogos/Usuarios/Administradores/agregar.html", function () {
+        });
+    };
+
+    function modModificar(idusuario) {
+        $('[data-toggle="tooltip"]').tooltip('hide');
+        $("#container").empty();
+        $("#container").load("Catalogos/Usuarios/Administradores/modificar.html", function () {
+            cargarDatos(idusuario);
+        });
+    };
+
+
+</script>

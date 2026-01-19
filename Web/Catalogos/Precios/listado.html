@@ -1,0 +1,342 @@
+<!-- ============================================================== -->
+<!-- breadcrumb -->
+<!-- ============================================================== -->
+<div class="page-breadcrumb">
+    <div class="row">
+        <div class="col-12 d-flex no-block align-items-center">
+            <h4 class="page-title">Precios</h4>
+            <div class="ml-auto text-right">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item active">
+                            <a href="javascript:;" onclick="modDashboard();">Dashboard</a>
+                        </li>
+                        <li class="breadcrumb-item active">
+                            <a href="javascript:;" onclick="modCatalogos();">Catálogos</a>
+                        </li>
+                        <li class="breadcrumb-item active">
+                            Precios
+                        </li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .m-b-0,
+    p {
+        margin-bottom: 0;
+    }
+
+    label.form-control-label {
+        margin-bottom: 0px;
+    }
+
+    .border-top {
+        border-top: 1px solid #ccc !important;
+    }
+    
+    small {
+        font-size: 14px;
+    }
+</style>
+<!-- ============================================================== -->
+<!-- End breadcrumb -->
+<!-- ============================================================== -->
+<!-- ============================================================== -->
+<!-- Container -->
+<!-- ============================================================== -->
+<div class="container-fluid">
+    <div class="row">
+        <!-- <button type="button" class="btn btn-success btn-square-icon" id="btnExcel">
+            <i class="fa fa-file-excel"></i> XLSX
+        </button> -->
+        <div class="col-12">
+            <div class="accordion" id="accordionExample">
+            </div>
+        </div>
+        <!-- MODAL ELIMINAR -->
+        <div id="modalEliminar" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog"
+            aria-labelledby="mySmallModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="modal-close" data-dismiss="modal" aria-label="Close">
+                            <i class="fa fa-times"></i>
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">Confirmación</h4>
+                    </div>
+                    <div class="modal-body">
+                        <strong>¿Está seguro que desea eliminar este tipo de servicio?</strong><br>No podrá deshacer
+                        esta
+                        acción.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-inline btn-default" data-dismiss="modal">Cancelar</button>
+                        <button id="btnDesactivar" type="button" class="btn btn-inline btn-danger"
+                            data-dismiss="modal">Eliminar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- FIN MODAL ELIMINAR -->
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- End Container -->
+<!-- ============================================================== -->
+<!--This page JavaScript -->
+
+<script>
+    $(document).ready(function () {
+        $('body').tooltip({ selector: '[data-toggle=tooltip]', trigger: 'hover' });
+    });
+    function validarAgregar(servicio_id) {
+        let error = false;
+        $(`#trNuevo${servicio_id} input`).each(function () {
+            const minLength = parseInt($(this).attr("minlength"));
+            var value = $(this).val();
+            var id = this.id;
+            var valido;
+            if (id.includes("txtNombreNuevo")) {
+                valido = value.length >= minLength;
+            } else if (id.includes("txtPrecioNuevo")) {
+                var pre = parseFloat(value).toFixed(2);
+                valido = !(isNaN(pre) || pre <= 0);
+            }
+            if (valido) {
+                $(this).removeClass('is-invalid');
+                $("#" + id + "Valid").removeClass('mostrar');
+            } else {
+                $(this).addClass('is-invalid');
+                $("#" + id + "Valid").addClass('mostrar');
+                error = true;
+            }
+        });
+        $(`#btnAgregar${servicio_id}`).attr("disabled", error);
+    }
+    function validarModificar(precio_id) {
+        let error = false;
+        $(`#tr${precio_id} input`).each(function () {
+            const minLength = parseInt($(this).attr("minlength"));
+            var value = $(this).val();
+            var id = this.id;
+            var valido;
+            if (id.includes("txtNombre")) {
+                valido = value.length >= minLength;
+            } else if (id.includes("txtPrecio")) {
+                var pre = parseFloat(value).toFixed(2);
+                valido = !(isNaN(pre) || pre <= 0);
+            }
+            if (valido) {
+                $(this).removeClass('is-invalid');
+                $("#" + id + "Valid").removeClass('mostrar');
+            } else {
+                $(this).addClass('is-invalid');
+                $("#" + id + "Valid").addClass('mostrar');
+                error = true;
+            }
+        });
+        $(`#btnModificar${precio_id}`).attr("disabled", error);
+    }
+    function agregar(servicio_id) {
+        //Se construye el json con los datos obtenidos
+        var jsonDatos = {
+            "servicio_id": servicio_id,
+            "nombre": $(`#txtNombreNuevo${servicio_id}`).val(),
+            "precio": $(`#txtPrecioNuevo${servicio_id}`).val()
+        };
+        $.ajax({
+            url: "http://localhost/Herkace_Shared/Web/api/app_ws/Precios/agregar",
+            method: "POST",
+            data: jsonDatos,
+            dataType: "json",
+            success: function (response) {
+                if (response.registrado) {
+                    Swal.fire({
+                        title: 'Registrado correctamente',
+                        icon: 'success'
+                    });
+                    tabla();
+                } else {
+                    Swal.fire({
+                        title: response.mensaje,
+                        icon: 'error'
+                    });
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                Swal.fire({
+                    title: 'Ocurrió un error al registrar el elemento. Intente de nuevo más tarde.',
+                    icon: 'error'
+                });
+            }
+        });
+    }
+    function modificar(precio_id) {
+        //Se construye el json con los datos obtenidos
+        var jsonDatos = {
+            "precio_id": precio_id,
+            "nombre": $(`#txtNombre${precio_id}`).val(),
+            "precio": $(`#txtPrecio${precio_id}`).val()
+        };
+        $.ajax({
+            url: "http://localhost/Herkace_Shared/Web/api/app_ws/Precios/modificar",
+            method: "PUT",
+            data: jsonDatos,
+            dataType: "json",
+            success: function (response) {
+                if (response.registrado) {
+                    Swal.fire({
+                        title: 'Modificado correctamente',
+                        icon: 'success'
+                    });
+                    tabla();
+                } else {
+                    Swal.fire({
+                        title: response.mensaje,
+                        icon: 'error'
+                    });
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                Swal.fire({
+                    title: 'Ocurrió un error al modificar el elemento. Intente de nuevo más tarde.',
+                    icon: 'error'
+                });
+            }
+        });
+    };
+
+    function tabla() {
+        $.ajax({
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            url: 'http://localhost/Herkace_Shared/Web/api/app_ws/Precios/listado_con_servicios',
+            dataType: 'json',
+            success: function (data) {
+                $('#accordionExample').empty();
+                $.each(data, function (key, item) {
+                    var servicio_id = item.servicio_id;
+                    var nombre = item.nombre;
+                    var codigoHTML = '';
+                    codigoHTML += '<div class="card m-b-0';
+                    if ($('#accordionExample').html() != "") {
+                        codigoHTML += ' border-top';
+                    }
+                    codigoHTML += '">';
+                    codigoHTML += `<a data-toggle="collapse" data-target="#collapse${servicio_id}" aria-expanded="false" aria-controls="collapse${servicio_id}" class="collapsed"><div class="card-header"><h5 class="mb-0"><span>${servicio_id}. ${nombre}</span></h5></div></a><div id="collapse${servicio_id}" class="collapse" aria-labelledby="heading${servicio_id}" data-parent="#accordionExample"><div class="card-body">`;
+                    codigoHTML += `<button id="btnNuevo${servicio_id}" onclick="nuevo(${servicio_id});" type="button" class="btn btn-success" data-toggle="tooltip" title="Agregar" style="margin-left: 8px;"><i class="fa fa-plus"></i> Agregar nueva tarifa</button>`;
+                    codigoHTML += '<table class="table table-bordered table-hover table-light" style="margin-bottom: 0px;"><thead class="thead-light text-center"><tr><th>Tarifa</th><th>Precio</th><th>Acciones</th></tr></thead><tbody>';
+                    $.each(item.precios, function (subkey, subitem) {
+                        var sub_precio_id = subitem.precio_id;
+                        var sub_nombre = subitem.nombre;
+                        codigoHTML += `<tr id="tr${sub_precio_id}">`;
+                        codigoHTML += `<td><input id="txtNombre${sub_precio_id}" minlength="2" type="text" class="form-control" placeholder="Nombre" value="${sub_nombre}" /><div class="invalid-feedback" id="txtNombre${sub_precio_id}Valid"></div></td>`;
+                        codigoHTML += `<td><div class="input-group"><div class="input-group-prepend"><div class="input-group-text"><i class="fa fa-dollar-sign"></i></div></div><input type="number" id="txtPrecio${sub_precio_id}" class="form-control" placeholder="Precio" step="0.01" value="${subitem.precio}" /></div><div class="invalid-feedback" id="txtPrecio${sub_precio_id}Valid">El dato ingresado no es válido</div><small class="form-text">Solo se permite la captura de 2 decimales</small></td>`;
+                        codigoHTML += `<td class="text-center">`;
+                        codigoHTML += `<button id="btnModificar${sub_precio_id}" onclick="modificar(${sub_precio_id});" type="button" class="btn btn-info" data-toggle="tooltip" title="Guardar" disabled><i class="fa fa-save"></i></button>`;
+                        codigoHTML += `<button onclick="setElementoEliminar(${sub_precio_id}, '${sub_nombre}', '${nombre}');" type="button" class="btn btn-danger" data-toggle="tooltip" title="Eliminar"><i class="fa fa-minus"></i></button>`;
+                        codigoHTML += `</td>`;
+                        codigoHTML += '</tr>';
+                    });
+                    codigoHTML += `<tr id="trNuevo${servicio_id}" class="ocultar">`;
+                    codigoHTML += `<td><input id="txtNombreNuevo${servicio_id}" minlength="2" type="text" class="form-control" placeholder="Nombre" /><div class="invalid-feedback" id="txtNombreNuevo${servicio_id}Valid"></div></td>`;
+                    codigoHTML += `<td><div class="input-group"><div class="input-group-prepend"><div class="input-group-text"><i class="fa fa-dollar-sign"></i></div></div><input id="txtPrecioNuevo${servicio_id}" type="number" class="form-control" placeholder="Precio" step="0.01" /></div><div class="invalid-feedback" id="txtPrecioNuevo${servicio_id}Valid">El dato ingresado no es válido</div><small class="form-text">Solo se permite la captura de 2 decimales</small></td>`;
+                    codigoHTML += `<td class="text-center">`;
+                    codigoHTML += `<button id="btnAgregar${servicio_id}" onclick="agregar(${servicio_id});" type="button" class="btn btn-info" data-toggle="tooltip" title="Guardar" disabled><i class="fa fa-save"></i></button>`;
+                    codigoHTML += `<button id="btnEliminarNuevo${servicio_id}" onclick="eliminarNuevo(${servicio_id});" type="button" class="btn btn-danger" data-toggle="tooltip" title="Eliminar"><i class="fa fa-minus"></i></button>`;
+                    codigoHTML += `</td>`;
+                    codigoHTML += '<tr>';
+                    codigoHTML += '</tbody></div></div></div>';
+                    $('#accordionExample').append(codigoHTML);
+                })
+            },
+            complete: function (jqXHR, textStatus) {
+                $(".card-header").css("cursor", "pointer");
+                $("table button").css("margin", "4px");
+                $(".btn-success").css({ "margin-left": "0px", "margin-bottom": "8px" });
+                $("input[type=text]").each(function () {
+                    var id = this.id;
+                    this.oninput = function () {
+                        inputMayus(this);
+                        id = id.replace("txtNombre", "");
+                        var nuevo = id.includes("Nuevo");
+                        if (nuevo) {
+                            validarAgregar(id.replace("Nuevo", ""));
+                        } else {
+                            validarModificar(id);
+                        }
+                    };
+                    const minLength = parseInt($(this).attr("minlength"));
+                    $("#" + id + "Valid").html(`El campo debe contener al menos ${minLength} caracteres.`);
+                });
+                $("input[type=number]").each(function () {
+                    this.oninput = function () {
+                        var id = this.id;
+                        id = id.replace("txtPrecio", "");
+                        var nuevo = id.includes("Nuevo");
+                        if (nuevo) {
+                            validarAgregar(id.replace("Nuevo", ""));
+                        } else {
+                            validarModificar(id);
+                        }
+                    };
+                    this.onblur = function () {
+                        inputMoney(this);
+                    };
+                });
+            }
+        });
+    }
+
+    function nuevo(servicio_id) {
+        $(`#btnNuevo${servicio_id}`).prop('disabled', true);
+        $(`#trNuevo${servicio_id}`).removeClass('ocultar');
+    };
+
+    function eliminarNuevo(servicio_id) {
+        $(`#btnNuevo${servicio_id}`).prop('disabled', false);
+        $(`#trNuevo${servicio_id}`).addClass('ocultar');
+        $(`#txtNombreNuevo${servicio_id}`).val('');
+        $(`#txtPrecioNuevo${servicio_id}`).val('');
+    };
+
+    var elementoEliminar = null;
+    function setElementoEliminar(id, nombre, servicio) {
+        elementoEliminar = id;
+        var codigoHTML = `<strong>¿Está seguro que desea desactivar esta tarifa?</strong><br /><strong>Nombre: </strong><label>${nombre}</label><br /><strong>Servicio: </strong><label>${servicio}</label><br />No podrá deshacer esta acción.`;
+        $("#modalEliminar .modal-body").html(codigoHTML);
+        $("#modalEliminar").modal('show');
+    }
+
+    $('#btnDesactivar').click(function () {
+        //Construcción del json
+        var activo = parseInt($("#lblNuevoVal").val());
+        var jsonDesactivar = {
+            "precio_id": elementoEliminar
+        };
+        //Aquí se hace el envío al API para desactivar al cliente
+        $.ajax({
+            url: "http://localhost/Herkace_Shared/Web/api/app_ws/Precios/desactivar",
+            method: "PUT",
+            data: jsonDesactivar,
+            dataType: "json",
+            success: function (response) {
+                if (response.cambio) {
+                    Swal.fire({
+                        title: `El elemento ha sido desactivado correctamente`,
+                        icon: 'success'
+                    });
+                    tabla();
+                } else {
+                    Swal.fire({ title: `Ocurrió un error al desactivar el elemento. Intente de nuevo más tarde.`, icon: 'error' });
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                Swal.fire({ title: `Ocurrió un error al desactivar el elemento. Intente de nuevo más tarde.`, icon: 'error' });
+            }
+        });
+    });
+</script>

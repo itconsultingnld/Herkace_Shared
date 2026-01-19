@@ -1,0 +1,440 @@
+<!-- ============================================================== -->
+<!-- breadcrumb -->
+<!-- ============================================================== -->
+<div class="page-breadcrumb">
+    <div class="row">
+        <div class="col-12 d-flex no-block align-items-center">
+            <h4 class="page-title">Folios</h4>
+            <div class="ml-auto text-right">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item active">
+                            <a href="javascript:;" onclick="modDashboard();">Dashboard</a>
+                        </li>
+                        <li class="breadcrumb-item active">
+                            <a href="javascript:;" onclick="modCatalogos();">Catálogos</a>
+                        </li>
+                        <li class="breadcrumb-item active">Folios</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    p {
+        margin-bottom: 0;
+    }
+
+    label.form-control-label {
+        margin-bottom: 0px;
+    }
+</style>
+<!-- ============================================================== -->
+<!-- End breadcrumb -->
+<!-- ============================================================== -->
+<!-- ============================================================== -->
+<!-- Container -->
+<!-- ============================================================== -->
+<div class="container-fluid">
+    <div class="row">
+        <a href="javascript:;" onclick="modInsertar();">
+            <button type="button" class="btn-square-icon">
+                <i class="fa fa-plus"></i>
+                Agregar folios
+            </button>
+        </a>
+        <button type="button" class="btn btn-success btn-square-icon" id="btnExcel">
+            <i class="fa fa-file-excel"></i> XLSX
+        </button>
+        <div class="table-responsive">
+            <table id="tbl" class="table table-bordered table-hover table-light">
+                <thead class="thead-light">
+                    <tr>
+                        <th><b>Folio</b></th>
+                        <th><b>Tipo de verificación</b></th>
+                        <th><b>Usuario</b></th>
+                        <th><b>Fecha y hora</b></th>
+                        <th><b>Eliminar</b></th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+        <!-- MODAL AGREGAR -->
+        <div id="modalAgregar" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="modal-close" data-dismiss="modal" aria-label="Close">
+                            <i class="fa fa-times"></i>
+                        </button>
+                        <h4 class="modal-title col-11 text-center" id="myModalLabel">Agregar folios</h4>
+                    </div>
+                    <div class="modal-body row">
+                        <div class="col-sm-12">
+                            <div class="form-group row align-items-center">
+                                <label for="cboTipoAgregar" class="col-sm-2 form-control-label text-right">
+                                    Tipo de verificación:
+                                </label>
+                                <div class="col-sm-10">
+                                    <select class="form-control" id="cboTipoAgregar">
+                                        <option value="0">Seleccione un tipo de verificación</option>
+                                    </select>
+                                    <div class="invalid-feedback" id="cboTipoAgregarValid">
+                                        Debe seleccionar un tipo de verificación
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group row align-items-center">
+                                <label class="col-sm-2 form-control-label"></label>
+                                <div class="col-sm-10">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="ragTipoAgregar"
+                                            id="radTipoAgregarM" value="M" disabled checked>
+                                        <label class="form-check-label" for="radTipoAgregarM">Motorizado</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="ragTipoAgregar"
+                                            id="radTipoAgregarA" value="A" disabled>
+                                        <label class="form-check-label" for="radTipoAgregarA">Arrastre</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group row align-items-center">
+                                <label for="txtDesdeAgregar"
+                                    class="col-sm-2 form-control-label text-right">Desde:</label>
+                                <div class="col-sm-10 input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">M</div>
+                                    </div>
+                                    <input type="number" class="form-control" id="txtDesdeAgregar" placeholder="Desde"
+                                        minlength="2" oninput="validarFormulario();" required />
+                                    <div class="invalid-feedback" id="txtDesdeAgregarValid">
+                                        Debe ingresar un valor menor que el campo "Hasta"
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group row align-items-center">
+                                <label for="txtHastaAgregar"
+                                    class="col-sm-2 form-control-label text-right">Hasta:</label>
+                                <div class="col-sm-10 input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">M</div>
+                                    </div>
+                                    <input type="number" class="form-control" id="txtHastaAgregar" placeholder="Hasta"
+                                        minlength="2" oninput="validarFormulario();" required />
+                                    <div class="invalid-feedback" id="txtHastaAgregarValid">
+                                        Debe ingresar un valor mayor que el campo "Desde"
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-inline btn-danger" data-dismiss="modal">Cancelar</button>
+                        <button id="btnAgregar" type="button" class="btn btn-inline btn-success"
+                            disabled>Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- FIN MODAL AGREGAR -->
+        <!-- MODAL ELIMINAR -->
+        <div id="modalEliminar" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog"
+            aria-labelledby="mySmallModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="modal-close" data-dismiss="modal" aria-label="Close">
+                            <i class="fa fa-times"></i>
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">Confirmación</h4>
+                    </div>
+                    <div class="modal-body">
+                        <strong>¿Está seguro que desea eliminar el folio?</strong>
+                        <br />
+                        <strong>Folio: </strong><label id="lblFolioEliminar"></label>
+                        <br />
+                        <strong>Tipo verificación: </strong><label id="lblTipoEliminar"></label>
+                        <br />
+                        No podrá deshacer esta acción.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-inline btn-default" data-dismiss="modal">Cancelar</button>
+                        <button id="btnDesactivar" type="button" class="btn btn-inline btn-danger"
+                            data-dismiss="modal">Eliminar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- FIN MODAL ELIMINAR -->
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- End Container -->
+<!-- ============================================================== -->
+<!--This page JavaScript -->
+
+<script>
+    $(document).ready(function () {
+        $('body').tooltip({ selector: '[data-toggle=tooltip]', trigger: 'hover' });
+        $("table thead tr th").addClass("text-center");
+        $('.input-group-prepend').hide();
+        getTiposVerificaciones();
+    });
+    function getTiposVerificaciones() {
+        $.ajax({
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            url: 'http://localhost/Herkace_Shared/Web/api/app_ws/TiposVerificaciones/listado',
+            dataType: 'json',
+            success: function (data) {
+                $.each(data, function (key, item) {
+                    var codigoHTML = `<option value=${item.tipo_verificacion_id}>${item.nombre}</option>`;
+                    $('#cboTipoAgregar').append(codigoHTML);
+                });
+            }
+        });
+    }
+    $('#cboTipoAgregar').change(function () {
+        if (tipoSelEC()) {
+            $('input[name=ragTipoAgregar]').attr('disabled', false);
+            $('.input-group-prepend').show();
+        } else {
+            $('input[name=ragTipoAgregar]').attr('disabled', true);
+            $('.input-group-prepend').hide();
+        }
+        validarFormulario();
+    });
+    $('input[name=ragTipoAgregar]').change(function () {
+        $('.input-group-text').html($('input[name=ragTipoAgregar]:checked').val());
+    });
+    function tipoSel() {
+        return $('#cboTipoAgregar').val();
+    }
+    function tipoSelEC() {
+        return tipoSel() == '2';
+    }
+    function validarFormulario() {
+        let error = false;
+        if (tipoSel() == 0) {
+            $('#cboTipoAgregar').addClass('is-invalid');
+            $('#cboTipoAgregarValidar').addClass('mostrar');
+            error = true;
+        } else {
+            $('#cboTipoAgregar').removeClass('is-invalid');
+            $('#cboTipoAgregarValidar').removeClass('mostrar');
+        }
+        if (!error) {
+            var desde = $("#txtDesdeAgregar").val();
+            var hasta = $("#txtHastaAgregar").val();
+            var intDesde = parseInt(desde);
+            var intHasta = parseInt(hasta);
+            console.log('revisando...');
+            if (isNaN(intDesde) || intDesde == 0) {
+                $("#txtDesdeAgregar").addClass("is-invalid");
+                $("#txtDesdeAgregarValid").html("El valor ingresado no es válido");
+                $("#txtDesdeAgregarValid").addClass("mostrar");
+                error = true;
+            } else {
+                $("#txtDesdeAgregar").removeClass("is-invalid");
+                $("#txtDesdeAgregarValid").removeClass("mostrar");
+            }
+            if (isNaN(intHasta) || intHasta == 0) {
+                $("#txtHastaAgregar").addClass("is-invalid");
+                $("#txtHastaAgregarValid").html("El valor ingresado no es válido");
+                $("#txtHastaAgregarValid").addClass("mostrar");
+                error = true;
+            } else {
+                $("#txtHastaAgregar").removeClass("is-invalid");
+                $("#txtHastaAgregarValid").removeClass("mostrar");
+            }
+            if (!error) {
+                if (intDesde >= intHasta) {
+                    $("#txtDesdeAgregar").addClass("is-invalid");
+                    $("#txtHastaAgregar").addClass("is-invalid");
+                    $("#txtDesdeAgregarValid").html('Debe ingresar un valor menor que el campo "Hasta"');
+                    $("#txtHastaAgregarValid").html('Debe ingresar un valor mayor que el campo "Desde"');
+                    $("#txtDesdeAgregarValid").addClass("mostrar");
+                    $("#txtHastaAgregarValid").addClass("mostrar");
+                    error = true;
+                } else {
+                    $("#txtDesdeAgregar").removeClass("is-invalid");
+                    $("#txtHastaAgregar").removeClass("is-invalid");
+                    $("#txtDesdeAgregarValid").removeClass("mostrar");
+                    $("#txtHastaAgregarValid").removeClass("mostrar");
+                }
+            }
+        }
+        $("#btnAgregar").attr("disabled", error);
+    }
+    $('#btnAgregar').click(function () {
+        //Se construye el json con los datos obtenidos
+        var prefijo = '';
+        if (tipoSelEC()) {
+            prefijo = $('input[name=ragTipoAgregar]:checked').val();
+        }
+        var jsonDatos = {
+            "tipo_verificacion_id": tipoSel(),
+            "prefijo": prefijo,
+            "desde": $("#txtDesdeAgregar").val(),
+            "hasta": $("#txtHastaAgregar").val(),
+            "usuario_id": localStorage.getItem("AE")
+        };
+        $.ajax({
+            url: "http://localhost/Herkace_Shared/Web/api/app_ws/Folios/agregar",
+            method: "POST",
+            data: jsonDatos,
+            dataType: "json",
+            success: function (response) {
+                if (response.registrado) {
+                    $('#modalAgregar').modal('hide');
+                    Swal.fire({
+                        title: 'Los folios han sido registrados correctamente',
+                        icon: 'success'
+                    });
+                    tabla();
+                } else {
+                    Swal.fire({
+                        title: response.mensaje,
+                        icon: 'error'
+                    });
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                $('#modalAgregar').modal('hide');
+                Swal.fire({
+                    title: 'Ocurrió un error al registrar el servidor. Intente de nuevo más tarde.',
+                    icon: 'error'
+                });
+            }
+        });
+    });
+    $('#modalAgregar').on('hidden.bs.modal', function (e) {
+        $("#txtDesdeAgregar").val('');
+        $("#txtHastaAgregar").val('');
+        $('#cboTipoAgregar').val('0');
+        $("#modalAgregar input").removeClass('is-invalid');
+        $("#modalAgregar .invalid-feedback").removeClass('mostrar');
+        $("#btnAgregar").prop('disabled', true);
+    });
+
+    function tabla() {
+        $('#modalCargando').modal('show');
+        if ($.fn.dataTable.isDataTable('#tbl')) {
+            $('#tbl').DataTable().destroy();
+        }
+        $('#tbl tbody').empty();
+        var columnas = [
+            { "data": "folio" },
+            { "data": "tipo_verificacion" },
+            { "data": "usuario" },
+            { "data": "fecha_hora" },
+            {
+                "render": function (data, type, row, meta) {
+                    var codigoHTML = '<a href="javascript:;" onclick="setElementoEliminar(' + row.folio_id + ',\'' + row.folio + '\',\'' + row.tipo_verificacion + '\');">';
+                    codigoHTML += '<button type="button" class="btn btn-inline btn-outline-danger" data-toggle="tooltip" title="Eliminar">';
+                    codigoHTML += '<i class="fa fa-times"></i>';
+                    codigoHTML += '</button>';
+                    codigoHTML += '</a>';
+                    return codigoHTML;
+                }
+            }
+        ];
+        var table = $('#tbl').DataTable({
+            ordering: false, searching: true, info: true, paging: true,
+            language: { 'url': 'assets/extra-libs/DataTables/Spanish.html' },
+            serverSide: false,
+            ajax: {
+                url: 'http://localhost/Herkace_Shared/Web/api/app_ws/Folios/listado_vw',
+                type: 'GET',
+                dataSrc: ""
+            },
+            columns: columnas,
+            initComplete: function () {
+                $(this.api().table().container()).find('input').parent().wrap('<form>').parent().attr('autocomplete', 'off');
+                $('#modalCargando').modal('hide');
+            }
+        });
+        table.on('draw', function () {
+            $("#tbl tbody tr").each(function () {
+                $(this).children("td").each(function (i, e) {
+                    if (i == 4) {
+                        $(this).addClass("text-center");
+                    }
+                });
+            });
+        });
+    }
+
+    var elementoEliminar = null;
+    function setElementoEliminar(id, nombre, tipo) {
+        elementoEliminar = id;
+        $("#lblFolioEliminar").html(nombre);
+        $("#lblTipoEliminar").html(tipo);
+        $("#modalEliminar").modal("show");
+    }
+
+    $('#btnDesactivar').click(function () {
+        //Construcción del json
+        var jsonDesactivar = {
+            "folio_id": elementoEliminar
+        };
+        //Aquí se hace el envío al API para desactivar al cliente
+        $.ajax({
+            url: "http://localhost/Herkace_Shared/Web/api/app_ws/Folios/desactivar",
+            method: "PUT",
+            data: jsonDesactivar,
+            dataType: "json",
+            success: function (response) {
+                if (response.cambio) {
+                    Swal.fire({
+                        title: `El folio ha sido eliminado correctamente`,
+                        icon: 'success'
+                    });
+                    tabla();
+                } else {
+                    Swal.fire({ title: `Ocurrió un error al eliminar el folio. Intente de nuevo más tarde.`, icon: 'error' });
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                Swal.fire({ title: `Ocurrió un error al eliminar el folio. Intente de nuevo más tarde.`, icon: 'error' });
+            }
+        });
+    });
+
+    $("#btnExcel").click(function () {
+        $('#modalCargando').modal('show');
+        var request = new XMLHttpRequest(), file, fileURL;
+        request.open("POST", 'http://localhost/Herkace_Shared/Web/api/app_ws/Folios/excel');
+        request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        request.responseType = "arraybuffer";
+        request.send();
+        request.onreadystatechange = function () {
+            if (request.readyState === 4 && request.status === 200) {
+                $('#modalCargando').modal('hide');
+                const a = document.createElement('a');
+                document.body.appendChild(a);
+                const blob = new Blob([request.response], {
+                    type: 'octet/stream'
+                });
+                const url = window.URL.createObjectURL(blob);
+                a.href = url;
+                a.download = "Folios.xlsx";
+                a.click();
+                window.URL.revokeObjectURL(url);
+            }
+        };
+    });
+
+    function modInsertar() {
+        $('#modalAgregar').modal('show');
+    };
+</script>
