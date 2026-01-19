@@ -1,4 +1,4 @@
-# Herkace_Shared
+# Herkace
 
 Sistema de control de verificaciones.
 
