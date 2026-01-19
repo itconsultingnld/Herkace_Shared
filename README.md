@@ -7,7 +7,7 @@ Sistema de control de verificaciones.
 Se deben realizar los siguientes cambios antes de utilizarlo:
 
 [Web/api/app_ws/application/config/constants.php](Web/api/app_ws/application/config/constants.php)
-- Línea 87: Contiene las claves del API de [factura.com](factura.com). Hay que comentar el bloque de Sandbox y descomentar el de Producción, poniendo las claves de API correctas.
+- Línea 87: Contiene las claves del API de [factura.com](https://factura.com/). Hay que comentar el bloque de Sandbox y descomentar el de Producción, poniendo las claves de API correctas.
 
 [Web/api/app_ws/application/helpers/envio_correo_helper.php](Web/api/app_ws/application/helpers/envio_correo_helper.php)
 - Líneas 22 a 30: Se deben configurar los parámetros de envío de correo, tales como el host, puerto, usuario y contraseña del servidor SMTP que se utilizará para el envío de correos.
